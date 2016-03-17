@@ -933,6 +933,10 @@ public with sharing class ESignLiveRESTAPIHelper
         try
         {
             connectionSettings = e_SignLive_Connection_Settings__c.getInstance('Main');    
+            if(connectionSettings.Endpoint__c.equals('') || connectionSettings.API_Key__c.equals(''))
+            {
+                
+            }
         }
         catch(Exception e)
         {            
