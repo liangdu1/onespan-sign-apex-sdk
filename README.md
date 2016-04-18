@@ -14,8 +14,8 @@ The SDK can be installed using the <a href="https://githubsfdeploy.herokuapp.com
 </a> button.
 
 Alternatively, it can be installed as an unmanaged package:
-* [Production/Developer Sandbox](https://login.salesforce.com/packaging/installPackage.apexp?p0=04t15000000Kooq)
-* [Test Sandbox](https://test.salesforce.com/packaging/installPackage.apexp?p0=04t15000000Kooq)
+* [Production/Developer Sandbox](https://login.salesforce.com/packaging/installPackage.apexp?p0=04t15000000KpGE)
+* [Test Sandbox](https://test.salesforce.com/packaging/installPackage.apexp?p0=04t15000000KpGE)
 
 After installing in your sandbox or developer org you'll need to configure the connection settings by creating an entry in the eSignLive Connection Settings custom setting.
 
