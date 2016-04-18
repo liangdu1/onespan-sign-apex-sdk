@@ -9,7 +9,7 @@ public with sharing class ESignLiveExamples
     public ESignLiveExamples(){}
 
     /**
-     * Example method for creating a package
+     * Example method for creating a package without any documents
      */
     public static String createPackageExample()
     {
@@ -151,7 +151,7 @@ public with sharing class ESignLiveExamples
         ESignLiveSDK sdk = new ESignLiveSDK();
 
         ESignLiveAPIObjects.Package_x pkg = sdk.getPackage(packageId);
-        System.debug('=> Response PackageId from getPackageExample: ' + pkg);
+        System.debug('=> Response Package from getPackageExample: ' + pkg);
         
         return pkg;
     }
@@ -181,10 +181,10 @@ public with sharing class ESignLiveExamples
         blobMap.put('testDocumentOne', b1);
         blobMap.put('testDocumentTwo', b2);
 
-        // Call the SDK method and get the packageId which is returned from the SDK method
+        // Call the SDK method and get the JSON response which is returned from the SDK method
         String response = sdk.createDocuments(packageId,blobMap);       
 
-        // Print the packageId to console
+        // Print the JSON Response to console
         System.debug('=> Response from createDocumentsExample: ' + response);
 
         return response;
@@ -221,10 +221,10 @@ public with sharing class ESignLiveExamples
     {
         ESignLiveSDK sdk = new ESignLiveSDK();
 
-        // Call the SDK method and get the HTTP response status code and status string
+        // Call the SDK method and get the Base64 encoded String
         String response = sdk.getAudit(packageId);      
 
-        // Print the response to console
+        // Print the Base64 encoded String to console.  If we need to view the PDF document, do the Base64 decoding on the output string and then save the file with .pdf extension.
         System.debug('=> Response from getAuditExample: ' + response);
 
         return response;
@@ -237,10 +237,10 @@ public with sharing class ESignLiveExamples
     {
         ESignLiveSDK sdk = new ESignLiveSDK();
 
-        // Call the SDK method and get the HTTP response status code and status string
+        // Call the SDK method and and get the Base64 encoded String
         String response = sdk.downloadAllAttachmentFilesForSignerInPackage(packageId,roleId);
 
-        // Print the response to console
+        // Print the Base64 encoded String to console.  If we need to view the documents, do the Base64 decoding on the output string and then save the file with .zip extension.
         System.debug('=> Response from downloadAllAttachmentFilesForSignerInPackageExample: ' + response);
     }
 
@@ -251,7 +251,7 @@ public with sharing class ESignLiveExamples
     {
         ESignLiveSDK sdk = new ESignLiveSDK();
 
-        // Call the SDK method and get the HTTP response status code and status string
+        // Call the SDK method and get the new Role information as the response 
         String response = sdk.updateSigner(packageId, roleId, firstname, lastname, email, optionalMessageToTheAssignee);
 
         // Print the response to console
@@ -274,7 +274,7 @@ public with sharing class ESignLiveExamples
 
         challenges.add(challenge);
 
-        // Call the SDK method and get the HTTP response status code and status string
+        // Call the SDK method and get the response status code and status string
         String response = sdk.safeSetAuth(packageId, roleId, ESignLiveAPIObjects.AuthScheme.CHALLENGE, challenges);
 
         // Print the response to console
@@ -303,7 +303,7 @@ public with sharing class ESignLiveExamples
         ESignLiveSDK sdk = new ESignLiveSDK();
         String response = sdk.getSigningStatus(packageId);
 
-        // Print the response to console
+        // Print the Package Status to console
         System.debug('=> Response from getSigningStatusExample: ' + response);
 
         return response;
@@ -317,7 +317,7 @@ public with sharing class ESignLiveExamples
         ESignLiveSDK sdk = new ESignLiveSDK();
         String response = sdk.getSigningUrl(packageId, signerId);
 
-        // Print the response to console
+        // Print the Signing URL to the console
         System.debug('=> Response from getSigningUrlExample: ' + response);
 
         return response;
@@ -331,7 +331,7 @@ public with sharing class ESignLiveExamples
         ESignLiveSDK sdk = new ESignLiveSDK();
         Blob documentBlob = sdk.downloadDocument(packageId,documentId);
 
-        // Print the response to console
+        // Print the Base64 Encoded document string to console
         System.debug('=> Response from downloadDocumentExample: ' + EncodingUtil.base64Encode(documentBlob));
 
         return documentBlob;
@@ -345,7 +345,7 @@ public with sharing class ESignLiveExamples
         ESignLiveSDK sdk = new ESignLiveSDK();
         String response = sdk.setStatus(packageId,status);
 
-        // Print the response to console
+        // Print the HTTP Reponse status code and status string to console
         System.debug('=> Response from setStatusExample: ' + response);
     }
 
@@ -377,7 +377,7 @@ public with sharing class ESignLiveExamples
 
         String response = sdk.addSignature(packageId,documentId,approval);
 
-        // Print the response to console
+        // Print the Approval object JSON String to console
         System.debug('=> Response from addSignatureExample: ' + response);
 
         return response;
@@ -390,7 +390,7 @@ public with sharing class ESignLiveExamples
     {
         ESignLiveSDK sdk = new ESignLiveSDK();
         
-        // Call the SDK method and get the HTTP response status code and status string
+        // Call the SDK method and get the Role object JSON String as response
         String response = sdk.addRole(firstname, lastname, email, packageId);
 
         // Print the response to console
@@ -475,10 +475,10 @@ public with sharing class ESignLiveExamples
     {
         ESignLiveSDK sdk = new ESignLiveSDK();
 
-        // Call the SDK method and get the HTTP response status code and status string
+        // Call the SDK method and get the Approval object as response
         ESignLiveAPIObjects.Approval response = sdk.getApproval(packageId, documentId, approvalId);
 
-        // Print the response to console
+        // Print the Approval object to console
         System.debug('=> Response from getApprovalExample: ' + response);
         
         return response;
@@ -528,7 +528,7 @@ public with sharing class ESignLiveExamples
     {
         ESignLiveSDK sdk = new ESignLiveSDK();
 
-        // Call the SDK method and get the HTTP response status code and status string
+        // Call the SDK method and get the Role object as the response
         ESignLiveAPIObjects.Role response = sdk.getRole(packageId, roleId);
 
         // Print the response to console
@@ -574,7 +574,7 @@ public with sharing class ESignLiveExamples
         String response = sdk.updateRole(packageId, roleId, role );
 
         // Print the response to console
-        System.debug('=> Response from deleteApprovalExample: ' + response);
+        System.debug('=> Response from updateRoleExample: ' + response);
         
         return response;
     }
@@ -600,7 +600,7 @@ public with sharing class ESignLiveExamples
 
         String response = sdk.addField(packageId,documentId,approvalId,field1);
 
-        // Print the response to console
+        // Print the field object JSON string to console
         System.debug('=> Response from addFieldExample: ' + response);
     }
 
@@ -611,10 +611,10 @@ public with sharing class ESignLiveExamples
     {
         ESignLiveSDK sdk = new ESignLiveSDK();
 
-        // Call the SDK method and get the HTTP response status code and status string
+        // Call the SDK method and get the Field object as the response
         ESignLiveAPIObjects.Field response = sdk.getField(packageId, documentId, approvalId, fieldId);
 
-        // Print the response to console
+        // Print the field object to console
         System.debug('=> Response from getFieldExample: ' + response);
         
         return response;
