@@ -606,6 +606,9 @@ public class ESignLiveSDKTest
         // Object repsonse
         List<ESignLiveAPIObjects.Signer> response = null;
         
+        // Create custom setting for test
+        ESignLiveTestDataUtility.createConnectionSetting();        
+
         // Code to test
         ESignLiveSDK liveSDK = new ESignLiveSDK();
         response = liveSDK.createRolesSigner(firstName, lastName, email, title, company);
