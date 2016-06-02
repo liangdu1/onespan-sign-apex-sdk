@@ -92,6 +92,11 @@ public with sharing class ESignLiveDocumentUtilities
             
             contentEncoded = contentEncoded.substring(0,contentEncoded.length()-4) + last4BytesForContent;
         }
+        else if( last4BytesForContent.endsWith('=')) 
+        {
+            last4BytesForContent =  last4BytesForContent.substring(0,3) + 'N';
+            contentEncoded = contentEncoded.substring(0,contentEncoded.length()-4) + last4BytesForContent;
+        }
 
         return contentEncoded;
     }
