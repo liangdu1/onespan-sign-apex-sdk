@@ -1,11 +1,11 @@
 # Apex SDK for eSignLive
 This SDK allows you to integrate with eSignLive's REST API using Apex.  Examples on how to use the SDK are included in the ESignLiveExamples class.
 
-To get started, you'll need to create a free developer account [here](https://www.esignlive.com/partners-and-apps/sandbox-account-creation/?_ga=1.248624133.38793117.1457297517).
+To get started, you'll need to create a free developer account [here](http://bit.ly/1NWBoEo).
 
-Documentation for the SDK can be accessed [here](https://github.com/KadenceCollective/esignlive-apex-sdk/wiki/SDK-Documentation).
+Documentation for the SDK can be accessed [here](http://bit.ly/1TtTXwb).
 
-For help, use eSignLive's [Developer Community](https://developer.esignlive.com/).
+For help, use eSignLive's [Developer Community](http://bit.ly/1TtTZEf).
 
 ## Installation and Configuration
 The SDK can be installed using the <a href="https://githubsfdeploy.herokuapp.com?owner=KadenceCollective&repo=esignlive-apex-sdk">
@@ -14,8 +14,8 @@ The SDK can be installed using the <a href="https://githubsfdeploy.herokuapp.com
 </a> button.
 
 Alternatively, it can be installed as an unmanaged package:
-* [Production/Developer Sandbox](https://login.salesforce.com/packaging/installPackage.apexp?p0=04t15000000Kooq)
-* [Test Sandbox](https://test.salesforce.com/packaging/installPackage.apexp?p0=04t15000000Kooq)
+* [Production/Developer Sandbox](http://bit.ly/1Nk4s91)
+* [Test Sandbox](http://bit.ly/1NWRWfm)
 
 After installing in your sandbox or developer org you'll need to configure the connection settings by creating an entry in the eSignLive Connection Settings custom setting.
 
