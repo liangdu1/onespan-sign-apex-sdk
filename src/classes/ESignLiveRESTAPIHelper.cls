@@ -34,7 +34,7 @@ public with sharing class ESignLiveRESTAPIHelper
         } 
         else 
         {
-            throw new ESignLiveRestAPIHelperException('Error authenticating to eSignLive: ' + response.getStatusCode() + ' - ' + response.getStatus());
+            throw new ESignLiveRestAPIHelperException('Error authenticating to eSignLive: ' + response.getStatusCode() + ' - ' + response.getStatus() + ' - ' +  response.getBody());
         }
 
         return sessionId;
@@ -63,7 +63,7 @@ public with sharing class ESignLiveRESTAPIHelper
         }
         else
         {
-            throw new ESignLiveRestAPIHelperException('Error cloning template or package with eSignLive: ' + response.getStatusCode() + ' - ' + response.getStatus());
+            throw new ESignLiveRestAPIHelperException('Error cloning template or package with eSignLive: ' + response.getStatusCode() + ' - ' + response.getStatus() + ' - ' +  response.getBody());
         }
 
         return packageResponse;
@@ -84,7 +84,7 @@ public with sharing class ESignLiveRESTAPIHelper
         }
         else
         {
-            throw new ESignLiveRestAPIHelperException('Error updating package with eSignLive: ' + response.getStatusCode() + ' - ' + response.getStatus());   
+            throw new ESignLiveRestAPIHelperException('Error updating package with eSignLive: ' + response.getStatusCode() + ' - ' + response.getStatus() + ' - ' +  response.getBody());   
         }
     }
 
@@ -108,12 +108,12 @@ public with sharing class ESignLiveRESTAPIHelper
             catch(Exception e)
             {
                 System.debug(e.getStackTraceString());
-                throw new ESignLiveRestAPIHelperException('Error getting eSignLive package signing status: ' + response.getStatusCode() + ' - ' + response.getStatus());
+                throw new ESignLiveRestAPIHelperException('Error getting eSignLive package signing status: ' + response.getStatusCode() + ' - ' + response.getStatus() + ' - ' +  response.getBody());
             }
         }
         else
         {
-            throw new ESignLiveRestAPIHelperException('Error getting eSignLive package signing status: ' + response.getStatusCode() + ' - ' + response.getStatus());
+            throw new ESignLiveRestAPIHelperException('Error getting eSignLive package signing status: ' + response.getStatusCode() + ' - ' + response.getStatus() + ' - ' +  response.getBody());
         }
         return packageStatus.status.name();
     }
@@ -132,9 +132,9 @@ public with sharing class ESignLiveRESTAPIHelper
         }
         else
         {
-            throw new ESignLiveRestAPIHelperException('Error deleting package with eSignLive: ' + response.getStatusCode() + ' - ' + response.getStatus());   
+            throw new ESignLiveRestAPIHelperException('Error deleting package with eSignLive: ' + response.getStatusCode() + ' - ' + response.getStatus() + ' - ' +  response.getBody());   
         }
-        return response.getStatusCode() + ' - ' + response.getStatus();
+        return response.getStatusCode() + ' - ' + response.getStatus() + ' - ' +  response.getBody();
     }
 
     /**
@@ -161,7 +161,7 @@ public with sharing class ESignLiveRESTAPIHelper
         }
         else
         {
-            throw new ESignLiveRestAPIHelperException('Error obtaining eSignLive signing Url: ' + response.getStatusCode() + ' - ' + response.getStatus());
+            throw new ESignLiveRestAPIHelperException('Error obtaining eSignLive signing Url: ' + response.getStatusCode() + ' - ' + response.getStatus() + ' - ' +  response.getBody());
         }
         
         return signingUrl;
@@ -191,7 +191,7 @@ public with sharing class ESignLiveRESTAPIHelper
         }   
         else
         {
-            throw new ESignLiveRestAPIHelperException('Error obtaining signed eSignLive document: ' + response.getStatusCode() + ' - ' + response.getStatus());
+            throw new ESignLiveRestAPIHelperException('Error obtaining signed eSignLive document: ' + response.getStatusCode() + ' - ' + response.getStatus() + ' - ' +  response.getBody());
         }
 
         return signedDocument;
@@ -224,7 +224,7 @@ public with sharing class ESignLiveRESTAPIHelper
         }
         else
         {
-            throw new ESignLiveRestAPIHelperException('Error creating eSignLive signer: ' + response.getStatusCode() + ' - ' + response.getStatus());  
+            throw new ESignLiveRestAPIHelperException('Error creating eSignLive signer: ' + response.getStatusCode() + ' - ' + response.getStatus() + ' - ' +  response.getBody());  
         }
 
         return approvalResponse;
@@ -254,7 +254,7 @@ public with sharing class ESignLiveRESTAPIHelper
         }
         else
         {
-            throw new ESignLiveRestAPIHelperException('Error creating eSignLive signer: ' + response.getStatusCode() + ' - ' + response.getStatus());  
+            throw new ESignLiveRestAPIHelperException('Error creating eSignLive signer: ' + response.getStatusCode() + ' - ' + response.getStatus() + ' - ' +  response.getBody());  
         }
 
         return approvalResponse;
@@ -285,10 +285,10 @@ public with sharing class ESignLiveRESTAPIHelper
         }
         else
         {
-            throw new ESignLiveRestAPIHelperException('Error creating eSignLive signer: ' + response.getStatusCode() + ' - ' + response.getStatus());  
+            throw new ESignLiveRestAPIHelperException('Error creating eSignLive signer: ' + response.getStatusCode() + ' - ' + response.getStatus() + ' - ' +  response.getBody());  
         }
 
-         return response.getStatusCode() + ' - ' + response.getStatus();
+         return response.getStatusCode() + ' - ' + response.getStatus() + ' - ' +  response.getBody();
     }
 
     /**
@@ -305,9 +305,9 @@ public with sharing class ESignLiveRESTAPIHelper
         }
         else
         {
-            throw new ESignLiveRestAPIHelperException('Error deleting package with eSignLive: ' + response.getStatusCode() + ' - ' + response.getStatus());   
+            throw new ESignLiveRestAPIHelperException('Error deleting package with eSignLive: ' + response.getStatusCode() + ' - ' + response.getStatus() + ' - ' +  response.getBody());   
         }
-        return response.getStatusCode() + ' - ' + response.getStatus();
+        return response.getStatusCode() + ' - ' + response.getStatus() + ' - ' +  response.getBody();
     }
 
     /**
@@ -334,7 +334,7 @@ public with sharing class ESignLiveRESTAPIHelper
         }   
         else
         {
-            throw new ESignLiveRestAPIHelperException('Error obtaining the Audit Trail: ' + response.getStatusCode() + ' - ' + response.getStatus());
+            throw new ESignLiveRestAPIHelperException('Error obtaining the Audit Trail: ' + response.getStatusCode() + ' - ' + response.getStatus() + ' - ' +  response.getBody());
         }
         return evidenceSummary;
     }
@@ -370,7 +370,7 @@ public with sharing class ESignLiveRESTAPIHelper
         }   
         else
         {
-            throw new ESignLiveRestAPIHelperException('Error obtaining the Attachments for the role: ' + response.getStatusCode() + ' - ' + response.getStatus());
+            throw new ESignLiveRestAPIHelperException('Error obtaining the Attachments for the role: ' + response.getStatusCode() + ' - ' + response.getStatus() + ' - ' +  response.getBody());
         }
 
         return signerAttachmentZip;
@@ -403,7 +403,7 @@ public with sharing class ESignLiveRESTAPIHelper
         }   
         else
         {
-            throw new ESignLiveRestAPIHelperException('Error creating the Role: ' + response.getStatusCode() + ' - ' + response.getStatus());
+            throw new ESignLiveRestAPIHelperException('Error creating the Role: ' + response.getStatusCode() + ' - ' + response.getStatus() + ' - ' +  response.getBody());
         }
         return JSON.serialize(role);
     }
@@ -434,7 +434,7 @@ public with sharing class ESignLiveRESTAPIHelper
         }   
         else
         {
-            throw new ESignLiveRestAPIHelperException('Error reassigning the Role: ' + response.getStatusCode() + ' - ' + response.getStatus());
+            throw new ESignLiveRestAPIHelperException('Error reassigning the Role: ' + response.getStatusCode() + ' - ' + response.getStatus() + ' - ' +  response.getBody());
         }
 
         return JSON.serialize(role);
@@ -464,7 +464,7 @@ public with sharing class ESignLiveRESTAPIHelper
         }   
         else
         {
-            throw new ESignLiveRestAPIHelperException('Error getting the Role: ' + response.getStatusCode() + ' - ' + response.getStatus());
+            throw new ESignLiveRestAPIHelperException('Error getting the Role: ' + response.getStatusCode() + ' - ' + response.getStatus() + ' - ' +  response.getBody());
         }
 
         return role;
@@ -508,9 +508,9 @@ public with sharing class ESignLiveRESTAPIHelper
         }
         else
         {
-            throw new ESignLiveRestAPIHelperException('Error deleting Role with eSignLive: ' + response.getStatusCode() + ' - ' + response.getStatus());   
+            throw new ESignLiveRestAPIHelperException('Error deleting Role with eSignLive: ' + response.getStatusCode() + ' - ' + response.getStatus() + ' - ' +  response.getBody());   
         }
-        return response.getStatusCode() + ' - ' + response.getStatus();
+        return response.getStatusCode() + ' - ' + response.getStatus() + ' - ' +  response.getBody();
     }
 
     /**
@@ -539,7 +539,7 @@ public with sharing class ESignLiveRESTAPIHelper
         }   
         else
         {
-            throw new ESignLiveRestAPIHelperException('Error creating the Field: ' + response.getStatusCode() + ' - ' + response.getStatus());
+            throw new ESignLiveRestAPIHelperException('Error creating the Field: ' + response.getStatusCode() + ' - ' + response.getStatus() + ' - ' +  response.getBody());
         }
         return JSON.serialize(field);
     }
@@ -567,7 +567,7 @@ public with sharing class ESignLiveRESTAPIHelper
         }   
         else
         {
-            throw new ESignLiveRestAPIHelperException('Error getting the Field: ' + response.getStatusCode() + ' - ' + response.getStatus());
+            throw new ESignLiveRestAPIHelperException('Error getting the Field: ' + response.getStatusCode() + ' - ' + response.getStatus() + ' - ' +  response.getBody());
         }
 
         return field;
@@ -609,9 +609,9 @@ public with sharing class ESignLiveRESTAPIHelper
         }
         else
         {
-            throw new ESignLiveRestAPIHelperException('Error deleting Field with eSignLive: ' + response.getStatusCode() + ' - ' + response.getStatus());   
+            throw new ESignLiveRestAPIHelperException('Error deleting Field with eSignLive: ' + response.getStatusCode() + ' - ' + response.getStatus() + ' - ' +  response.getBody());   
         }
-        return response.getStatusCode() + ' - ' + response.getStatus();
+        return response.getStatusCode() + ' - ' + response.getStatus() + ' - ' +  response.getBody();
     }
 
     /**
@@ -651,9 +651,9 @@ public with sharing class ESignLiveRESTAPIHelper
         }
         else
         {
-            throw new ESignLiveRestAPIHelperException('Error deleting package with eSignLive: ' + response.getStatusCode() + ' - ' + response.getStatus());   
+            throw new ESignLiveRestAPIHelperException('Error deleting package with eSignLive: ' + response.getStatusCode() + ' - ' + response.getStatus() + ' - ' +  response.getBody());   
         }
-        return response.getStatusCode() + ' - ' + response.getStatus();
+        return response.getStatusCode() + ' - ' + response.getStatus() + ' - ' +  response.getBody();
     }
 
     /**
@@ -680,7 +680,7 @@ public with sharing class ESignLiveRESTAPIHelper
         }   
         else
         {
-            throw new ESignLiveRestAPIHelperException('Error creating eSignLive package with documents: ' + response.getStatusCode() + ' - ' + response.getStatus());
+            throw new ESignLiveRestAPIHelperException('Error creating eSignLive package with documents: ' + response.getStatusCode() + ' - ' + response.getStatus() + ' - ' +  response.getBody());
         }
 
         return packageId;
@@ -709,7 +709,7 @@ public with sharing class ESignLiveRESTAPIHelper
         }   
         else
         {
-            throw new ESignLiveRestAPIHelperException('Error creating eSignLive package with documents: ' + response.getStatusCode() + ' - ' + response.getStatus());
+            throw new ESignLiveRestAPIHelperException('Error creating eSignLive package with documents: ' + response.getStatusCode() + ' - ' + response.getStatus() + ' - ' +  response.getBody());
         }
 
         return JSON.serialize(documentResponse);
@@ -740,7 +740,7 @@ public with sharing class ESignLiveRESTAPIHelper
         }   
         else
         {
-            throw new ESignLiveRestAPIHelperException('Error creating eSignLive package: ' + response.getStatusCode() + ' - ' + response.getStatus());
+            throw new ESignLiveRestAPIHelperException('Error creating eSignLive package: ' + response.getStatusCode() + ' - ' + response.getStatus() + ' - ' +  response.getBody());
         }
 
         return packageId;
@@ -772,7 +772,7 @@ public with sharing class ESignLiveRESTAPIHelper
         }   
         else
         {
-            throw new ESignLiveRestAPIHelperException('Error getting the Package: ' + response.getStatusCode() + ' - ' + response.getStatus());
+            throw new ESignLiveRestAPIHelperException('Error getting the Package: ' + response.getStatusCode() + ' - ' + response.getStatus() + ' - ' +  response.getBody());
         }
 
         return pkg;
@@ -798,10 +798,10 @@ public with sharing class ESignLiveRESTAPIHelper
         }
         else
         {
-            throw new ESignLiveRestAPIHelperException('Error updating eSignLive package status: ' + response.getStatusCode() + ' - ' + response.getStatus());
+            throw new ESignLiveRestAPIHelperException('Error updating eSignLive package status: ' + response.getStatusCode() + ' - ' + response.getStatus() + ' - ' +  response.getBody());
         }
 
-        return response.getStatusCode() + ' - ' + response.getStatus();
+        return response.getStatusCode() + ' - ' + response.getStatus() + ' - ' +  response.getBody();
     }
 
     /**
@@ -942,7 +942,7 @@ public with sharing class ESignLiveRESTAPIHelper
         {            
             throw new ESignLiveRestAPIHelperException(
                     'Error in retrieving the eSignLive Custom Settings. Please verify you have the below set up:\n '
-                +   'Custom Setting API Name: e_SignLive_Connection_Settings__c, Custom Setting Record Name: Main');
+                +   'Custom Setting API Name: e_SignLive_Connection_Settings__c, Custom Setting Record Name: Main'+e.getMessage());
         }
     }
 
