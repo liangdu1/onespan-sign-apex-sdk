@@ -490,7 +490,7 @@ public class ESignLiveRESTAPIHelperTest
         Test.stopTest();
         
         // Verify result
-        System.assertEquals('200 - OK', response);
+        System.assertEquals('200 - OK', response.substring(0,8));
     }
 
     /**
@@ -625,7 +625,7 @@ public class ESignLiveRESTAPIHelperTest
         Test.stopTest();
         
         // Verify result
-        System.assertEquals('200 - OK', response);
+        System.assertEquals('200 - OK', response.substring(0,8));
     }
 
     /**
@@ -691,7 +691,7 @@ public class ESignLiveRESTAPIHelperTest
         Test.stopTest();
         
         // Verify result
-        System.assertEquals('200 - OK', response);
+        System.assertEquals('200 - OK', response.substring(0,8));
     }
 
     /**
@@ -729,7 +729,7 @@ public class ESignLiveRESTAPIHelperTest
         Test.stopTest();
         
         // Verify result
-        System.assertEquals('200 - OK', response);
+        System.assertEquals('200 - OK', response.substring(0,8));
     }
 
     /**
@@ -761,7 +761,7 @@ public class ESignLiveRESTAPIHelperTest
         Test.stopTest();
         
         // Verify result
-        System.assertEquals('200 - OK', response);
+        System.assertEquals('200 - OK', response.substring(0,8));
     } 
 
     public static testMethod void testDeleteRole()
@@ -790,7 +790,7 @@ public class ESignLiveRESTAPIHelperTest
         Test.stopTest();
         
         // Verify result
-        System.assertEquals('200 - OK', response);
+        System.assertEquals('200 - OK', response.substring(0,8));
     }
 
     /**
@@ -859,7 +859,7 @@ public class ESignLiveRESTAPIHelperTest
         Test.stopTest();
         
         // Verify result
-        System.assertEquals('200 - OK', response);
+        System.assertEquals('200 - OK', response.substring(0,8));
     }
 
     /**
@@ -892,6 +892,6 @@ public class ESignLiveRESTAPIHelperTest
         Test.stopTest();
         
         // Verify result
-        System.assertEquals('200 - OK', response);
+        System.assertEquals('200 - OK', response.substring(0,8));
     }
 }

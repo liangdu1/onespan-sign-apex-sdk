@@ -4,7 +4,6 @@
  * Utility class used for creating test data for test classes
  */
   
-@isTest
 public with sharing class ESignLiveTestDataUtility
 { 
     /**
