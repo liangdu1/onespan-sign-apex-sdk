@@ -541,10 +541,10 @@ public class ESignLiveRESTAPIHelperTest
             // Set parameters for call
             Blob myBlob = Blob.valueof('StringToBlob');
             String packageId = 'avc123456';
-            List<ESignLiveAPIObjects.Document> documentList = ESignLiveTestDataUtility.createDocumentList();
+            ESignLiveAPIObjects.Document document = ESignLiveTestDataUtility.createDocument('docId', 'Document Name', 123);
             
             // Get JSON response
-            String mockResponse = JSON.serialize(documentList);
+            String mockResponse = JSON.serialize(document);
             
             // Object response
             String response = null;

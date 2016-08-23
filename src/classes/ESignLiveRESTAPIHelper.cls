@@ -694,13 +694,13 @@ public with sharing class ESignLiveRESTAPIHelper
         String resourceUrl = '/packages/'+packageId+'/documents' ;
         HttpResponse response = doPost(resourceUrl, multipartFormData);
 
-        List<ESignLiveAPIObjects.Document> documentResponse = new List<ESignLiveAPIObjects.Document>();
+        ESignLiveAPIObjects.Document documentResponse;
 
         if(response.getStatusCode() == 200)
         {
             try
             {
-                documentResponse = (List<ESignLiveAPIObjects.Document>)JSON.deserialize(response.getBody(), List<ESignLiveAPIObjects.Document>.class);
+                documentResponse = (ESignLiveAPIObjects.Document)JSON.deserialize(response.getBody(), ESignLiveAPIObjects.Document.class);
             }
             catch(Exception e)
             {

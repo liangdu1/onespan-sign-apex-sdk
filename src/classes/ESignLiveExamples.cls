@@ -168,7 +168,7 @@ public with sharing class ESignLiveExamples
     /**
      * Example method for creating a document
      */
-    public static String createDocumentsExample(String packageId)
+    public static String createDocumentsExample(String packageId, String docName, String docDescription)
     {
         ESignLiveSDK sdk = new ESignLiveSDK();
 
@@ -181,10 +181,90 @@ public with sharing class ESignLiveExamples
         blobMap.put('testDocumentOne', b1);
         blobMap.put('testDocumentTwo', b2);
 
-        // Call the SDK method and get the JSON response which is returned from the SDK method
-        String response = sdk.createDocuments(packageId,blobMap);       
+        ESignLiveAPIObjects.Document doc = new ESignLiveAPIObjects.Document();
+        doc.Name = docName;
+        doc.description = docDescription;
 
-        // Print the JSON Response to console
+        ESignLiveAPIObjects.ExtractAnchor ea = new ESignLiveAPIObjects.ExtractAnchor();
+        ea.text = 'testDocumentOne';
+        ea.index = 0;
+        ea.width = 150;
+        ea.height = 40;
+        ea.anchorPoint = ESignLiveAPIObjects.AnchorPoint.TOPRIGHT;
+        ea.characterIndex = 12;
+        ea.leftOffset = -20;
+        ea.topOffset = -60;
+
+        ESignLiveAPIObjects.Field f1 = new ESignLiveAPIObjects.Field();
+        f1.type = 'SIGNATURE';
+        f1.page = 0;
+        f1.extract = false; 
+        f1.left = 0;
+        f1.subtype = 'FULLNAME';
+        f1.top = 0;
+        f1.extractAnchor = ea;
+
+
+        ESignLiveAPIObjects.ExtractAnchor ea1 = new ESignLiveAPIObjects.ExtractAnchor();
+        ea1.text = 'testDocumentOne';
+        ea1.index = 0;
+        ea1.width = 150;
+        ea1.height = 40;
+        ea1.anchorPoint = ESignLiveAPIObjects.AnchorPoint.BOTTOMRIGHT;
+        ea1.characterIndex = 12;
+        ea1.leftOffset = -40;
+        ea1.topOffset = 0;
+
+        ESignLiveAPIObjects.Field f2 = new ESignLiveAPIObjects.Field();
+        f2.type = 'INPUT';
+        f2.page = 0;
+        f2.extract = false; 
+        f2.left = 0;
+        f2.subtype = 'LABEL';
+        f2.binding = '{approval.signed}';
+        f2.top = 0;
+        f2.extractAnchor = ea1;
+
+        // Create request
+        List<ESignLiveAPIObjects.AuthChallenge> challenges = new List<ESignLiveAPIObjects.AuthChallenge>();
+        
+        ESignLiveAPIObjects.Delivery delivery = new ESignLiveAPIObjects.Delivery();
+        delivery.email = true;
+        delivery.provider = true;
+
+        ESignLiveAPIObjects.Auth auth = new ESignLiveAPIObjects.Auth();
+        auth.challenges = challenges;
+        auth.scheme = ESignLiveAPIObjects.AuthScheme.NONE;
+
+        ESignLiveAPIObjects.Signer signer = new ESignLiveAPIObjects.Signer();
+        signer.auth = auth;
+        signer.delivery = delivery;
+        signer.firstName = 'firstName';
+        signer.lastName = 'lastName';
+        signer.email = 'fnln@test.com';
+        signer.name = 'firstNamelastName';
+
+        List<ESignLiveAPIObjects.Signer> signers = new List<ESignLiveAPIObjects.Signer>();
+        signers.add(signer);
+
+        ESignLiveAPIObjects.Role role = new ESignLiveAPIObjects.Role();
+        role.signers = signers;
+        role.reassign = true;
+        role.name = 'firstNamelastName';
+        role.id = 'firstNamelastName';
+        role.type = 'SIGNER';
+
+        ESignLiveAPIObjects.Approval approval1 = new ESignLiveAPIObjects.Approval();
+        approval1.role = 'firstNamelastName';
+        approval1.fields = new List<ESignLiveAPIObjects.Field> {f1,f2};
+
+        ESignLiveAPIObjects.Document doc1 = new ESignLiveAPIObjects.Document();
+        doc.name = 'testDocumentOne';
+        doc.approvals = new List<ESignLiveAPIObjects.Approval> {approval1};
+        // Call the SDK method and get the packageId which is returned from the SDK method
+        String response = sdk.createDocuments(packageId, doc, blobMap);       
+
+        // Print the packageId to console
         System.debug('=> Response from createDocumentsExample: ' + response);
 
         return response;

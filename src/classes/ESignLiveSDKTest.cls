@@ -324,21 +324,25 @@ public class ESignLiveSDKTest
             // Set parameters for call
             Blob myBlob = Blob.valueof('StringToBlob');
             String packageId = 'avc123456';
-            List<ESignLiveAPIObjects.Document> documentList = ESignLiveTestDataUtility.createDocumentList();
+            ESignLiveAPIObjects.Document document= ESignLiveTestDataUtility.createDocument('id','name',1);
             Map<String,Blob> documentMap = ESignLiveTestDataUtility.createDocumentMap();
             
             // Get JSON response
-            String mockResponse = JSON.serialize(documentList);
+            String mockResponse = JSON.serialize(document);
             
             // Object response
             String response = null;
+
+            ESignLiveAPIObjects.Document doc = new ESignLiveAPIObjects.Document();
+            doc.Name = 'Test Doc';
+            doc.description = 'Test Description';
             
             // Set mock callout class
             Test.setMock(HttpCalloutMock.class, new ESignLiveServiceMock(mockResponse));
             
             // Creates class that does callout
             ESignLiveSDK liveSDK = new ESignLiveSDK();
-            response = liveSDK.createDocuments( packageId, documentMap);
+            response = liveSDK.createDocuments( packageId, doc, documentMap);
         
         Test.stopTest();
         
