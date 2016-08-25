@@ -1,5 +1,5 @@
 # Apex SDK for eSignLive
-Developed by [Kadence Collective](http://hirekadence.com){:target="_blank"}, this SDK allows you to integrate with eSignLive's REST API using Apex.  Examples on how to use the SDK are included in the ESignLiveExamples class.
+Developed by [Kadence Collective](http://hirekadence.com), this SDK allows you to integrate with eSignLive's REST API using Apex.  Examples on how to use the SDK are included in the ESignLiveExamples class.
 
 To get started, you'll need to create a free developer account [here](http://bit.ly/1NWBoEo).
 
