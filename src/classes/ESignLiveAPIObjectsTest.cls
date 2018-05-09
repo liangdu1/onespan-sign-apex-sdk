@@ -7,7 +7,7 @@
  */
 
 @isTest
-public class ESignLiveAPIObjectsTest 
+public class ESignLiveAPIObjectsTest
 {
     /**
      * Method to test the enumerated values
@@ -22,7 +22,7 @@ public class ESignLiveAPIObjectsTest
         ESignLiveAPIObjects.SenderType newSenderType = ESignLiveAPIObjects.SenderType.REGULAR;
         ESignLiveAPIObjects.PackageStatus newPackageStatus = ESignLiveAPIObjects.PackageStatus.DRAFT;
         ESignLiveAPIObjects.PackageType newPackageType = ESignLiveAPIObjects.PackageType.PACKAGE_X;
-    } 
+    }
 
     /**
      * Method to test instantiating classes using empty constructors
@@ -36,7 +36,7 @@ public class ESignLiveAPIObjectsTest
         ESignLiveAPIObjects.Auth newAuth = new ESignLiveAPIObjects.Auth();
         ESignLiveAPIObjects.Authentication newAuthentication = new ESignLiveAPIObjects.Authentication();
         ESignLiveAPIObjects.CeremonyEventComplete newCeremonyEventComplete = new ESignLiveAPIObjects.CeremonyEventComplete();
-        ESignLiveAPIObjects.CeremonyEvents newCeremonyEvents = new ESignLiveAPIObjects.CeremonyEvents();        
+        ESignLiveAPIObjects.CeremonyEvents newCeremonyEvents = new ESignLiveAPIObjects.CeremonyEvents();
         ESignLiveAPIObjects.CeremonySettings newCeremonySettings = new ESignLiveAPIObjects.CeremonySettings();
         ESignLiveAPIObjects.AuthChallenge newAuthChallenge = new ESignLiveAPIObjects.AuthChallenge();
         ESignLiveAPIObjects.Delivery newDelivery = new  ESignLiveAPIObjects.Delivery();
@@ -70,10 +70,10 @@ public class ESignLiveAPIObjectsTest
         ESignLiveAPIObjects.TitleBarOptions newTitleBarOptions = new ESignLiveAPIObjects.TitleBarOptions();
         ESignLiveAPIObjects.User newUser = new ESignLiveAPIObjects.User();
         ESignLiveAPIObjects.EmailMessage newEmailMessage = new ESignLiveAPIObjects.EmailMessage();
-        ESignLiveAPIObjects.HeaderOptions newHeaderOptions = new ESignLiveAPIObjects.HeaderOptions();        
+        ESignLiveAPIObjects.HeaderOptions newHeaderOptions = new ESignLiveAPIObjects.HeaderOptions();
         ESignLiveAPIObjects.CurrentSignerProgress newCurrentSignerProgress = new ESignLiveAPIObjects.CurrentSignerProgress();
         ESignLiveAPIObjects.OverallProgress newOverallProgress = new ESignLiveAPIObjects.OverallProgress();
-    }  
+    }
 
     /**
      * Method to test instantiating classes using arguments
@@ -93,7 +93,7 @@ public class ESignLiveAPIObjectsTest
         ESignLiveAPIObjects.AttachmentBin newAttachmentBin = new ESignLiveAPIObjects.AttachmentBin('attachmentId', '', 'Id', System.now(), 'Name');
         ESignLiveAPIObjects.BrandingBarOptions newBrandingBarOptions = new ESignLiveAPIObjects.BrandingBarOptions(new ESignLiveAPIObjects.Image());
         ESignLiveAPIObjects.DocumentToolbarOptions newDocumentToolbarOptions = new ESignLiveAPIObjects.DocumentToolbarOptions(true);
-        ESignLiveAPIObjects.Document newDocument = new ESignLiveAPIObjects.Document(new List<ESignLiveAPIObjects.Approval>(), 'data', 'description', new ESignLiveAPIObjects.External(), new List<ESignLiveAPIObjects.Field>(), 'id', 1, 'name',new List<ESignLiveAPIObjects.Page_x>(), 10);
+        ESignLiveAPIObjects.Document newDocument = new ESignLiveAPIObjects.Document(new List<ESignLiveAPIObjects.Approval>(), new ESignLiveAPIObjects.Data(), 'description', new ESignLiveAPIObjects.External(), new List<ESignLiveAPIObjects.Field>(), 'id', 1, 'name',new List<ESignLiveAPIObjects.Page_x>(), 10);
         ESignLiveAPIObjects.EmailMessage newEmailMessage = new ESignLiveAPIObjects.EmailMessage('content');
         ESignLiveAPIObjects.External newExternal = new ESignLiveAPIObjects.External('data', 'id', 'provider', 'providerName');
         ESignLiveAPIObjects.ExtractAnchor newExtractAnchor = new ESignLiveAPIObjects.ExtractAnchor(ESignLiveAPIObjects.AnchorPoint.TOPLEFT, 1, 1, 1, 1, 'text', 1, 1);
@@ -112,7 +112,7 @@ public class ESignLiveAPIObjectsTest
         ESignLiveAPIObjects.Role newRole = new ESignLiveAPIObjects.Role(new List<ESignLiveAPIObjects.AttachmentRequirement>(), 'data', new ESignLiveAPIObjects.EmailMessage(), 'id', 1, true, 'name', true, new List<ESignLiveAPIObjects.Signer>(), 'type');
         ESignLiveAPIObjects.SignatureStyle newSignatureStyle = new ESignLiveAPIObjects.SignatureStyle('handdrawn', new ESignLiveAPIObjects.TextualSignatureStyle());
         ESignLiveAPIObjects.SigningUrl newSigningUrl = new ESignLiveAPIObjects.SigningUrl('roleId', 'url', 'packageId');
-        ESignLiveAPIObjects.Sender newSender = new ESignLiveAPIObjects.Sender(DateTime.now(), new ESignLiveAPIObjects.Address(), 'company', DateTime.now(), 'email', new ESignLiveAPIObjects.External(), 'firsName', 'id', 'language', 'lastName', DateTime.now(), new List<ESignLiveAPIObjects.GroupMembership>(), 'name', 'phone', new ESignLiveAPIObjects.SignatureStyle(), ESignLiveAPIObjects.SenderStatus.LOCKED, ESignLiveAPIObjects.SenderType.MANAGER, 'title', DateTime.now());        
+        ESignLiveAPIObjects.Sender newSender = new ESignLiveAPIObjects.Sender(DateTime.now(), new ESignLiveAPIObjects.Address(), 'company', DateTime.now(), 'email', new ESignLiveAPIObjects.External(), 'firsName', 'id', 'language', 'lastName', DateTime.now(), new List<ESignLiveAPIObjects.GroupMembership>(), 'name', 'phone', new ESignLiveAPIObjects.SignatureStyle(), ESignLiveAPIObjects.SenderStatus.LOCKED, ESignLiveAPIObjects.SenderType.MANAGER, 'title', DateTime.now());
         ESignLiveAPIObjects.CurrentSignerProgress newCurrentSignerProgress = new ESignLiveAPIObjects.CurrentSignerProgress(1, 1, 1, 1, 1, 1);
         ESignLiveAPIObjects.OverallProgress newOverallProgress = new ESignLiveAPIObjects.OverallProgress(1, 1, 1, 1, 1);
         ESignLiveAPIObjects.SignedDocumentDelivery newSignedDocumntDelivery = new ESignLiveAPIObjects.SignedDocumentDelivery(new List<ESignLiveAPIObjects.External>(), new List<ESignLiveAPIObjects.Document>(), 'filePrefix', 'fileSuffix');
