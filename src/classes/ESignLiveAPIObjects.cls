@@ -36,8 +36,8 @@ public with sharing class ESignLiveAPIObjects
 
         public Address(){}
 
-        public Address(String address1, String address2, String city, 
-            String country, String state, String zipcode)
+        public Address(String address1, String address2, String city,
+                String country, String state, String zipcode)
         {
             this.address1 = address1;
             this.address2 = address2;
@@ -60,8 +60,8 @@ public with sharing class ESignLiveAPIObjects
 
         public Approval(){}
 
-        public Approval(DateTime accepted, String data, List<Field> fields, String id, 
-            String name, String role, DateTime signed)
+        public Approval(DateTime accepted, String data, List<Field> fields, String id,
+                String name, String role, DateTime signed)
         {
             this.accepted = accepted;
             this.data = data;
@@ -106,7 +106,7 @@ public with sharing class ESignLiveAPIObjects
         public AttachmentRequirement(){}
 
         public AttachmentRequirement(String data, String description, String id, String name,
-            Boolean required, String comment, String status)
+                Boolean required, String comment, String status)
         {
             this.data = data;
             this.description = description;
@@ -215,10 +215,10 @@ public with sharing class ESignLiveAPIObjects
 
         public CeremonySettings(){}
 
-        public CeremonySettings(Boolean declineButton, DocumentToolbarOptions documentToolbarOptions, 
-            CeremonyEvents events, Link handOver, Boolean hideCaptureText, Boolean hideWatermark, 
-                Boolean inPerson, LayoutOptions layout, Integer maxAuthFailsAllowed, 
-                    Boolean optOutButton, List<String> optOutReasons, LayoutStyle style)
+        public CeremonySettings(Boolean declineButton, DocumentToolbarOptions documentToolbarOptions,
+                CeremonyEvents events, Link handOver, Boolean hideCaptureText, Boolean hideWatermark,
+                Boolean inPerson, LayoutOptions layout, Integer maxAuthFailsAllowed,
+                Boolean optOutButton, List<String> optOutReasons, LayoutStyle style)
         {
             this.declineButton = declineButton;
             this.documentToolbarOptions = documentToolbarOptions;
@@ -239,6 +239,7 @@ public with sharing class ESignLiveAPIObjects
     {
         String origin;
         String sdk;
+        String ese_document_texttag_extract_needed;
 
         public Data()
         {
@@ -266,7 +267,7 @@ public with sharing class ESignLiveAPIObjects
     public class Document
     {
         public List<Approval> approvals;
-        public String data;
+        public Data data;
         public String description;
         public External external;
         public Boolean extract;
@@ -279,8 +280,8 @@ public with sharing class ESignLiveAPIObjects
 
         public Document(){}
 
-        public Document(List<Approval> approvals, String data, String description, External external, 
-            List<Field> fields, String id, Integer index, String name, List<Page_x> pages, Integer size)
+        public Document(List<Approval> approvals, Data data, String description, External external,
+                List<Field> fields, String id, Integer index, String name, List<Page_x> pages, Integer size)
         {
             this.approvals = approvals;
             this.data = data;
@@ -291,7 +292,7 @@ public with sharing class ESignLiveAPIObjects
             this.index = index;
             this.name = name;
             this.pages = pages;
-            this.size = size; 
+            this.size = size;
         }
     }
 
@@ -350,8 +351,8 @@ public with sharing class ESignLiveAPIObjects
 
         public ExtractAnchor(){}
 
-        public ExtractAnchor(AnchorPoint anchorPoint, Integer characterIndex, Integer height, Integer index, 
-            Integer leftOffset, String text, Integer topOffset, Integer width)
+        public ExtractAnchor(AnchorPoint anchorPoint, Integer characterIndex, Integer height, Integer index,
+                Integer leftOffset, String text, Integer topOffset, Integer width)
         {
             this.anchorPoint = anchorPoint;
             this.characterIndex = characterIndex;
@@ -385,7 +386,7 @@ public with sharing class ESignLiveAPIObjects
         public Field(){}
 
         public Field(String data, Boolean extract, ExtractAnchor extractAnchor, Decimal height, String id,
-            Decimal left, String name, Integer page, String subtype, Decimal top, String type, 
+                Decimal left, String name, Integer page, String subtype, Decimal top, String type,
                 FieldValidation validation, String value, Decimal width,String binding)
         {
             this.data = data;
@@ -419,7 +420,7 @@ public with sharing class ESignLiveAPIObjects
         public FieldValidation(){}
 
         public FieldValidation(List<String> enum_x, Integer errorCode, String errorMessage, Integer maxLength,
-            Integer minLength, String pattern, Boolean required)
+                Integer minLength, String pattern, Boolean required)
         {
             this.enum_x = enum_x;
             this.errorCode = errorCode;
@@ -439,8 +440,8 @@ public with sharing class ESignLiveAPIObjects
     public class GlobalActionsOptions
     {
         public Boolean confirm;
-        public Boolean download;  
-        public Boolean saveAsLayout;     
+        public Boolean download;
+        public Boolean saveAsLayout;
 
         public GlobalActionsOptions(){}
 
@@ -449,7 +450,7 @@ public with sharing class ESignLiveAPIObjects
             this.confirm = confirm;
             this.download = download;
             this.saveAsLayout = saveAsLayout;
-        } 
+        }
     }
 
     public class GroupMembership
@@ -459,7 +460,7 @@ public with sharing class ESignLiveAPIObjects
         public MemberType memberType;
 
         public GroupMembership(){}
- 
+
         public GroupMembership(String groupId, String groupName, MemberType memberType)
         {
             this.groupId = groupId;
@@ -479,8 +480,8 @@ public with sharing class ESignLiveAPIObjects
 
         public HeaderOptions(){}
 
-        public HeaderOptions(Boolean breadcrumbs, Boolean feedback, GlobalActionsOptions globalActions, 
-            Boolean globalNavigation, Boolean sessionBar, TitleBarOptions titleBar)
+        public HeaderOptions(Boolean breadcrumbs, Boolean feedback, GlobalActionsOptions globalActions,
+                Boolean globalNavigation, Boolean sessionBar, TitleBarOptions titleBar)
         {
             this.breadcrumbs = breadcrumbs;
             this.feedback = feedback;
@@ -533,8 +534,8 @@ public with sharing class ESignLiveAPIObjects
 
         public LayoutOptions(){}
 
-        public LayoutOptions(BrandingBarOptions brandingBar, FooterOptions footer, 
-            HeaderOptions header, Boolean iframe, Boolean navigator)
+        public LayoutOptions(BrandingBarOptions brandingBar, FooterOptions footer,
+                HeaderOptions header, Boolean iframe, Boolean navigator)
         {
             this.brandingBar = brandingBar;
             this.footer = footer;
@@ -571,8 +572,8 @@ public with sharing class ESignLiveAPIObjects
 
         public Message(){}
 
-        public Message(String content, DateTime created, List<Document> documents, User from_x, 
-            MessageStatus status, List<USer> to)
+        public Message(String content, DateTime created, List<Document> documents, User from_x,
+                MessageStatus status, List<USer> to)
         {
             this.content = content;
             this.created = created;
@@ -613,10 +614,10 @@ public with sharing class ESignLiveAPIObjects
         }
 
         public Package_x(Boolean autocomplete, DateTime completed, String consent, String description,
-            List<Document> documents, DateTime due, String emailMessage, String id, String language,
+                List<Document> documents, DateTime due, String emailMessage, String id, String language,
                 PackageArtifactsLimits limits, List<Message> messages, String name, List<Role> roles,
-                    Sender sender, Settings settings, SignedDocumentDelivery signedDocumentDelivery, 
-                        PackageStatus status, Boolean trashed, PackageType type, DateTime updated)
+                Sender sender, Settings settings, SignedDocumentDelivery signedDocumentDelivery,
+                PackageStatus status, Boolean trashed, PackageType type, DateTime updated)
         {
             this.autocomplete = autocomplete;
             this.completed = completed;
@@ -668,8 +669,8 @@ public with sharing class ESignLiveAPIObjects
 
         public Page_x(){}
 
-        public Page_x(Decimal height, String id, Integer index, Decimal left, Decimal top, 
-            Integer version, Decimal width)
+        public Page_x(Decimal height, String id, Integer index, Decimal left, Decimal top,
+                Integer version, Decimal width)
         {
             this.height = height;
             this.id = id;
@@ -697,9 +698,9 @@ public with sharing class ESignLiveAPIObjects
         public Role(){}
 
         public Role(List<AttachmentRequirement> attachmentRequirements, String data, EmailMessage emailMessage,
-            String id, Integer index, Boolean locked, String name, Boolean reassign, List<Signer> signers,
+                String id, Integer index, Boolean locked, String name, Boolean reassign, List<Signer> signers,
                 String type)
-        {   
+        {
             this.attachmentRequirements = attachmentRequirements;
             this.data = data;
             this.emailMessage = emailMessage;
@@ -769,9 +770,9 @@ public with sharing class ESignLiveAPIObjects
         public Sender(){}
 
         public Sender(DateTime activated, Address address, String company, DateTime created,  String email,
-            External external, String firsName, String id, String language, String lastName, DateTime locked,
-             List<GroupMembership> memberships, String name, String phone, SignatureStyle signature, 
-             SenderStatus status, SenderType type, String title, DateTime updated )
+                External external, String firsName, String id, String language, String lastName, DateTime locked,
+                List<GroupMembership> memberships, String name, String phone, SignatureStyle signature,
+                SenderStatus status, SenderType type, String title, DateTime updated )
         {
             this.activated = activated;
             this.address = address;
@@ -807,7 +808,7 @@ public with sharing class ESignLiveAPIObjects
         public CurrentSignerProgress(){}
 
         public CurrentSignerProgress(Integer documentsToConfirmCount,Integer documentsConfirmedCount,Integer approvalsToConfirmCount,
-            Integer approvalsConfirmedCount,Integer documentsPartiallyCompletedCount,Integer approvalsToSignNowCount)
+                Integer approvalsConfirmedCount,Integer documentsPartiallyCompletedCount,Integer approvalsToSignNowCount)
         {
             this.documentsToConfirmCount = documentsToConfirmCount;
             this.documentsConfirmedCount = documentsConfirmedCount;
@@ -825,11 +826,11 @@ public with sharing class ESignLiveAPIObjects
         public Integer documentsToConfirmCount;
         public Integer documentsConfirmedCount;
         public Integer documentsPartiallyCompletedCount;
-        
+
         public OverAllProgress(){}
 
         public OverAllProgress(Integer documentsToCompleteCount,Integer documentsCompletedCount,Integer documentsToConfirmCount,
-            Integer documentsConfirmedCount,Integer documentsPartiallyCompletedCount)
+                Integer documentsConfirmedCount,Integer documentsPartiallyCompletedCount)
         {
             this.documentsToCompleteCount = documentsToCompleteCount;
             this.documentsCompletedCount = documentsCompletedCount;
@@ -853,8 +854,8 @@ public with sharing class ESignLiveAPIObjects
 
         public SignedDocumentDelivery(){}
 
-        public SignedDocumentDelivery(List<External> destinations, List<Document> excludedDocuments, 
-            String filePrefix, String fileSuffix)
+        public SignedDocumentDelivery(List<External> destinations, List<Document> excludedDocuments,
+                String filePrefix, String fileSuffix)
         {
             this.destinations = destinations;
             this.excludedDocuments = excludedDocuments;
@@ -887,8 +888,8 @@ public with sharing class ESignLiveAPIObjects
         public Signer(){}
 
         public Signer(Address address, Auth auth, String company, String data, Delivery delivery, String email,
-            External external, String firsName, Group group_x, String id, String language,
-                String lastName, String name, String phone, SignatureStyle signature, 
+                External external, String firsName, Group group_x, String id, String language,
+                String lastName, String name, String phone, SignatureStyle signature,
                 String title, DateTime updated )
         {
             this.address = address;
@@ -975,7 +976,7 @@ public with sharing class ESignLiveAPIObjects
         public User(){}
 
         public User(Address address, String company, DateTime created, String data, String email, External external,
-            String firstName, String id, String language, String lastName, String name, String phone, 
+                String firstName, String id, String language, String lastName, String name, String phone,
                 SignatureStyle signature, String title, DateTime updated)
         {
             this.address = address;
