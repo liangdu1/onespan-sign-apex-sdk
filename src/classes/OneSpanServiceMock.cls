@@ -1,10 +1,10 @@
 /**
- * Class Name: ESignLiveServiceMock
+ * Class Name: OneSpanServiceMock
  *
- * Mock class used for testing eSignLive callouts
+ * Mock class used for testing OneSpan callouts
  */
 
-global class ESignLiveServiceMock implements HttpCalloutMock
+global class OneSpanServiceMock implements HttpCalloutMock
 {
     //Variables that will be set in the HTTP request
     private String body;
@@ -15,7 +15,7 @@ global class ESignLiveServiceMock implements HttpCalloutMock
     /**
      * Constructor
      */
-    global ESignLiveServiceMock(String passedBody)
+    global OneSpanServiceMock(String passedBody)
     {
         this.body = passedBody;
         this.statusCode = 200;
@@ -24,7 +24,7 @@ global class ESignLiveServiceMock implements HttpCalloutMock
     /**
      * Constructor
      */
-    global ESignLiveServiceMock(String passedBody, Integer statusCode)
+    global OneSpanServiceMock(String passedBody, Integer statusCode)
     {
         this.body = passedBody;
         this.statusCode = statusCode;
@@ -33,7 +33,7 @@ global class ESignLiveServiceMock implements HttpCalloutMock
     /**
      * Constructor
      */
-    global ESignLiveServiceMock(String passedBody, Integer statusCode, String status)
+    global OneSpanServiceMock(String passedBody, Integer statusCode, String status)
     {
         this.body = passedBody;
         this.statusCode = statusCode;
@@ -43,7 +43,7 @@ global class ESignLiveServiceMock implements HttpCalloutMock
     /**
      * Constructor
      */
-    global ESignLiveServiceMock(String passedBody, Integer statusCode, Blob passedBlob)
+    global OneSpanServiceMock(String passedBody, Integer statusCode, Blob passedBlob)
     {
         this.body = passedBody;
         this.statusCode = statusCode;

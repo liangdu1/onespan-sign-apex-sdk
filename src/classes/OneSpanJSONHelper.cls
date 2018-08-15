@@ -1,11 +1,10 @@
 /**
- * Class Name: ESignLiveJSONHelper.cls
- *
+ * Class Name: OneSpanJSONHelper.cls*
  * Class that contains helper methods for working with JSON
  * requests and responses
  */
 
-public with sharing class ESignLiveJSONHelper
+public with sharing class OneSpanJSONHelper
 {
     /**
      * Method to prepare outbound JSON to include removing _x

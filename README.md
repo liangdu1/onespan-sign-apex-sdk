@@ -1,11 +1,11 @@
-# Apex SDK for eSignLive
-Developed by [Kadence Collective](http://hirekadence.com), this SDK allows you to integrate with eSignLive's REST API using Apex.  Examples on how to use the SDK are included in the ESignLiveExamples class.
+# Apex SDK for OneSpan
+Developed by [Kadence Collective](http://hirekadence.com), this SDK allows you to integrate with OneSpan's REST API using Apex.  Examples on how to use the SDK are included in the OneSpanExamples class.
 
 To get started, you'll need to create a free developer account [here](http://bit.ly/2wamkvq).
 
 Documentation for the SDK can be accessed [here](http://bit.ly/2uN6Rlz).
 
-For help, use eSignLive's [Developer Community](http://bit.ly/2uJz52e).
+For help, use OneSpan's [Developer Community](http://bit.ly/2uJz52e).
 
 ## Installation and Configuration
 The SDK can be installed using the <a href="https://githubsfdeploy.herokuapp.com?owner=KadenceCollective&repo=esignlive-apex-sdk">
@@ -17,11 +17,11 @@ Alternatively, it can be installed as an unmanaged package:
 * [Production/Developer Sandbox](	https://login.salesforce.com/packaging/installPackage.apexp?p0=04t15000000O8b0)
 * [Test Sandbox](	https://test.salesforce.com/packaging/installPackage.apexp?p0=04t15000000O8b0)
 
-After installing in your sandbox or developer org you'll need to configure the connection settings by creating an entry in the eSignLive Connection Settings custom setting.
+After installing in your sandbox or developer org you'll need to configure the connection settings by creating an entry in the OneSpan Connection Settings custom setting.
 
 **Name** = Main  
 **Endpoint** = https://sandbox.e-signlive.com/api (SANDBOX) || https://apps.e-signlive.com/api (PROD)  
-**API Key** = YOUR_API_KEY - can be obtained by going to the Account page in your eSignLive Sandbox.  For production accounts it should be emailed to you upon account creation.
+**API Key** = YOUR_API_KEY - can be obtained by going to the Account page in your OneSpan Sandbox.  For production accounts it should be emailed to you upon account creation.
 
 ## SDK Methods
 The following methods are included in the current version of the SDK:
@@ -60,4 +60,4 @@ The following methods are included in the current version of the SDK:
 * Delete Signature
 
 ##License##
-This eSignLive Apex SDK is released under the following [license](/LICENSE).
+This OneSpan Apex SDK is released under the following [license](/LICENSE).

@@ -1,12 +1,12 @@
-public with sharing class ESignLiveRESTAPIHelper
+public with sharing class OneSpanRESTAPIHelper
 {
     @TestVisible
-    private e_SignLive_Connection_Settings__c connectionSettings{get;set;}
+    private OneSpan_Connection_Settings__c connectionSettings{get;set;}
 
     /**
-     * Constructor - sets the connection settings used for connecting to eSignLive
+     * Constructor - sets the connection settings used for connecting to OneSpan
      */
-    public ESignLiveRESTAPIHelper()
+    public OneSpanRESTAPIHelper()
     {
         setSettings();
     }
@@ -24,17 +24,17 @@ public with sharing class ESignLiveRESTAPIHelper
         {
             try
             {
-                ESignLiveAPIObjects.Authentication authentication = (ESignLiveAPIObjects.Authentication)JSON.deserialize(response.getBody(), ESignLiveAPIObjects.Authentication.class);
+                OneSpanAPIObjects.Authentication authentication = (OneSpanAPIObjects.Authentication)JSON.deserialize(response.getBody(), OneSpanAPIObjects.Authentication.class);
                 sessionId = authentication.value;
             }
             catch(Exception e)
             {
-                throw new ESignLiveRestAPIHelperException('Error authenticating to eSignLive: ' + e.getMessage());
+                throw new OneSpanRestAPIHelperException('Error authenticating to OneSpan: ' + e.getMessage());
             }
         } 
         else 
         {
-            throw new ESignLiveRestAPIHelperException('Error authenticating to eSignLive: ' + response.getStatusCode() + ' - ' + response.getStatus() + ' - ' +  response.getBody());
+            throw new OneSpanRestAPIHelperException('Error authenticating to OneSpan: ' + response.getStatusCode() + ' - ' + response.getStatus() + ' - ' +  response.getBody());
         }
 
         return sessionId;
@@ -43,27 +43,27 @@ public with sharing class ESignLiveRESTAPIHelper
     /**
      * Method to create a template or a document package from an existing document package.
      */
-    public ESignLiveAPIObjects.Package_x createPackageFromTemplate(ESignLiveAPIObjects.Package_x packageSettings, String packageIdToClone)
+    public OneSpanAPIObjects.Package_x createPackageFromTemplate(OneSpanAPIObjects.Package_x packageSettings, String packageIdToClone)
     {
         String requestBody = JSON.serialize(packageSettings);
         HttpResponse response = doPost('/packages/' + packageIdToClone + '/clone', requestBody);
 
         // Check response
-        ESignLiveAPIObjects.Package_x packageResponse = new ESignLiveAPIObjects.Package_x();
+        OneSpanAPIObjects.Package_x packageResponse = new OneSpanAPIObjects.Package_x();
         if(response.getStatusCode() == 200)
         {
             try
             {
-                packageResponse = (ESignLiveAPIObjects.Package_x)JSON.deserialize(response.getBody(), ESignLiveAPIObjects.Package_x.class);
+                packageResponse = (OneSpanAPIObjects.Package_x)JSON.deserialize(response.getBody(), OneSpanAPIObjects.Package_x.class);
             }
             catch(Exception e)
             {
-                throw new ESignLiveRestAPIHelperException('Error cloning template or package with eSignLive: ' + e.getMessage());
+                throw new OneSpanRestAPIHelperException('Error cloning template or package with OneSpan: ' + e.getMessage());
             }
         }
         else
         {
-            throw new ESignLiveRestAPIHelperException('Error cloning template or package with eSignLive: ' + response.getStatusCode() + ' - ' + response.getStatus() + ' - ' +  response.getBody());
+            throw new OneSpanRestAPIHelperException('Error cloning template or package with OneSpan: ' + response.getStatusCode() + ' - ' + response.getStatus() + ' - ' +  response.getBody());
         }
 
         return packageResponse;
@@ -72,7 +72,7 @@ public with sharing class ESignLiveRESTAPIHelper
     /**
      * Method to update the information of a document package
      */
-    public void updatePackage(ESignLiveAPIObjects.Package_x packageSettings, String packageId)
+    public void updatePackage(OneSpanAPIObjects.Package_x packageSettings, String packageId)
     {
         String requestBody = JSON.serialize(packageSettings);
         HttpResponse response = doPut('/packages/' + packageId, requestBody);
@@ -84,7 +84,7 @@ public with sharing class ESignLiveRESTAPIHelper
         }
         else
         {
-            throw new ESignLiveRestAPIHelperException('Error updating package with eSignLive: ' + response.getStatusCode() + ' - ' + response.getStatus() + ' - ' +  response.getBody());   
+            throw new OneSpanRestAPIHelperException('Error updating package with OneSpan: ' + response.getStatusCode() + ' - ' + response.getStatus() + ' - ' +  response.getBody());
         }
     }
 
@@ -98,22 +98,22 @@ public with sharing class ESignLiveRESTAPIHelper
         HttpResponse response = doGet(resourceUrl);
 
         // Check response
-        ESignLiveAPIObjects.Package_x packageStatus;
+        OneSpanAPIObjects.Package_x packageStatus;
         if(response.getStatusCode() == 200)
         {   
             try
             {
-                packageStatus = (ESignLiveAPIObjects.Package_x)JSON.deserialize(response.getBody(), ESignLiveAPIObjects.Package_x.class);
+                packageStatus = (OneSpanAPIObjects.Package_x)JSON.deserialize(response.getBody(), OneSpanAPIObjects.Package_x.class);
             }
             catch(Exception e)
             {
                 System.debug(e.getStackTraceString());
-                throw new ESignLiveRestAPIHelperException('Error getting eSignLive package signing status: ' + response.getStatusCode() + ' - ' + response.getStatus() + ' - ' +  response.getBody());
+                throw new OneSpanRestAPIHelperException('Error getting OneSpan package signing status: ' + response.getStatusCode() + ' - ' + response.getStatus() + ' - ' +  response.getBody());
             }
         }
         else
         {
-            throw new ESignLiveRestAPIHelperException('Error getting eSignLive package signing status: ' + response.getStatusCode() + ' - ' + response.getStatus() + ' - ' +  response.getBody());
+            throw new OneSpanRestAPIHelperException('Error getting OneSpan package signing status: ' + response.getStatusCode() + ' - ' + response.getStatus() + ' - ' +  response.getBody());
         }
         return packageStatus.status.name();
     }
@@ -132,7 +132,7 @@ public with sharing class ESignLiveRESTAPIHelper
         }
         else
         {
-            throw new ESignLiveRestAPIHelperException('Error deleting package with eSignLive: ' + response.getStatusCode() + ' - ' + response.getStatus() + ' - ' +  response.getBody());   
+            throw new OneSpanRestAPIHelperException('Error deleting package with OneSpan: ' + response.getStatusCode() + ' - ' + response.getStatus() + ' - ' +  response.getBody());
         }
         return response.getStatusCode() + ' - ' + response.getStatus() + ' - ' +  response.getBody();
     }
@@ -140,28 +140,28 @@ public with sharing class ESignLiveRESTAPIHelper
     /**
      * Method to get the signing Url of a package
      */
-    public ESignLiveAPIObjects.SigningUrl getSigningUrl(String packageId, String signerId)
+    public OneSpanAPIObjects.SigningUrl getSigningUrl(String packageId, String signerId)
     {
         // Send Request
         String resourceUrl = '/packages/' + packageId + '/roles/' + signerId + '/signingUrl';
         HttpResponse response = doGet(resourceUrl);
 
         // Check response
-        ESignLiveAPIObjects.SigningUrl signingUrl;
+        OneSpanAPIObjects.SigningUrl signingUrl;
         if(response.getStatusCode() == 200)
         {
             try
             {
-                signingUrl = (ESignLiveAPIObjects.SigningUrl)JSON.deserialize(response.getBody(), ESignLiveAPIObjects.SigningUrl.class);
+                signingUrl = (OneSpanAPIObjects.SigningUrl)JSON.deserialize(response.getBody(), OneSpanAPIObjects.SigningUrl.class);
             }
             catch(Exception e)
             {
-                throw new ESignLiveRestAPIHelperException('Error obtaining eSignLive signing Url: ' + e.getMessage());
+                throw new OneSpanRestAPIHelperException('Error obtaining OneSpan signing Url: ' + e.getMessage());
             }
         }
         else
         {
-            throw new ESignLiveRestAPIHelperException('Error obtaining eSignLive signing Url: ' + response.getStatusCode() + ' - ' + response.getStatus() + ' - ' +  response.getBody());
+            throw new OneSpanRestAPIHelperException('Error obtaining OneSpan signing Url: ' + response.getStatusCode() + ' - ' + response.getStatus() + ' - ' +  response.getBody());
         }
         
         return signingUrl;
@@ -186,12 +186,12 @@ public with sharing class ESignLiveRESTAPIHelper
             }
             catch(Exception e)
             {
-                throw new ESignLiveRestAPIHelperException('Error obtaining signed eSignLive document: ' + e.getMessage());
+                throw new OneSpanRestAPIHelperException('Error obtaining signed OneSpan document: ' + e.getMessage());
             }
         }   
         else
         {
-            throw new ESignLiveRestAPIHelperException('Error obtaining signed eSignLive document: ' + response.getStatusCode() + ' - ' + response.getStatus() + ' - ' +  response.getBody());
+            throw new OneSpanRestAPIHelperException('Error obtaining signed OneSpan document: ' + response.getStatusCode() + ' - ' + response.getStatus() + ' - ' +  response.getBody());
         }
 
         return signedDocument;
@@ -200,7 +200,7 @@ public with sharing class ESignLiveRESTAPIHelper
     /**
      * Method that adds the Signature for the Package Id, Document Id, and Approval passed.
      */
-    public ESignLiveAPIObjects.Approval createApproval(String packageId, String documentId, ESignLiveAPIObjects.Approval approval)
+    public OneSpanAPIObjects.Approval createApproval(String packageId, String documentId, OneSpanAPIObjects.Approval approval)
     {
         String requestBody = JSON.serialize(approval);
         System.debug('=> requestBody for createApproval:'+requestBody);
@@ -210,21 +210,21 @@ public with sharing class ESignLiveRESTAPIHelper
         HttpResponse response = doPost(resourceUrl, requestBody);
 
         // Check response
-        ESignLiveAPIObjects.Approval approvalResponse;
+        OneSpanAPIObjects.Approval approvalResponse;
         if(response.getStatusCode() == 200)
         {
             try
             {
-                approvalResponse = (ESignLiveAPIObjects.Approval)JSON.deserialize(response.getBody(), ESignLiveAPIObjects.Approval.class);
+                approvalResponse = (OneSpanAPIObjects.Approval)JSON.deserialize(response.getBody(), OneSpanAPIObjects.Approval.class);
             }
             catch(Exception e)
             {
-                throw new ESignLiveRestAPIHelperException('Error creating eSignLive signer: ' + e.getMessage());
+                throw new OneSpanRestAPIHelperException('Error creating OneSpan signer: ' + e.getMessage());
             }
         }
         else
         {
-            throw new ESignLiveRestAPIHelperException('Error creating eSignLive signer: ' + response.getStatusCode() + ' - ' + response.getStatus() + ' - ' +  response.getBody());  
+            throw new OneSpanRestAPIHelperException('Error creating OneSpan signer: ' + response.getStatusCode() + ' - ' + response.getStatus() + ' - ' +  response.getBody());
         }
 
         return approvalResponse;
@@ -233,28 +233,28 @@ public with sharing class ESignLiveRESTAPIHelper
     /**
      * Method that adds the Signature for the Package Id, Document Id, and Approval passed.
      */
-    public ESignLiveAPIObjects.Approval getApproval(String packageId, String documentId, String approvalId)
+    public OneSpanAPIObjects.Approval getApproval(String packageId, String documentId, String approvalId)
     {
         // Send Request
         String resourceUrl = '/packages/' + packageId + '/documents/' + documentId + '/approvals/' + approvalId;
         HttpResponse response = doGet(resourceUrl);
 
         // Check response
-        ESignLiveAPIObjects.Approval approvalResponse;
+        OneSpanAPIObjects.Approval approvalResponse;
         if(response.getStatusCode() == 200)
         {
             try
             {
-                approvalResponse = (ESignLiveAPIObjects.Approval)JSON.deserialize(response.getBody(), ESignLiveAPIObjects.Approval.class);
+                approvalResponse = (OneSpanAPIObjects.Approval)JSON.deserialize(response.getBody(), OneSpanAPIObjects.Approval.class);
             }
             catch(Exception e)
             {
-                throw new ESignLiveRestAPIHelperException('Error creating eSignLive signer: ' + e.getMessage());
+                throw new OneSpanRestAPIHelperException('Error creating OneSpan signer: ' + e.getMessage());
             }
         }
         else
         {
-            throw new ESignLiveRestAPIHelperException('Error creating eSignLive signer: ' + response.getStatusCode() + ' - ' + response.getStatus() + ' - ' +  response.getBody());  
+            throw new OneSpanRestAPIHelperException('Error creating OneSpan signer: ' + response.getStatusCode() + ' - ' + response.getStatus() + ' - ' +  response.getBody());
         }
 
         return approvalResponse;
@@ -263,7 +263,7 @@ public with sharing class ESignLiveRESTAPIHelper
     /**
      * Method that adds the Signature for the Package Id, Document Id, and Approval passed.
      */
-    public String updateApproval(String packageId, String documentId, String approvalId, ESignLiveAPIObjects.Approval approval)
+    public String updateApproval(String packageId, String documentId, String approvalId, OneSpanAPIObjects.Approval approval)
     {   
         String requestBody = JSON.serialize(approval);
         // Send Request
@@ -271,21 +271,21 @@ public with sharing class ESignLiveRESTAPIHelper
         HttpResponse response = doPut(resourceUrl, requestBody);
 
         // Check response
-        ESignLiveAPIObjects.Approval approvalResponse;
+        OneSpanAPIObjects.Approval approvalResponse;
         if(response.getStatusCode() == 200)
         {
             try
             {
-                approvalResponse = (ESignLiveAPIObjects.Approval)JSON.deserialize(response.getBody(), ESignLiveAPIObjects.Approval.class);
+                approvalResponse = (OneSpanAPIObjects.Approval)JSON.deserialize(response.getBody(), OneSpanAPIObjects.Approval.class);
             }
             catch(Exception e)
             {
-                throw new ESignLiveRestAPIHelperException('Error creating eSignLive signer: ' + e.getMessage());
+                throw new OneSpanRestAPIHelperException('Error creating OneSpan signer: ' + e.getMessage());
             }
         }
         else
         {
-            throw new ESignLiveRestAPIHelperException('Error creating eSignLive signer: ' + response.getStatusCode() + ' - ' + response.getStatus() + ' - ' +  response.getBody());  
+            throw new OneSpanRestAPIHelperException('Error creating OneSpan signer: ' + response.getStatusCode() + ' - ' + response.getStatus() + ' - ' +  response.getBody());
         }
 
          return response.getStatusCode() + ' - ' + response.getStatus() + ' - ' +  response.getBody();
@@ -305,7 +305,7 @@ public with sharing class ESignLiveRESTAPIHelper
         }
         else
         {
-            throw new ESignLiveRestAPIHelperException('Error deleting package with eSignLive: ' + response.getStatusCode() + ' - ' + response.getStatus() + ' - ' +  response.getBody());   
+            throw new OneSpanRestAPIHelperException('Error deleting package with OneSpan: ' + response.getStatusCode() + ' - ' + response.getStatus() + ' - ' +  response.getBody());
         }
         return response.getStatusCode() + ' - ' + response.getStatus() + ' - ' +  response.getBody();
     }
@@ -329,12 +329,12 @@ public with sharing class ESignLiveRESTAPIHelper
             }
             catch(Exception e)
             {
-                throw new ESignLiveRestAPIHelperException('Error obtaining the Audit Trail: ' + e.getMessage());
+                throw new OneSpanRestAPIHelperException('Error obtaining the Audit Trail: ' + e.getMessage());
             }
         }   
         else
         {
-            throw new ESignLiveRestAPIHelperException('Error obtaining the Audit Trail: ' + response.getStatusCode() + ' - ' + response.getStatus() + ' - ' +  response.getBody());
+            throw new OneSpanRestAPIHelperException('Error obtaining the Audit Trail: ' + response.getStatusCode() + ' - ' + response.getStatus() + ' - ' +  response.getBody());
         }
         return evidenceSummary;
     }
@@ -360,17 +360,17 @@ public with sharing class ESignLiveRESTAPIHelper
                 }
                 else
                 {
-                    throw new ESignLiveRestAPIHelperException('No attachments found for the role.');       
+                    throw new OneSpanRestAPIHelperException('No attachments found for the role.');
                 }
             }
             catch(Exception e)
             {
-                throw new ESignLiveRestAPIHelperException('Error obtaining the Attachments for the role: ' + e.getMessage());
+                throw new OneSpanRestAPIHelperException('Error obtaining the Attachments for the role: ' + e.getMessage());
             }
         }   
         else
         {
-            throw new ESignLiveRestAPIHelperException('Error obtaining the Attachments for the role: ' + response.getStatusCode() + ' - ' + response.getStatus() + ' - ' +  response.getBody());
+            throw new OneSpanRestAPIHelperException('Error obtaining the Attachments for the role: ' + response.getStatusCode() + ' - ' + response.getStatus() + ' - ' +  response.getBody());
         }
 
         return signerAttachmentZip;
@@ -380,9 +380,9 @@ public with sharing class ESignLiveRESTAPIHelper
     /**
      * Method to create a role. 
      */
-    public String createRole(String packageId, ESignLiveAPIObjects.Role signer)
+    public String createRole(String packageId, OneSpanAPIObjects.Role signer)
     {
-        ESignLiveAPIObjects.Role role;
+        OneSpanAPIObjects.Role role;
         String resourceUrl = '/packages/' + packageId + '/roles/';
 
         //Serialize the Role object
@@ -394,16 +394,16 @@ public with sharing class ESignLiveRESTAPIHelper
         {
             try
             {
-                role = (ESignLiveAPIObjects.Role)JSON.deserialize(response.getBody(), ESignLiveAPIObjects.Role.class);
+                role = (OneSpanAPIObjects.Role)JSON.deserialize(response.getBody(), OneSpanAPIObjects.Role.class);
             }
             catch(Exception e)
             {
-                throw new ESignLiveRestAPIHelperException('Error creating the Role: ' + e.getMessage());
+                throw new OneSpanRestAPIHelperException('Error creating the Role: ' + e.getMessage());
             }
         }   
         else
         {
-            throw new ESignLiveRestAPIHelperException('Error creating the Role: ' + response.getStatusCode() + ' - ' + response.getStatus() + ' - ' +  response.getBody());
+            throw new OneSpanRestAPIHelperException('Error creating the Role: ' + response.getStatusCode() + ' - ' + response.getStatus() + ' - ' +  response.getBody());
         }
         return JSON.serialize(role);
     }
@@ -411,9 +411,9 @@ public with sharing class ESignLiveRESTAPIHelper
     /**
      * Method to reassign a role. 
      */
-    public String reassignRole(String packageId, String roleId, ESignLiveAPIObjects.Role signer)
+    public String reassignRole(String packageId, String roleId, OneSpanAPIObjects.Role signer)
     {
-        ESignLiveAPIObjects.Role role;
+        OneSpanAPIObjects.Role role;
         String resourceUrl = '/packages/' + packageId + '/roles/' + roleId + '/reassign';
 
         //Serialize the Role object
@@ -425,16 +425,16 @@ public with sharing class ESignLiveRESTAPIHelper
         {
             try
             {
-                role = (ESignLiveAPIObjects.Role)JSON.deserialize(response.getBody(), ESignLiveAPIObjects.Role.class);
+                role = (OneSpanAPIObjects.Role)JSON.deserialize(response.getBody(), OneSpanAPIObjects.Role.class);
             }
             catch(Exception e)
             {
-                throw new ESignLiveRestAPIHelperException('Error reassigning the Role: ' + e.getMessage());
+                throw new OneSpanRestAPIHelperException('Error reassigning the Role: ' + e.getMessage());
             }
         }   
         else
         {
-            throw new ESignLiveRestAPIHelperException('Error reassigning the Role: ' + response.getStatusCode() + ' - ' + response.getStatus() + ' - ' +  response.getBody());
+            throw new OneSpanRestAPIHelperException('Error reassigning the Role: ' + response.getStatusCode() + ' - ' + response.getStatus() + ' - ' +  response.getBody());
         }
 
         return JSON.serialize(role);
@@ -444,9 +444,9 @@ public with sharing class ESignLiveRESTAPIHelper
     /**
      * Method to get a role 
      */
-    public ESignLiveAPIObjects.Role getRole(String packageId, String roleId)
+    public OneSpanAPIObjects.Role getRole(String packageId, String roleId)
     {
-        ESignLiveAPIObjects.Role role;
+        OneSpanAPIObjects.Role role;
         String resourceUrl = '/packages/' + packageId + '/roles/' + roleId;
 
         HttpResponse response = doGet(resourceUrl);
@@ -455,16 +455,16 @@ public with sharing class ESignLiveRESTAPIHelper
         {
             try
             {
-                role = (ESignLiveAPIObjects.Role)JSON.deserialize(response.getBody(), ESignLiveAPIObjects.Role.class);
+                role = (OneSpanAPIObjects.Role)JSON.deserialize(response.getBody(), OneSpanAPIObjects.Role.class);
             }
             catch(Exception e)
             {
-                throw new ESignLiveRestAPIHelperException('Error getting the Role: ' + e.getMessage());
+                throw new OneSpanRestAPIHelperException('Error getting the Role: ' + e.getMessage());
             }
         }   
         else
         {
-            throw new ESignLiveRestAPIHelperException('Error getting the Role: ' + response.getStatusCode() + ' - ' + response.getStatus() + ' - ' +  response.getBody());
+            throw new OneSpanRestAPIHelperException('Error getting the Role: ' + response.getStatusCode() + ' - ' + response.getStatus() + ' - ' +  response.getBody());
         }
 
         return role;
@@ -474,7 +474,7 @@ public with sharing class ESignLiveRESTAPIHelper
      * This method sets the signer/role authentication mechanism to Email(NONE), Q/A(CHALLENGE) and SMS(SMS) 
      * based on the inputs provided.
      */
-    public String updateRole(String packageId, String roleId, ESignLiveAPIObjects.Role signer)
+    public String updateRole(String packageId, String roleId, OneSpanAPIObjects.Role signer)
     {
         String resourceUrl = '/packages/' + packageId + '/roles/' + roleId;
         HttpResponse res = new HttpResponse();
@@ -487,7 +487,7 @@ public with sharing class ESignLiveRESTAPIHelper
         }
         catch(Exception e)
         {
-            throw new ESignLiveRestAPIHelperException('Error updating the Role: ' + e.getMessage());
+            throw new OneSpanRestAPIHelperException('Error updating the Role: ' + e.getMessage());
         }
 
         return res.getStatusCode() + ' - ' + res.getStatus();
@@ -508,7 +508,7 @@ public with sharing class ESignLiveRESTAPIHelper
         }
         else
         {
-            throw new ESignLiveRestAPIHelperException('Error deleting Role with eSignLive: ' + response.getStatusCode() + ' - ' + response.getStatus() + ' - ' +  response.getBody());   
+            throw new OneSpanRestAPIHelperException('Error deleting Role with OneSpan: ' + response.getStatusCode() + ' - ' + response.getStatus() + ' - ' +  response.getBody());
         }
         return response.getStatusCode() + ' - ' + response.getStatus() + ' - ' +  response.getBody();
     }
@@ -516,9 +516,9 @@ public with sharing class ESignLiveRESTAPIHelper
     /**
      * Method to create a Field. 
      */
-    public String createField(String packageId, String documentId, String approvalId, ESignLiveAPIObjects.Field fieldToCreate)
+    public String createField(String packageId, String documentId, String approvalId, OneSpanAPIObjects.Field fieldToCreate)
     {
-        ESignLiveAPIObjects.Field field;
+        OneSpanAPIObjects.Field field;
         String resourceUrl = '/packages/' + packageId + '/documents/' + documentId + '/approvals/' + approvalId + '/fields';
 
         //Serialize the Role object
@@ -530,16 +530,16 @@ public with sharing class ESignLiveRESTAPIHelper
         {
             try
             {
-                field = (ESignLiveAPIObjects.Field)JSON.deserialize(response.getBody(), ESignLiveAPIObjects.Field.class);
+                field = (OneSpanAPIObjects.Field)JSON.deserialize(response.getBody(), OneSpanAPIObjects.Field.class);
             }
             catch(Exception e)
             {
-                throw new ESignLiveRestAPIHelperException('Error creating the Field: ' + e.getMessage());
+                throw new OneSpanRestAPIHelperException('Error creating the Field: ' + e.getMessage());
             }
         }   
         else
         {
-            throw new ESignLiveRestAPIHelperException('Error creating the Field: ' + response.getStatusCode() + ' - ' + response.getStatus() + ' - ' +  response.getBody());
+            throw new OneSpanRestAPIHelperException('Error creating the Field: ' + response.getStatusCode() + ' - ' + response.getStatus() + ' - ' +  response.getBody());
         }
         return JSON.serialize(field);
     }
@@ -547,9 +547,9 @@ public with sharing class ESignLiveRESTAPIHelper
     /**
      * Method to get a Field 
      */
-    public ESignLiveAPIObjects.Field getField(String packageId, String documentId, String approvalId, String fieldId)
+    public OneSpanAPIObjects.Field getField(String packageId, String documentId, String approvalId, String fieldId)
     {
-        ESignLiveAPIObjects.Field field;
+        OneSpanAPIObjects.Field field;
         String resourceUrl = '/packages/' + packageId + '/documents/' + documentId + '/approvals/' + approvalId + '/fields/' + fieldId;
 
         HttpResponse response = doGet(resourceUrl);
@@ -558,16 +558,16 @@ public with sharing class ESignLiveRESTAPIHelper
         {
             try
             {
-                field = (ESignLiveAPIObjects.Field)JSON.deserialize(response.getBody(), ESignLiveAPIObjects.Field.class);
+                field = (OneSpanAPIObjects.Field)JSON.deserialize(response.getBody(), OneSpanAPIObjects.Field.class);
             }
             catch(Exception e)
             {
-                throw new ESignLiveRestAPIHelperException('Error getting the Field: ' + e.getMessage());
+                throw new OneSpanRestAPIHelperException('Error getting the Field: ' + e.getMessage());
             }
         }   
         else
         {
-            throw new ESignLiveRestAPIHelperException('Error getting the Field: ' + response.getStatusCode() + ' - ' + response.getStatus() + ' - ' +  response.getBody());
+            throw new OneSpanRestAPIHelperException('Error getting the Field: ' + response.getStatusCode() + ' - ' + response.getStatus() + ' - ' +  response.getBody());
         }
 
         return field;
@@ -576,7 +576,7 @@ public with sharing class ESignLiveRESTAPIHelper
     /**
      * Method to update a field
      */
-    public String updateField(String packageId, String documentId, String approvalId, String fieldId, ESignLiveAPIObjects.Field fieldToUpdate)
+    public String updateField(String packageId, String documentId, String approvalId, String fieldId, OneSpanAPIObjects.Field fieldToUpdate)
     {
         String resourceUrl = '/packages/' + packageId + '/documents/' + documentId + '/approvals/' + approvalId + '/fields/' + fieldId;
         HttpResponse res = new HttpResponse();
@@ -589,7 +589,7 @@ public with sharing class ESignLiveRESTAPIHelper
         }
         catch(Exception e)
         {
-            throw new ESignLiveRestAPIHelperException('Error updating the Field: ' + e.getMessage());
+            throw new OneSpanRestAPIHelperException('Error updating the Field: ' + e.getMessage());
         }
 
         return res.getStatusCode() + ' - ' + res.getStatus();
@@ -609,7 +609,7 @@ public with sharing class ESignLiveRESTAPIHelper
         }
         else
         {
-            throw new ESignLiveRestAPIHelperException('Error deleting Field with eSignLive: ' + response.getStatusCode() + ' - ' + response.getStatus() + ' - ' +  response.getBody());   
+            throw new OneSpanRestAPIHelperException('Error deleting Field with OneSpan: ' + response.getStatusCode() + ' - ' + response.getStatus() + ' - ' +  response.getBody());
         }
         return response.getStatusCode() + ' - ' + response.getStatus() + ' - ' +  response.getBody();
     }
@@ -618,7 +618,7 @@ public with sharing class ESignLiveRESTAPIHelper
      * This method sets the signer/field authentication mechanism to Email(NONE), Q/A(CHALLENGE) and SMS(SMS) 
      * based on the inputs provided.
      */
-    public String updateDocument(String packageId, String documentId, ESignLiveAPIObjects.Document doc)
+    public String updateDocument(String packageId, String documentId, OneSpanAPIObjects.Document doc)
     {
         String resourceUrl = '/packages/' + packageId + '/documents/' + documentId;
         HttpResponse res = new HttpResponse();
@@ -631,7 +631,7 @@ public with sharing class ESignLiveRESTAPIHelper
         }
         catch(Exception e)
         {
-            throw new ESignLiveRestAPIHelperException('Error updating the Role: ' + e.getMessage());
+            throw new OneSpanRestAPIHelperException('Error updating the Role: ' + e.getMessage());
         }
 
         return res.getStatusCode() + ' - ' + res.getStatus();
@@ -651,7 +651,7 @@ public with sharing class ESignLiveRESTAPIHelper
         }
         else
         {
-            throw new ESignLiveRestAPIHelperException('Error deleting package with eSignLive: ' + response.getStatusCode() + ' - ' + response.getStatus() + ' - ' +  response.getBody());   
+            throw new OneSpanRestAPIHelperException('Error deleting package with OneSpan: ' + response.getStatusCode() + ' - ' + response.getStatus() + ' - ' +  response.getBody());
         }
         return response.getStatusCode() + ' - ' + response.getStatus() + ' - ' +  response.getBody();
     }
@@ -670,17 +670,17 @@ public with sharing class ESignLiveRESTAPIHelper
         {
             try
             {
-                ESignLiveAPIObjects.Package_x packageResponse = (ESignLiveAPIObjects.Package_x)JSON.deserialize(response.getBody(), ESignLiveAPIObjects.Package_x.class);
+                OneSpanAPIObjects.Package_x packageResponse = (OneSpanAPIObjects.Package_x)JSON.deserialize(response.getBody(), OneSpanAPIObjects.Package_x.class);
                 packageId = packageResponse.id;
             }
             catch(Exception e)
             {
-                throw new ESignLiveRestAPIHelperException('Error creating eSignLive package with documents: ' + e.getMessage());
+                throw new OneSpanRestAPIHelperException('Error creating OneSpan package with documents: ' + e.getMessage());
             }
         }   
         else
         {
-            throw new ESignLiveRestAPIHelperException('Error creating eSignLive package with documents: ' + response.getStatusCode() + ' - ' + response.getStatus() + ' - ' +  response.getBody());
+            throw new OneSpanRestAPIHelperException('Error creating OneSpan package with documents: ' + response.getStatusCode() + ' - ' + response.getStatus() + ' - ' +  response.getBody());
         }
 
         return packageId;
@@ -694,22 +694,22 @@ public with sharing class ESignLiveRESTAPIHelper
         String resourceUrl = '/packages/'+packageId+'/documents' ;
         HttpResponse response = doPost(resourceUrl, multipartFormData);
 
-        ESignLiveAPIObjects.Document documentResponse;
+        OneSpanAPIObjects.Document documentResponse;
 
         if(response.getStatusCode() == 200)
         {
             try
             {
-                documentResponse = (ESignLiveAPIObjects.Document)JSON.deserialize(response.getBody(), ESignLiveAPIObjects.Document.class);
+                documentResponse = (OneSpanAPIObjects.Document)JSON.deserialize(response.getBody(), OneSpanAPIObjects.Document.class);
             }
             catch(Exception e)
             {
-                throw new ESignLiveRestAPIHelperException('Error creating eSignLive package with documents: ' + e.getMessage());
+                throw new OneSpanRestAPIHelperException('Error creating OneSpan package with documents: ' + e.getMessage());
             }
         }   
         else
         {
-            throw new ESignLiveRestAPIHelperException('Error creating eSignLive package with documents: ' + response.getStatusCode() + ' - ' + response.getStatus() + ' - ' +  response.getBody());
+            throw new OneSpanRestAPIHelperException('Error creating OneSpan package with documents: ' + response.getStatusCode() + ' - ' + response.getStatus() + ' - ' +  response.getBody());
         }
 
         return JSON.serialize(documentResponse);
@@ -718,7 +718,7 @@ public with sharing class ESignLiveRESTAPIHelper
     /**
      * Method to create a package with the information provided. 
      */
-    public String createPackage(ESignLiveAPIObjects.Package_x pkg)
+    public String createPackage(OneSpanAPIObjects.Package_x pkg)
     {
         String requestBody = JSON.serialize(pkg);
         String resourceUrl = '/packages/' ;
@@ -730,17 +730,17 @@ public with sharing class ESignLiveRESTAPIHelper
         {
             try
             {
-                ESignLiveAPIObjects.Package_x packageResponse = (ESignLiveAPIObjects.Package_x)JSON.deserialize(response.getBody(), ESignLiveAPIObjects.Package_x.class);
+                OneSpanAPIObjects.Package_x packageResponse = (OneSpanAPIObjects.Package_x)JSON.deserialize(response.getBody(), OneSpanAPIObjects.Package_x.class);
                 packageId = packageResponse.id;
             }
             catch(Exception e)
             {
-                throw new ESignLiveRestAPIHelperException('Error creating eSignLive package: ' + e.getMessage());
+                throw new OneSpanRestAPIHelperException('Error creating OneSpan package: ' + e.getMessage());
             }
         }   
         else
         {
-            throw new ESignLiveRestAPIHelperException('Error creating eSignLive package: ' + response.getStatusCode() + ' - ' + response.getStatus() + ' - ' +  response.getBody());
+            throw new OneSpanRestAPIHelperException('Error creating OneSpan package: ' + response.getStatusCode() + ' - ' + response.getStatus() + ' - ' +  response.getBody());
         }
 
         return packageId;
@@ -749,9 +749,9 @@ public with sharing class ESignLiveRESTAPIHelper
     /**
      * This method gets the Package for the given package id. 
      */
-    public ESignLiveAPIObjects.Package_x getPackage(String packageId)
+    public OneSpanAPIObjects.Package_x getPackage(String packageId)
     {
-        ESignLiveAPIObjects.Package_x pkg;
+        OneSpanAPIObjects.Package_x pkg;
 
         String resourceUrl = '/packages/' + packageId;
 
@@ -759,20 +759,20 @@ public with sharing class ESignLiveRESTAPIHelper
 
         if(response.getStatusCode() == 200)
         {            
-            String inboundResponseBody = ESignLiveJSONHelper.prepareInboundJSON(response.getBody());            
+            String inboundResponseBody = OneSpanJSONHelper.prepareInboundJSON(response.getBody());
 
             try
             {
-                pkg = (ESignLiveAPIObjects.Package_x)JSON.deserialize(inboundResponseBody, ESignLiveAPIObjects.Package_x.class);
+                pkg = (OneSpanAPIObjects.Package_x)JSON.deserialize(inboundResponseBody, OneSpanAPIObjects.Package_x.class);
             }
             catch(Exception e)
             {
-                throw new ESignLiveRestAPIHelperException('Error getting the Package: ' + e.getMessage());
+                throw new OneSpanRestAPIHelperException('Error getting the Package: ' + e.getMessage());
             }
         }   
         else
         {
-            throw new ESignLiveRestAPIHelperException('Error getting the Package: ' + response.getStatusCode() + ' - ' + response.getStatus() + ' - ' +  response.getBody());
+            throw new OneSpanRestAPIHelperException('Error getting the Package: ' + response.getStatusCode() + ' - ' + response.getStatus() + ' - ' +  response.getBody());
         }
 
         return pkg;
@@ -781,9 +781,9 @@ public with sharing class ESignLiveRESTAPIHelper
     /**
      * Method to update a package status.
      */
-    public String updatePackageStatus(String packageId, ESignLiveAPIObjects.PackageStatus status)
+    public String updatePackageStatus(String packageId, OneSpanAPIObjects.PackageStatus status)
     {
-        ESignLiveAPIObjects.Package_x pkg = new ESignLiveAPIObjects.Package_x();
+        OneSpanAPIObjects.Package_x pkg = new OneSpanAPIObjects.Package_x();
         String resourceUrl = '/packages/' + packageId;
 
         pkg.status = status;
@@ -798,7 +798,7 @@ public with sharing class ESignLiveRESTAPIHelper
         }
         else
         {
-            throw new ESignLiveRestAPIHelperException('Error updating eSignLive package status: ' + response.getStatusCode() + ' - ' + response.getStatus() + ' - ' +  response.getBody());
+            throw new OneSpanRestAPIHelperException('Error updating OneSpan package status: ' + response.getStatusCode() + ' - ' + response.getStatus() + ' - ' +  response.getBody());
         }
 
         return response.getStatusCode() + ' - ' + response.getStatus() + ' - ' +  response.getBody();
@@ -810,7 +810,7 @@ public with sharing class ESignLiveRESTAPIHelper
     private HttpResponse doPost(String resourceUrl, String requestBody)
     {
         //Cleanup requestBody string before sending it out
-        String outboundRequestBody = ESignLiveJSONHelper.prepareOutboundJSON(requestBody);
+        String outboundRequestBody = OneSpanJSONHelper.prepareOutboundJSON(requestBody);
         System.debug('=> outboundRequestBody:'+outboundRequestBody);
 
         // Build Request
@@ -859,7 +859,7 @@ public with sharing class ESignLiveRESTAPIHelper
      */
     private HttpResponse doPut(String resourceUrl, String requestBody)
     {
-        String outboundRequestBody = ESignLiveJSONHelper.prepareOutboundJSON(requestBody);
+        String outboundRequestBody = OneSpanJSONHelper.prepareOutboundJSON(requestBody);
         System.debug('=> Put Request Body after cleanup: ' + outboundRequestBody);
 
         // Build Request
@@ -896,7 +896,7 @@ public with sharing class ESignLiveRESTAPIHelper
         {
             System.debug('=> Formating for JSON response');
             // Format responseBody string before returning
-            String inboundResponseBody = ESignLiveJSONHelper.prepareInboundJSON(response.getBody());
+            String inboundResponseBody = OneSpanJSONHelper.prepareInboundJSON(response.getBody());
             response.setBody(inboundResponseBody);
         }
 
@@ -919,7 +919,7 @@ public with sharing class ESignLiveRESTAPIHelper
         HttpResponse response = (new Http()).send(request);
 
         //Format responseBody string before returning
-        String inboundResponseBody = ESignLiveJSONHelper.prepareInboundJSON(response.getBody());
+        String inboundResponseBody = OneSpanJSONHelper.prepareInboundJSON(response.getBody());
         response.setBody(inboundResponseBody);
        
         return response;
@@ -932,7 +932,7 @@ public with sharing class ESignLiveRESTAPIHelper
     {
         try
         {
-            connectionSettings = e_SignLive_Connection_Settings__c.getInstance('Main');    
+            connectionSettings = OneSpan_Connection_Settings__c.getInstance('Main');
             if(connectionSettings.Endpoint__c.equals('') || connectionSettings.API_Key__c.equals(''))
             {
                 
@@ -940,11 +940,11 @@ public with sharing class ESignLiveRESTAPIHelper
         }
         catch(Exception e)
         {            
-            throw new ESignLiveRestAPIHelperException(
-                    'Error in retrieving the eSignLive Custom Settings. Please verify you have the below set up:\n '
-                +   'Custom Setting API Name: e_SignLive_Connection_Settings__c, Custom Setting Record Name: Main'+e.getMessage());
+            throw new OneSpanRestAPIHelperException(
+                    'Error in retrieving the OneSpan Custom Settings. Please verify you have the below set up:\n '
+                +   'Custom Setting API Name: OneSpan_Connection_Settings__c, Custom Setting Record Name: Main'+e.getMessage());
         }
     }
 
-    public class ESignLiveRestAPIHelperException extends Exception{}
+    public class OneSpanRestAPIHelperException extends Exception{}
 }
