@@ -1,4 +1,8 @@
 # Apex SDK for OneSpan
+
+![kadence]                 |  ![onespan]
+:-------------------------:|:-------------------------:
+
 Developed by [Kadence Collective](http://hirekadence.com), this SDK allows you to integrate with OneSpan's REST API using Apex.  Examples on how to use the SDK are included in the OneSpanExamples class.
 
 To get started, you'll need to create a free developer account [here](http://bit.ly/2wamkvq).
@@ -61,3 +65,6 @@ The following methods are included in the current version of the SDK:
 
 ##License##
 This OneSpan Apex SDK is released under the following [license](/LICENSE).
+
+[onespan]: https://i.imgur.com/PGpgbGB.png "OneSpan logo"
+[kadence]: https://i.imgur.com/IgbJMbD.png "Kadence Collective Logo"
