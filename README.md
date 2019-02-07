@@ -18,8 +18,8 @@ The SDK can be installed using the <a href="https://githubsfdeploy.herokuapp.com
 </a> button.
 
 Alternatively, it can be installed as an unmanaged package:
-* [Production/Developer Sandbox](	https://login.salesforce.com/packaging/installPackage.apexp?p0=04t15000000O8b0)
-* [Test Sandbox](	https://test.salesforce.com/packaging/installPackage.apexp?p0=04t15000000O8b0)
+* [Production/Developer Sandbox](	https://login.salesforce.com/packaging/installPackage.apexp?p0=04t1C0000011MJ2)
+* [Test Sandbox](	https://test.salesforce.com/packaging/installPackage.apexp?p0=04t1C0000011MJ2)
 
 After installing in your sandbox or developer org you'll need to configure the connection settings by creating an entry in the OneSpan Connection Settings custom setting.
 
