@@ -1,11 +1,10 @@
 /**
- * Class Name: ESignLiveValidationTest.cls
- *
- * Test class for the ESignLiveValidation class
+ * Class Name: OneSpanValidationTest.cls*
+ * Test class for the OneSpanValidation class
  */
 
 @isTest
-public class ESignLiveValidationTest
+public class OneSpanValidationTest
 {
     /**
      * Method to test validating an empty string
@@ -18,12 +17,12 @@ public class ESignLiveValidationTest
         try
         {
             // Code to test
-            ESignLiveValidation.validate(nameOfString, valueString);
+            OneSpanValidation.validate(nameOfString, valueString);
         }
         catch(Exception e)
         {
             // Verify result
-            System.assertEquals('ESignLiveValidation.ESignLiveValidationException', e.getTypeName());
+            System.assertEquals('OneSpanValidation.OneSpanValidationException', e.getTypeName());
         }
     }
 
@@ -38,12 +37,12 @@ public class ESignLiveValidationTest
         try
         {
             // Code to test
-            ESignLiveValidation.validate(nameOfString, valueString);
+            OneSpanValidation.validate(nameOfString, valueString);
         }
         catch(Exception e)
         {
             // Verify result
-            System.assertEquals('ESignLiveValidation.ESignLiveValidationException', e.getTypeName());
+            System.assertEquals('OneSpanValidation.OneSpanValidationException', e.getTypeName());
         }
     }
 
@@ -58,12 +57,12 @@ public class ESignLiveValidationTest
         try
         {
             // Code to test
-            ESignLiveValidation.validate(nameOfInteger, valueInteger);
+            OneSpanValidation.validate(nameOfInteger, valueInteger);
         }
         catch(Exception e)
         {
             // Verify result
-            System.assertEquals('ESignLiveValidation.ESignLiveValidationException', e.getTypeName());
+            System.assertEquals('OneSpanValidation.OneSpanValidationException', e.getTypeName());
         }
     }
 
@@ -78,12 +77,12 @@ public class ESignLiveValidationTest
         try
         {
             // Code to test
-            ESignLiveValidation.validate(nameOfInteger, valueInteger);
+            OneSpanValidation.validate(nameOfInteger, valueInteger);
         }
         catch(Exception e)
         {
             // Verify result
-            System.assertEquals('ESignLiveValidation.ESignLiveValidationException', e.getTypeName());
+            System.assertEquals('OneSpanValidation.OneSpanValidationException', e.getTypeName());
         }
     }
 
@@ -98,12 +97,12 @@ public class ESignLiveValidationTest
         try
         {
             // Code to test
-            ESignLiveValidation.validate(nameOfInteger, valueInteger);
+            OneSpanValidation.validate(nameOfInteger, valueInteger);
         }
         catch(Exception e)
         {
             // Verify result
-            System.assertEquals('ESignLiveValidation.ESignLiveValidationException', e.getTypeName());
+            System.assertEquals('OneSpanValidation.OneSpanValidationException', e.getTypeName());
         }
     }
 
@@ -113,16 +112,16 @@ public class ESignLiveValidationTest
     private static testmethod void validateNullScheme()
     {
         // Set parameters
-        ESignLiveAPIObjects.AuthScheme auth = null;
+        OneSpanAPIObjects.AuthScheme auth = null;
         try
         {
             // Code to test
-            ESignLiveValidation.validate(auth);
+            OneSpanValidation.validate(auth);
         }
         catch(Exception e)
         {
             // Verify result
-            System.assertEquals('ESignLiveValidation.ESignLiveValidationException', e.getTypeName());
+            System.assertEquals('OneSpanValidation.OneSpanValidationException', e.getTypeName());
         }
     }
 
@@ -132,16 +131,16 @@ public class ESignLiveValidationTest
     private static testmethod void validateNullAuthChallenge()
     {
         // Set parameters
-        ESignLiveAPIObjects.AuthChallenge authChallenge = null;
+        OneSpanAPIObjects.AuthChallenge authChallenge = null;
         try
         {
             // Code to test
-            ESignLiveValidation.validate(authChallenge);
+            OneSpanValidation.validate(authChallenge);
         }
         catch(Exception e)
         {
             // Verify result
-            System.assertEquals('ESignLiveValidation.ESignLiveValidationException', e.getTypeName());
+            System.assertEquals('OneSpanValidation.OneSpanValidationException', e.getTypeName());
         }
     }
 
@@ -151,17 +150,17 @@ public class ESignLiveValidationTest
     private static testmethod void validateNullAuthChallengeMaskInput()
     {
         // Set parameters
-        ESignLiveAPIObjects.AuthChallenge authChallenge = new ESignLiveAPIObjects.AuthChallenge();
+        OneSpanAPIObjects.AuthChallenge authChallenge = new OneSpanAPIObjects.AuthChallenge();
         authChallenge.maskInput = null;
         try
         {
             // Code to test
-            ESignLiveValidation.validate(authChallenge);
+            OneSpanValidation.validate(authChallenge);
         }
         catch(Exception e)
         {
             // Verify result
-            System.assertEquals('ESignLiveValidation.ESignLiveValidationException', e.getTypeName());
+            System.assertEquals('OneSpanValidation.OneSpanValidationException', e.getTypeName());
         }
     }
 
@@ -171,19 +170,19 @@ public class ESignLiveValidationTest
     private static testmethod void validateNullAuthChallengeQuestion()
     {
         // Set parameters
-        ESignLiveAPIObjects.AuthChallenge authChallenge = new ESignLiveAPIObjects.AuthChallenge();
+        OneSpanAPIObjects.AuthChallenge authChallenge = new OneSpanAPIObjects.AuthChallenge();
         authChallenge.maskInput = false;
         authChallenge.question = '';
         authChallenge.answer = 'answer';
         try
         {
             // Code to test
-            ESignLiveValidation.validate(authChallenge);
+            OneSpanValidation.validate(authChallenge);
         }
         catch(Exception e)
         {
             // Verify result
-            System.assertEquals('ESignLiveValidation.ESignLiveValidationException', e.getTypeName());
+            System.assertEquals('OneSpanValidation.OneSpanValidationException', e.getTypeName());
         }
     }
 
@@ -193,19 +192,19 @@ public class ESignLiveValidationTest
     private static testmethod void validateNullAuthChallengeAnswer()
     {
         // Set parameters
-        ESignLiveAPIObjects.AuthChallenge authChallenge = new ESignLiveAPIObjects.AuthChallenge();
+        OneSpanAPIObjects.AuthChallenge authChallenge = new OneSpanAPIObjects.AuthChallenge();
         authChallenge.maskInput = null;
         authChallenge.question = 'question';
         authChallenge.answer = '';
         try
         {
             // Code to test
-            ESignLiveValidation.validate(authChallenge);
+            OneSpanValidation.validate(authChallenge);
         }
         catch(Exception e)
         {
             // Verify result
-            System.assertEquals('ESignLiveValidation.ESignLiveValidationException', e.getTypeName());
+            System.assertEquals('OneSpanValidation.OneSpanValidationException', e.getTypeName());
         }
     }
 
@@ -214,16 +213,16 @@ public class ESignLiveValidationTest
      */
     private static testmethod void validateAuthChallengeList()
     {
-        List<ESignLiveAPIObjects.AuthChallenge> authChallengeList = new List<ESignLiveAPIObjects.AuthChallenge>();
+        List<OneSpanAPIObjects.AuthChallenge> authChallengeList = new List<OneSpanAPIObjects.AuthChallenge>();
         try
         {
             // Code to test
-            ESignLiveValidation.validate(authChallengeList);
+            OneSpanValidation.validate(authChallengeList);
         }
         catch(Exception e)
         {
             // Verify result
-            System.assertEquals('ESignLiveValidation.ESignLiveValidationException', e.getTypeName());
+            System.assertEquals('OneSpanValidation.OneSpanValidationException', e.getTypeName());
         }
     }
 
@@ -232,16 +231,16 @@ public class ESignLiveValidationTest
      */
     private static testmethod void validateNullAttachmentRequirement()
     {
-        ESignLiveAPIObjects.AttachmentRequirement ar = null;
+        OneSpanAPIObjects.AttachmentRequirement ar = null;
         try
         {
             // Code to test
-            ESignLiveValidation.validate(ar);
+            OneSpanValidation.validate(ar);
         }
         catch(Exception e)
         {
             // Verify result
-            System.assertEquals('ESignLiveValidation.ESignLiveValidationException', e.getTypeName());
+            System.assertEquals('OneSpanValidation.OneSpanValidationException', e.getTypeName());
         }
     }
 
@@ -250,17 +249,17 @@ public class ESignLiveValidationTest
      */
     private static testmethod void validateNullNameAttachmentRequirement()
     {
-        ESignLiveAPIObjects.AttachmentRequirement ar = new ESignLiveAPIObjects.AttachmentRequirement();
+        OneSpanAPIObjects.AttachmentRequirement ar = new OneSpanAPIObjects.AttachmentRequirement();
         ar.Name = '';
         try
         {
             // Code to test
-            ESignLiveValidation.validate(ar);
+            OneSpanValidation.validate(ar);
         }
         catch(Exception e)
         {
             // Verify result
-            System.assertEquals('ESignLiveValidation.ESignLiveValidationException', e.getTypeName());
+            System.assertEquals('OneSpanValidation.OneSpanValidationException', e.getTypeName());
         }
     }
 
@@ -269,16 +268,16 @@ public class ESignLiveValidationTest
      */
     private static testmethod void validateNullPackageX()
     {
-        ESignLiveAPIObjects.Package_x pkg = null;
+        OneSpanAPIObjects.Package_x pkg = null;
         try
         {
             // Code to test
-            ESignLiveValidation.validate(pkg);
+            OneSpanValidation.validate(pkg);
         }
         catch(Exception e)
         {
             // Verify result
-            System.assertEquals('ESignLiveValidation.ESignLiveValidationException', e.getTypeName());
+            System.assertEquals('OneSpanValidation.OneSpanValidationException', e.getTypeName());
         }
     }
 
@@ -287,17 +286,17 @@ public class ESignLiveValidationTest
      */
     private static testmethod void validateNullNamePackageX()
     {
-        ESignLiveAPIObjects.Package_x pkg = new ESignLiveAPIObjects.Package_x();
+        OneSpanAPIObjects.Package_x pkg = new OneSpanAPIObjects.Package_x();
         pkg.name = null;
         try
         {
             // Code to test
-            ESignLiveValidation.validate(pkg);
+            OneSpanValidation.validate(pkg);
         }
         catch(Exception e)
         {
             // Verify result
-            System.assertEquals('ESignLiveValidation.ESignLiveValidationException', e.getTypeName());
+            System.assertEquals('OneSpanValidation.OneSpanValidationException', e.getTypeName());
         }
     }
 
@@ -310,12 +309,12 @@ public class ESignLiveValidationTest
         try
         {
             // Code to test
-            ESignLiveValidation.validate(blobMap);
+            OneSpanValidation.validate(blobMap);
         }
         catch(Exception e)
         {
             // Verify result
-            System.assertEquals('ESignLiveValidation.ESignLiveValidationException', e.getTypeName());
+            System.assertEquals('OneSpanValidation.OneSpanValidationException', e.getTypeName());
         }
     }
 
@@ -329,12 +328,12 @@ public class ESignLiveValidationTest
         try
         {
             // Code to test
-            ESignLiveValidation.validate(blobMap);
+            OneSpanValidation.validate(blobMap);
         }
         catch(Exception e)
         {
             // Verify result
-            System.assertEquals('ESignLiveValidation.ESignLiveValidationException', e.getTypeName());
+            System.assertEquals('OneSpanValidation.OneSpanValidationException', e.getTypeName());
         }
     }
 
@@ -344,16 +343,16 @@ public class ESignLiveValidationTest
     private static testmethod void validateStatus()
     {
         
-        ESignLiveAPIObjects.PackageStatus status = null;
+        OneSpanAPIObjects.PackageStatus status = null;
         try
         {
             // Code to test
-            ESignLiveValidation.validate(status);
+            OneSpanValidation.validate(status);
         }
         catch(Exception e)
         {
             // Verify result
-            System.assertEquals('ESignLiveValidation.ESignLiveValidationException', e.getTypeName());
+            System.assertEquals('OneSpanValidation.OneSpanValidationException', e.getTypeName());
         }
 
     }
@@ -363,16 +362,16 @@ public class ESignLiveValidationTest
      */
     private static testmethod void validateNullApproval()
     {
-        ESignLiveAPIObjects.Approval approval = null;
+        OneSpanAPIObjects.Approval approval = null;
         try
         {
             // Code to test
-            ESignLiveValidation.validate(approval);
+            OneSpanValidation.validate(approval);
         }
         catch(Exception e)
         {
             // Verify result
-            System.assertEquals('ESignLiveValidation.ESignLiveValidationException', e.getTypeName());
+            System.assertEquals('OneSpanValidation.OneSpanValidationException', e.getTypeName());
         }
     }
 
@@ -381,17 +380,17 @@ public class ESignLiveValidationTest
      */
     private static testmethod void validateEmptyRoleApproval()
     {
-        ESignLiveAPIObjects.Approval approval = new ESignLiveAPIObjects.Approval();
+        OneSpanAPIObjects.Approval approval = new OneSpanAPIObjects.Approval();
         approval.role = '';
         try
         {
             // Code to test
-            ESignLiveValidation.validate(approval);
+            OneSpanValidation.validate(approval);
         }
         catch(Exception e)
         {
             // Verify result
-            System.assertEquals('ESignLiveValidation.ESignLiveValidationException', e.getTypeName());
+            System.assertEquals('OneSpanValidation.OneSpanValidationException', e.getTypeName());
         }
     }
 
@@ -400,16 +399,16 @@ public class ESignLiveValidationTest
      */
     private static testmethod void validateField()
     {
-        ESignLiveAPIObjects.Field f = null;
+        OneSpanAPIObjects.Field f = null;
         try
         {
             // Code to test
-            ESignLiveValidation.validate(f);
+            OneSpanValidation.validate(f);
         }
         catch(Exception e)
         {
             // Verify result
-            System.assertEquals('ESignLiveValidation.ESignLiveValidationException', e.getTypeName());
+            System.assertEquals('OneSpanValidation.OneSpanValidationException', e.getTypeName());
         }
     }
 
@@ -418,7 +417,7 @@ public class ESignLiveValidationTest
      */
     private static testmethod void validateNullHeightField()
     {
-        ESignLiveAPIObjects.Field f = new ESignLiveAPIObjects.Field();
+        OneSpanAPIObjects.Field f = new OneSpanAPIObjects.Field();
         f.width = 10;
         f.type = 'type';
         f.top = 100;
@@ -429,12 +428,12 @@ public class ESignLiveValidationTest
         try
         {
             // Code to test
-            ESignLiveValidation.validate(f);
+            OneSpanValidation.validate(f);
         }
         catch(Exception e)
         {
             // Verify result
-            System.assertEquals('ESignLiveValidation.ESignLiveValidationException', e.getTypeName());
+            System.assertEquals('OneSpanValidation.OneSpanValidationException', e.getTypeName());
         }
     }
 
@@ -449,12 +448,12 @@ public class ESignLiveValidationTest
         try
         {
             // Code to test
-            ESignLiveValidation.validate(nameOfDecimal, value);
+            OneSpanValidation.validate(nameOfDecimal, value);
         }
         catch(Exception e)
         {
             // Verify result
-            System.assertEquals('ESignLiveValidation.ESignLiveValidationException', e.getTypeName());
+            System.assertEquals('OneSpanValidation.OneSpanValidationException', e.getTypeName());
         }
     }
 }

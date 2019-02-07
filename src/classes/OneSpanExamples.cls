@@ -1,22 +1,21 @@
 /**
- * Class Name: ESignLiveExamples.cls
- *
+ * Class Name: OneSpanExamples.cls*
  * Class containing examples for using the SDK
  */
 
-public with sharing class ESignLiveExamples 
+public with sharing class OneSpanExamples
 {
-    public ESignLiveExamples(){}
+    public OneSpanExamples(){}
 
     /**
      * Example method for creating a package without any documents
      */
     public static String createPackageExample()
     {
-        ESignLiveSDK sdk = new ESignLiveSDK();
+        OneSpanSDK sdk = new OneSpanSDK();
 
         // Set up the example package 
-        ESignLiveAPIObjects.Package_x pkg = new ESignLiveAPIObjects.Package_x();
+        OneSpanAPIObjects.Package_x pkg = new OneSpanAPIObjects.Package_x();
         pkg.name = 'Test Package Name';
         pkg.autocomplete = true;
         pkg.description = 'Sample Description';
@@ -37,10 +36,10 @@ public with sharing class ESignLiveExamples
      */
     public static void createPackageWithDocumentsExample(String packageName, Boolean autocomplete, String packageDescription, DateTime packageDue, String emailMessage)
     {
-        ESignLiveSDK sdk = new ESignLiveSDK();
+        OneSpanSDK sdk = new OneSpanSDK();
 
         // Set up the example package and Document data
-        ESignLiveAPIObjects.Package_x pkg = new ESignLiveAPIObjects.Package_x();
+        OneSpanAPIObjects.Package_x pkg = new OneSpanAPIObjects.Package_x();
         Map<String,Blob> blobMap = new Map<String,Blob>();
 
         Blob b1 = Blob.valueOf('testDocumentOne');
@@ -53,17 +52,17 @@ public with sharing class ESignLiveExamples
         pkg.autocomplete = autocomplete;
         pkg.description = packageDescription;
 
-        ESignLiveAPIObjects.ExtractAnchor ea = new ESignLiveAPIObjects.ExtractAnchor();
+        OneSpanAPIObjects.ExtractAnchor ea = new OneSpanAPIObjects.ExtractAnchor();
         ea.text = 'testDocumentOne';
         ea.index = 0;
         ea.width = 150;
         ea.height = 40;
-        ea.anchorPoint = ESignLiveAPIObjects.AnchorPoint.TOPRIGHT;
+        ea.anchorPoint = OneSpanAPIObjects.AnchorPoint.TOPRIGHT;
         ea.characterIndex = 12;
         ea.leftOffset = -20;
         ea.topOffset = -60;
 
-        ESignLiveAPIObjects.Field f1 = new ESignLiveAPIObjects.Field();
+        OneSpanAPIObjects.Field f1 = new OneSpanAPIObjects.Field();
         f1.type = 'SIGNATURE';
         f1.page = 0;
         f1.extract = false; 
@@ -73,17 +72,17 @@ public with sharing class ESignLiveExamples
         f1.extractAnchor = ea;
 
 
-        ESignLiveAPIObjects.ExtractAnchor ea1 = new ESignLiveAPIObjects.ExtractAnchor();
+        OneSpanAPIObjects.ExtractAnchor ea1 = new OneSpanAPIObjects.ExtractAnchor();
         ea1.text = 'testDocumentOne';
         ea1.index = 0;
         ea1.width = 150;
         ea1.height = 40;
-        ea1.anchorPoint = ESignLiveAPIObjects.AnchorPoint.BOTTOMRIGHT;
+        ea1.anchorPoint = OneSpanAPIObjects.AnchorPoint.BOTTOMRIGHT;
         ea1.characterIndex = 12;
         ea1.leftOffset = -40;
         ea1.topOffset = 0;
 
-        ESignLiveAPIObjects.Field f2 = new ESignLiveAPIObjects.Field();
+        OneSpanAPIObjects.Field f2 = new OneSpanAPIObjects.Field();
         f2.type = 'INPUT';
         f2.page = 0;
         f2.extract = false; 
@@ -94,17 +93,17 @@ public with sharing class ESignLiveExamples
         f2.extractAnchor = ea1;
 
         // Create request
-        List<ESignLiveAPIObjects.AuthChallenge> challenges = new List<ESignLiveAPIObjects.AuthChallenge>();
+        List<OneSpanAPIObjects.AuthChallenge> challenges = new List<OneSpanAPIObjects.AuthChallenge>();
         
-        ESignLiveAPIObjects.Delivery delivery = new ESignLiveAPIObjects.Delivery();
+        OneSpanAPIObjects.Delivery delivery = new OneSpanAPIObjects.Delivery();
         delivery.email = true;
         delivery.provider = true;
 
-        ESignLiveAPIObjects.Auth auth = new ESignLiveAPIObjects.Auth();
+        OneSpanAPIObjects.Auth auth = new OneSpanAPIObjects.Auth();
         auth.challenges = challenges;
-        auth.scheme = ESignLiveAPIObjects.AuthScheme.NONE;
+        auth.scheme = OneSpanAPIObjects.AuthScheme.NONE;
 
-        ESignLiveAPIObjects.Signer signer = new ESignLiveAPIObjects.Signer();
+        OneSpanAPIObjects.Signer signer = new OneSpanAPIObjects.Signer();
         signer.auth = auth;
         signer.delivery = delivery;
         signer.firstName = 'firstName';
@@ -112,29 +111,29 @@ public with sharing class ESignLiveExamples
         signer.email = 'fnln@test.com';
         signer.name = 'firstNamelastName';
 
-        List<ESignLiveAPIObjects.Signer> signers = new List<ESignLiveAPIObjects.Signer>();
+        List<OneSpanAPIObjects.Signer> signers = new List<OneSpanAPIObjects.Signer>();
         signers.add(signer);
 
-        ESignLiveAPIObjects.Role role = new ESignLiveAPIObjects.Role();
+        OneSpanAPIObjects.Role role = new OneSpanAPIObjects.Role();
         role.signers = signers;
         role.reassign = true;
         role.name = 'firstNamelastName';
         role.id = 'firstNamelastName';
         role.type = 'SIGNER';
 
-        ESignLiveAPIObjects.Approval approval1 = new ESignLiveAPIObjects.Approval();
+        OneSpanAPIObjects.Approval approval1 = new OneSpanAPIObjects.Approval();
         approval1.role = 'firstNamelastName';
-        approval1.fields = new List<ESignLiveAPIObjects.Field> {f1,f2};
+        approval1.fields = new List<OneSpanAPIObjects.Field> {f1,f2};
 
-        ESignLiveAPIObjects.Document doc1 = new ESignLiveAPIObjects.Document();
+        OneSpanAPIObjects.Document doc1 = new OneSpanAPIObjects.Document();
         doc1.name = 'testDocumentOne';
-        doc1.approvals = new List<ESignLiveAPIObjects.Approval> {approval1};
+        doc1.approvals = new List<OneSpanAPIObjects.Approval> {approval1};
 
-        ESignLiveAPIObjects.Document doc2 = new ESignLiveAPIObjects.Document();
+        OneSpanAPIObjects.Document doc2 = new OneSpanAPIObjects.Document();
         doc2.name = 'testDocumentTwo';
 
-        pkg.documents = new List<ESignLiveAPIObjects.Document> {doc1,doc2};
-        pkg.roles = new List<ESignLiveAPIObjects.Role> {role};
+        pkg.documents = new List<OneSpanAPIObjects.Document> {doc1,doc2};
+        pkg.roles = new List<OneSpanAPIObjects.Role> {role};
 
         // Call the SDK method and get the packageId which is returned from the SDK method
         String response = sdk.createPackage(pkg,blobMap);       
@@ -146,11 +145,11 @@ public with sharing class ESignLiveExamples
     /**
      * Example method for getting a package
      */
-    public static ESignLiveAPIObjects.Package_x getPackageExample(String packageId)
+    public static OneSpanAPIObjects.Package_x getPackageExample(String packageId)
     {
-        ESignLiveSDK sdk = new ESignLiveSDK();
+        OneSpanSDK sdk = new OneSpanSDK();
 
-        ESignLiveAPIObjects.Package_x pkg = sdk.getPackage(packageId);
+        OneSpanAPIObjects.Package_x pkg = sdk.getPackage(packageId);
         System.debug('=> Response Package from getPackageExample: ' + pkg);
         
         return pkg;
@@ -159,9 +158,9 @@ public with sharing class ESignLiveExamples
     /**
      * Example method for updating a package
      */
-    public static void updatePackageExample(ESignLiveAPIObjects.Package_x pkg, String packageId)
+    public static void updatePackageExample(OneSpanAPIObjects.Package_x pkg, String packageId)
     {
-        ESignLiveSDK sdk = new ESignLiveSDK();
+        OneSpanSDK sdk = new OneSpanSDK();
         sdk.updatePackage(pkg,packageId);
     }
 
@@ -170,7 +169,7 @@ public with sharing class ESignLiveExamples
      */
     public static String createDocumentsExample(String packageId, String docName, String docDescription)
     {
-        ESignLiveSDK sdk = new ESignLiveSDK();
+        OneSpanSDK sdk = new OneSpanSDK();
 
         // Set up the Document data
         Map<String,Blob> blobMap = new Map<String,Blob>();
@@ -181,21 +180,21 @@ public with sharing class ESignLiveExamples
         blobMap.put('testDocumentOne', b1);
         blobMap.put('testDocumentTwo', b2);
 
-        ESignLiveAPIObjects.Document doc = new ESignLiveAPIObjects.Document();
+        OneSpanAPIObjects.Document doc = new OneSpanAPIObjects.Document();
         doc.Name = docName;
         doc.description = docDescription;
 
-        ESignLiveAPIObjects.ExtractAnchor ea = new ESignLiveAPIObjects.ExtractAnchor();
+        OneSpanAPIObjects.ExtractAnchor ea = new OneSpanAPIObjects.ExtractAnchor();
         ea.text = 'testDocumentOne';
         ea.index = 0;
         ea.width = 150;
         ea.height = 40;
-        ea.anchorPoint = ESignLiveAPIObjects.AnchorPoint.TOPRIGHT;
+        ea.anchorPoint = OneSpanAPIObjects.AnchorPoint.TOPRIGHT;
         ea.characterIndex = 12;
         ea.leftOffset = -20;
         ea.topOffset = -60;
 
-        ESignLiveAPIObjects.Field f1 = new ESignLiveAPIObjects.Field();
+        OneSpanAPIObjects.Field f1 = new OneSpanAPIObjects.Field();
         f1.type = 'SIGNATURE';
         f1.page = 0;
         f1.extract = false; 
@@ -205,17 +204,17 @@ public with sharing class ESignLiveExamples
         f1.extractAnchor = ea;
 
 
-        ESignLiveAPIObjects.ExtractAnchor ea1 = new ESignLiveAPIObjects.ExtractAnchor();
+        OneSpanAPIObjects.ExtractAnchor ea1 = new OneSpanAPIObjects.ExtractAnchor();
         ea1.text = 'testDocumentOne';
         ea1.index = 0;
         ea1.width = 150;
         ea1.height = 40;
-        ea1.anchorPoint = ESignLiveAPIObjects.AnchorPoint.BOTTOMRIGHT;
+        ea1.anchorPoint = OneSpanAPIObjects.AnchorPoint.BOTTOMRIGHT;
         ea1.characterIndex = 12;
         ea1.leftOffset = -40;
         ea1.topOffset = 0;
 
-        ESignLiveAPIObjects.Field f2 = new ESignLiveAPIObjects.Field();
+        OneSpanAPIObjects.Field f2 = new OneSpanAPIObjects.Field();
         f2.type = 'INPUT';
         f2.page = 0;
         f2.extract = false; 
@@ -226,17 +225,17 @@ public with sharing class ESignLiveExamples
         f2.extractAnchor = ea1;
 
         // Create request
-        List<ESignLiveAPIObjects.AuthChallenge> challenges = new List<ESignLiveAPIObjects.AuthChallenge>();
+        List<OneSpanAPIObjects.AuthChallenge> challenges = new List<OneSpanAPIObjects.AuthChallenge>();
         
-        ESignLiveAPIObjects.Delivery delivery = new ESignLiveAPIObjects.Delivery();
+        OneSpanAPIObjects.Delivery delivery = new OneSpanAPIObjects.Delivery();
         delivery.email = true;
         delivery.provider = true;
 
-        ESignLiveAPIObjects.Auth auth = new ESignLiveAPIObjects.Auth();
+        OneSpanAPIObjects.Auth auth = new OneSpanAPIObjects.Auth();
         auth.challenges = challenges;
-        auth.scheme = ESignLiveAPIObjects.AuthScheme.NONE;
+        auth.scheme = OneSpanAPIObjects.AuthScheme.NONE;
 
-        ESignLiveAPIObjects.Signer signer = new ESignLiveAPIObjects.Signer();
+        OneSpanAPIObjects.Signer signer = new OneSpanAPIObjects.Signer();
         signer.auth = auth;
         signer.delivery = delivery;
         signer.firstName = 'firstName';
@@ -244,23 +243,23 @@ public with sharing class ESignLiveExamples
         signer.email = 'fnln@test.com';
         signer.name = 'firstNamelastName';
 
-        List<ESignLiveAPIObjects.Signer> signers = new List<ESignLiveAPIObjects.Signer>();
+        List<OneSpanAPIObjects.Signer> signers = new List<OneSpanAPIObjects.Signer>();
         signers.add(signer);
 
-        ESignLiveAPIObjects.Role role = new ESignLiveAPIObjects.Role();
+        OneSpanAPIObjects.Role role = new OneSpanAPIObjects.Role();
         role.signers = signers;
         role.reassign = true;
         role.name = 'firstNamelastName';
         role.id = 'firstNamelastName';
         role.type = 'SIGNER';
 
-        ESignLiveAPIObjects.Approval approval1 = new ESignLiveAPIObjects.Approval();
+        OneSpanAPIObjects.Approval approval1 = new OneSpanAPIObjects.Approval();
         approval1.role = 'firstNamelastName';
-        approval1.fields = new List<ESignLiveAPIObjects.Field> {f1,f2};
+        approval1.fields = new List<OneSpanAPIObjects.Field> {f1,f2};
 
-        ESignLiveAPIObjects.Document doc1 = new ESignLiveAPIObjects.Document();
+        OneSpanAPIObjects.Document doc1 = new OneSpanAPIObjects.Document();
         doc.name = 'testDocumentOne';
-        doc.approvals = new List<ESignLiveAPIObjects.Approval> {approval1};
+        doc.approvals = new List<OneSpanAPIObjects.Approval> {approval1};
         // Call the SDK method and get the packageId which is returned from the SDK method
         String response = sdk.createDocuments(packageId, doc, blobMap);       
 
@@ -276,12 +275,12 @@ public with sharing class ESignLiveExamples
      */
     public static void setAttachmentRequirementsExample(String packageId, String roleId, String arName, Boolean arRequired, String arDescription)
     {
-        ESignLiveSDK sdk = new ESignLiveSDK();
+        OneSpanSDK sdk = new OneSpanSDK();
 
         // Set up the example attachment requirements
-        List<ESignLiveAPIObjects.AttachmentRequirement> arList = new List<ESignLiveAPIObjects.AttachmentRequirement>();
+        List<OneSpanAPIObjects.AttachmentRequirement> arList = new List<OneSpanAPIObjects.AttachmentRequirement>();
 
-        ESignLiveAPIObjects.AttachmentRequirement ar1 = new ESignLiveAPIObjects.AttachmentRequirement();
+        OneSpanAPIObjects.AttachmentRequirement ar1 = new OneSpanAPIObjects.AttachmentRequirement();
         ar1.name = arName;
         ar1.required = arRequired;
         ar1.description = arDescription;
@@ -299,7 +298,7 @@ public with sharing class ESignLiveExamples
      */
     public static String getAuditExample(String packageId)
     {
-        ESignLiveSDK sdk = new ESignLiveSDK();
+        OneSpanSDK sdk = new OneSpanSDK();
 
         // Call the SDK method and get the Base64 encoded String
         String response = sdk.getAudit(packageId);      
@@ -315,7 +314,7 @@ public with sharing class ESignLiveExamples
      */ 
     public static void downloadAllAttachmentFilesForSignerInPackageExample(String packageId,String roleId)
     {
-        ESignLiveSDK sdk = new ESignLiveSDK();
+        OneSpanSDK sdk = new OneSpanSDK();
 
         // Call the SDK method and and get the Base64 encoded String
         String response = sdk.downloadAllAttachmentFilesForSignerInPackage(packageId,roleId);
@@ -329,7 +328,7 @@ public with sharing class ESignLiveExamples
      */
     public static void updateSignerExample(String packageId, String roleId, String firstname, String lastname, String email, String optionalMessageToTheAssignee)
     {
-        ESignLiveSDK sdk = new ESignLiveSDK();
+        OneSpanSDK sdk = new OneSpanSDK();
 
         // Call the SDK method and get the new Role information as the response 
         String response = sdk.updateSigner(packageId, roleId, firstname, lastname, email, optionalMessageToTheAssignee);
@@ -343,10 +342,10 @@ public with sharing class ESignLiveExamples
      */
     public static void safeSetAuthExample(String packageId, String roleId, String question, String answer, Boolean maskInput)
     {
-        ESignLiveSDK sdk = new ESignLiveSDK();
+        OneSpanSDK sdk = new OneSpanSDK();
         
-        List<ESignLiveAPIObjects.AuthChallenge> challenges = new List<ESignLiveAPIObjects.AuthChallenge>();
-        ESignLiveAPIObjects.AuthChallenge challenge = new ESignLiveAPIObjects.AuthChallenge();
+        List<OneSpanAPIObjects.AuthChallenge> challenges = new List<OneSpanAPIObjects.AuthChallenge>();
+        OneSpanAPIObjects.AuthChallenge challenge = new OneSpanAPIObjects.AuthChallenge();
 
         challenge.question = question;
         challenge.answer = answer;
@@ -355,7 +354,7 @@ public with sharing class ESignLiveExamples
         challenges.add(challenge);
 
         // Call the SDK method and get the response status code and status string
-        String response = sdk.safeSetAuth(packageId, roleId, ESignLiveAPIObjects.AuthScheme.CHALLENGE, challenges);
+        String response = sdk.safeSetAuth(packageId, roleId, OneSpanAPIObjects.AuthScheme.CHALLENGE, challenges);
 
         // Print the response to console
         System.debug('=> Response from safeSetAuthExample: ' + response);
@@ -366,7 +365,7 @@ public with sharing class ESignLiveExamples
      */
     public static void setSigningOrderExample(String packageId, String roleId, Integer index)
     {
-        ESignLiveSDK sdk = new ESignLiveSDK();
+        OneSpanSDK sdk = new OneSpanSDK();
 
         // Call the SDK method and get the HTTP response status code and status string
         String response = sdk.setSigningOrder(packageId, roleId, index);
@@ -380,7 +379,7 @@ public with sharing class ESignLiveExamples
      */
     public static String getSigningStatusExample(String packageId)
     {
-        ESignLiveSDK sdk = new ESignLiveSDK();
+        OneSpanSDK sdk = new OneSpanSDK();
         String response = sdk.getSigningStatus(packageId);
 
         // Print the Package Status to console
@@ -394,7 +393,7 @@ public with sharing class ESignLiveExamples
      */
     public static String getSigningUrlExample(String packageId, String signerId)
     {
-        ESignLiveSDK sdk = new ESignLiveSDK();
+        OneSpanSDK sdk = new OneSpanSDK();
         String response = sdk.getSigningUrl(packageId, signerId);
 
         // Print the Signing URL to the console
@@ -408,7 +407,7 @@ public with sharing class ESignLiveExamples
      */
     public static Blob downloadDocumentExample(String packageId, String documentId)
     {
-        ESignLiveSDK sdk = new ESignLiveSDK();
+        OneSpanSDK sdk = new OneSpanSDK();
         Blob documentBlob = sdk.downloadDocument(packageId,documentId);
 
         // Print the Base64 Encoded document string to console
@@ -420,9 +419,9 @@ public with sharing class ESignLiveExamples
     /**
      * Example method to set the package status
      */
-    public static void setStatusExample(String packageId, ESignLiveAPIObjects.PackageStatus status)
+    public static void setStatusExample(String packageId, OneSpanAPIObjects.PackageStatus status)
     {
-        ESignLiveSDK sdk = new ESignLiveSDK();
+        OneSpanSDK sdk = new OneSpanSDK();
         String response = sdk.setStatus(packageId,status);
 
         // Print the HTTP Reponse status code and status string to console
@@ -435,9 +434,9 @@ public with sharing class ESignLiveExamples
     public static String addSignatureExample(String packageId, String roleId, String documentId, Decimal left, Decimal top, Decimal width, Decimal height,
                                            String fieldType, String fieldSubType, Integer page)
     {
-        ESignLiveSDK sdk = new ESignLiveSDK();
+        OneSpanSDK sdk = new OneSpanSDK();
         
-        ESignLiveAPIObjects.Field field1 = new ESignLiveAPIObjects.Field();
+        OneSpanAPIObjects.Field field1 = new OneSpanAPIObjects.Field();
         field1.left = left;
         field1.top = top;
         field1.width = width;
@@ -448,10 +447,10 @@ public with sharing class ESignLiveExamples
         field1.page = page;
 
 
-        List<ESignLiveAPIObjects.Field> fieldList = new List<ESignLiveAPIObjects.Field>();
+        List<OneSpanAPIObjects.Field> fieldList = new List<OneSpanAPIObjects.Field>();
         fieldList.add(field1);
 
-        ESignLiveAPIObjects.Approval approval = new ESignLiveAPIObjects.Approval();
+        OneSpanAPIObjects.Approval approval = new OneSpanAPIObjects.Approval();
         approval.role = roleId;
         approval.fields = fieldList;
 
@@ -468,7 +467,7 @@ public with sharing class ESignLiveExamples
      */
     public static String addRoleExample(String packageId, String firstname, String lastname, String email)
     {
-        ESignLiveSDK sdk = new ESignLiveSDK();
+        OneSpanSDK sdk = new OneSpanSDK();
         
         // Call the SDK method and get the Role object JSON String as response
         String response = sdk.addRole(firstname, lastname, email, packageId);
@@ -484,7 +483,7 @@ public with sharing class ESignLiveExamples
      */
     public static String deletePackageExample(String packageId)
     {
-        ESignLiveSDK sdk = new ESignLiveSDK();
+        OneSpanSDK sdk = new OneSpanSDK();
 
         // Call the SDK method and get the HTTP response status code and status string
         String response =  sdk.deletePackage(packageId);
@@ -500,10 +499,10 @@ public with sharing class ESignLiveExamples
      */
     public static String updateDocumentExample(String packageId, String documentId, String docName, String description)
     {
-        ESignLiveSDK sdk = new ESignLiveSDK();
+        OneSpanSDK sdk = new OneSpanSDK();
 
         // Example that will update the document name and description
-        ESignLiveAPIObjects.Document doc = new ESignLiveAPIObjects.Document();
+        OneSpanAPIObjects.Document doc = new OneSpanAPIObjects.Document();
         doc.Name = 'New Document Name';
         doc.description = 'New description';
 
@@ -521,7 +520,7 @@ public with sharing class ESignLiveExamples
      */
     public static String deleteDocumentExample(String packageId, String documentId)
     {
-        ESignLiveSDK sdk = new ESignLiveSDK();
+        OneSpanSDK sdk = new OneSpanSDK();
 
         // Call the SDK method and get the HTTP response status code and status string
         String response =  sdk.deleteDocument(packageId, documentId);
@@ -537,7 +536,7 @@ public with sharing class ESignLiveExamples
      */
     public static String deleteRoleExample(String packageId, String roleId)
     {
-        ESignLiveSDK sdk = new ESignLiveSDK();
+        OneSpanSDK sdk = new OneSpanSDK();
 
         // Call the SDK method and get the HTTP response status code and status string
         String response  = sdk.deleteDocument(packageId, roleId);
@@ -551,12 +550,12 @@ public with sharing class ESignLiveExamples
     /**
      * Example method to get an approval
      */
-    public static ESignLiveAPIObjects.Approval getApprovalExample(String packageId, String documentId, String approvalId)
+    public static OneSpanAPIObjects.Approval getApprovalExample(String packageId, String documentId, String approvalId)
     {
-        ESignLiveSDK sdk = new ESignLiveSDK();
+        OneSpanSDK sdk = new OneSpanSDK();
 
         // Call the SDK method and get the Approval object as response
-        ESignLiveAPIObjects.Approval response = sdk.getApproval(packageId, documentId, approvalId);
+        OneSpanAPIObjects.Approval response = sdk.getApproval(packageId, documentId, approvalId);
 
         // Print the Approval object to console
         System.debug('=> Response from getApprovalExample: ' + response);
@@ -569,12 +568,12 @@ public with sharing class ESignLiveExamples
      */
     public static String updateApprovalExample(String packageId, String documentId, String approvalId)
     {
-        ESignLiveSDK sdk = new ESignLiveSDK();
+        OneSpanSDK sdk = new OneSpanSDK();
         
-        ESignLiveAPIObjects.Approval approval = new ESignLiveAPIObjects.Approval();
+        OneSpanAPIObjects.Approval approval = new OneSpanAPIObjects.Approval();
         approval.name = 'New name';
         approval.role = 'New role';
-        approval.fields = new List<ESignLiveAPIObjects.Field>();
+        approval.fields = new List<OneSpanAPIObjects.Field>();
 
         // Call the SDK method and get the HTTP response status code and status string
         String response = sdk.updateApproval(packageId, documentId, approvalId, approval);
@@ -590,7 +589,7 @@ public with sharing class ESignLiveExamples
      */
     public static String deleteApprovalExample(String packageId, String documentId, String approvalId)
     {
-        ESignLiveSDK sdk = new ESignLiveSDK();
+        OneSpanSDK sdk = new OneSpanSDK();
 
         // Call the SDK method and get the HTTP response status code and status string
         String response = sdk.deleteApproval(packageId, documentId, approvalId);
@@ -604,12 +603,12 @@ public with sharing class ESignLiveExamples
     /**
      * Example method to get a role
      */
-    public static ESignLiveAPIObjects.Role getRoleExample(String packageId, String roleId)
+    public static OneSpanAPIObjects.Role getRoleExample(String packageId, String roleId)
     {
-        ESignLiveSDK sdk = new ESignLiveSDK();
+        OneSpanSDK sdk = new OneSpanSDK();
 
         // Call the SDK method and get the Role object as the response
-        ESignLiveAPIObjects.Role response = sdk.getRole(packageId, roleId);
+        OneSpanAPIObjects.Role response = sdk.getRole(packageId, roleId);
 
         // Print the response to console
         System.debug('=> Response from updateApprovalExample: ' + response);
@@ -623,17 +622,17 @@ public with sharing class ESignLiveExamples
     public static String updateRoleExample(String packageId, String roleId, String firstname, String lastname, String email, Boolean reassign)
     {
          // Create request
-        List<ESignLiveAPIObjects.AuthChallenge> challenges = new List<ESignLiveAPIObjects.AuthChallenge>();
+        List<OneSpanAPIObjects.AuthChallenge> challenges = new List<OneSpanAPIObjects.AuthChallenge>();
         
-        ESignLiveAPIObjects.Delivery delivery = new ESignLiveAPIObjects.Delivery();
+        OneSpanAPIObjects.Delivery delivery = new OneSpanAPIObjects.Delivery();
         delivery.email = true;
         delivery.provider = true;
 
-        ESignLiveAPIObjects.Auth auth = new ESignLiveAPIObjects.Auth();
+        OneSpanAPIObjects.Auth auth = new OneSpanAPIObjects.Auth();
         auth.challenges = challenges;
-        auth.scheme = ESignLiveAPIObjects.AuthScheme.NONE;
+        auth.scheme = OneSpanAPIObjects.AuthScheme.NONE;
 
-        ESignLiveAPIObjects.Signer signer = new ESignLiveAPIObjects.Signer();
+        OneSpanAPIObjects.Signer signer = new OneSpanAPIObjects.Signer();
         signer.auth = auth;
         signer.delivery = delivery;
         signer.firstName = firstName;
@@ -641,14 +640,14 @@ public with sharing class ESignLiveExamples
         signer.email = email;
         signer.name = firstName + lastName;
 
-        List<ESignLiveAPIObjects.Signer> signers = new List<ESignLiveAPIObjects.Signer>();
+        List<OneSpanAPIObjects.Signer> signers = new List<OneSpanAPIObjects.Signer>();
         signers.add(signer);
 
-        ESignLiveAPIObjects.Role role = new ESignLiveAPIObjects.Role();
+        OneSpanAPIObjects.Role role = new OneSpanAPIObjects.Role();
         role.signers = signers;
         role.reassign = reassign;
   
-        ESignLiveSDK sdk = new ESignLiveSDK();
+        OneSpanSDK sdk = new OneSpanSDK();
 
         // Call the SDK method and get the HTTP response status code and status string
         String response = sdk.updateRole(packageId, roleId, role );
@@ -665,9 +664,9 @@ public with sharing class ESignLiveExamples
     public static void addFieldExample(String packageId, String documentId, String approvalId, Decimal left, Decimal top, Decimal width, Decimal height,
                                            String fieldType, String fieldSubType, Integer page,String binding)
     {
-        ESignLiveSDK sdk = new ESignLiveSDK();
+        OneSpanSDK sdk = new OneSpanSDK();
         
-        ESignLiveAPIObjects.Field field1 = new ESignLiveAPIObjects.Field();
+        OneSpanAPIObjects.Field field1 = new OneSpanAPIObjects.Field();
         field1.left = left;
         field1.top = top;
         field1.width = width;
@@ -687,12 +686,12 @@ public with sharing class ESignLiveExamples
     /**
      * Example method to get a field
      */
-    public static ESignLiveAPIObjects.Field getFieldExample(String packageId, String documentId, String approvalId, String fieldId)
+    public static OneSpanAPIObjects.Field getFieldExample(String packageId, String documentId, String approvalId, String fieldId)
     {
-        ESignLiveSDK sdk = new ESignLiveSDK();
+        OneSpanSDK sdk = new OneSpanSDK();
 
         // Call the SDK method and get the Field object as the response
-        ESignLiveAPIObjects.Field response = sdk.getField(packageId, documentId, approvalId, fieldId);
+        OneSpanAPIObjects.Field response = sdk.getField(packageId, documentId, approvalId, fieldId);
 
         // Print the field object to console
         System.debug('=> Response from getFieldExample: ' + response);
@@ -705,10 +704,10 @@ public with sharing class ESignLiveExamples
      */
     public static String updateFieldExample(String packageId, String documentId, String approvalId, String fieldId)
     {
-        ESignLiveSDK sdk = new ESignLiveSDK();
+        OneSpanSDK sdk = new OneSpanSDK();
         
         // Example that will update the document name and role
-        ESignLiveAPIObjects.Field field1 = new ESignLiveAPIObjects.Field();
+        OneSpanAPIObjects.Field field1 = new OneSpanAPIObjects.Field();
         field1.left = 300;
         field1.top = 500;
         field1.width = 100;
@@ -732,7 +731,7 @@ public with sharing class ESignLiveExamples
      */
     public static String deleteFieldExample(String packageId, String documentId, String approvalId, String fieldId)
     {
-        ESignLiveSDK sdk = new ESignLiveSDK();
+        OneSpanSDK sdk = new OneSpanSDK();
 
         // Call the SDK method and get the HTTP response status code and status string
         String response = sdk.deleteField(packageId, documentId, approvalId, fieldId);

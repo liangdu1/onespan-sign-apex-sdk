@@ -1,19 +1,19 @@
 /**
- * Class Name: ESignLiveSDK
+ * Class Name: OneSpanSDK
  *
- * Entry methods for eSignLive SDK
+ * Entry methods for OneSpan SDK
  */
 
-public with sharing class ESignLiveSDK
+public with sharing class OneSpanSDK
 {
-    public ESignLiveRESTAPIHelper helper;
+    public OneSpanRESTAPIHelper helper;
     public static final String BOUNDARY = '----WebKitFormBoundary1bNO60n7FqP5WO4t';
     /**
      * Constructor - instantiate helper used throughout class
      */
-    public ESignLiveSDK()
+    public OneSpanSDK()
     {
-        helper = new ESignLiveRESTAPIHelper();
+        helper = new OneSpanRESTAPIHelper();
     }
 
     /**
@@ -24,26 +24,26 @@ public with sharing class ESignLiveSDK
      * based on the inputs provided.
      */
     public String safeSetAuth(String packageId, String roleId,
-                                ESignLiveAPIObjects.AuthScheme scheme,
-                                List<ESignLiveAPIObjects.AuthChallenge> challenges)
+                                OneSpanAPIObjects.AuthScheme scheme,
+                                List<OneSpanAPIObjects.AuthChallenge> challenges)
     {
-        ESignLiveValidation.validate('Package Id', packageId);
-        ESignLiveValidation.validate('Role Id', roleId);
-        ESignLiveValidation.validate(scheme);
+        OneSpanValidation.validate('Package Id', packageId);
+        OneSpanValidation.validate('Role Id', roleId);
+        OneSpanValidation.validate(scheme);
 
-        if(scheme != ESignLiveAPIObjects.AuthScheme.NONE)
+        if(scheme != OneSpanAPIObjects.AuthScheme.NONE)
         {
-            ESignLiveValidation.validate(challenges);    
+            OneSpanValidation.validate(challenges);
         }
         
         String response;
 
         // Get the Role for the RoleId and validate it
-        ESignLiveAPIObjects.Role role = helper.getRole(packageId,roleId);
+        OneSpanAPIObjects.Role role = helper.getRole(packageId,roleId);
         
         if(role != null && role.signers != null)
         {
-            ESignLiveAPIObjects.Auth auth = new ESignLiveAPIObjects.Auth();   
+            OneSpanAPIObjects.Auth auth = new OneSpanAPIObjects.Auth();
 
             auth.scheme = scheme;
             auth.challenges = challenges;
@@ -64,7 +64,7 @@ public with sharing class ESignLiveSDK
      */
     public String getAudit(String packageId)
     {
-        ESignLiveValidation.validate('Package Id', packageId);
+        OneSpanValidation.validate('Package Id', packageId);
 
         String str = helper.getAuditTrail(packageId);
         return str;
@@ -83,29 +83,29 @@ public with sharing class ESignLiveSDK
     public String updateSigner(String packageId,String roleId,String firstname,String lastname,String email,String optionalMessageToTheAssignee)
     {
 
-        ESignLiveValidation.validate('Email', email);
-        ESignLiveValidation.validate('First Name', firstname);
-        ESignLiveValidation.validate('Last Name', lastname);
+        OneSpanValidation.validate('Email', email);
+        OneSpanValidation.validate('First Name', firstname);
+        OneSpanValidation.validate('Last Name', lastname);
 
         // Get the Role for the RoleId and validate it
-        ESignLiveAPIObjects.Role oldSigner = helper.getRole(packageId,roleId);
+        OneSpanAPIObjects.Role oldSigner = helper.getRole(packageId,roleId);
         String response;
 
         if(oldSigner != null)
         {
             if(!oldSigner.reassign)
             {
-                throw new ESignLiveSDKException('This role is not allowed to change Signer: ' +roleId);
+                throw new OneSpanSDKException('This role is not allowed to change Signer: ' +roleId);
             }
 
-            ESignLiveAPIObjects.Role newSigner = new ESignLiveAPIObjects.Role();
+            OneSpanAPIObjects.Role newSigner = new OneSpanAPIObjects.Role();
             newSigner.name = firstname + lastname;
             newSigner.index = oldSigner.index;
             newSigner.id = '';
             newSigner.type = 'SIGNER';
             newSigner.reassign = true;
             newSigner.attachmentRequirements = oldSigner.attachmentRequirements;
-            newSigner.emailMessage = new ESignLiveAPIObjects.EmailMessage(optionalMessageToTheAssignee);
+            newSigner.emailMessage = new OneSpanAPIObjects.EmailMessage(optionalMessageToTheAssignee);
             newSigner.signers = createRolesSigner(firstname, lastname, email, '', '');
             newSigner.signers[0].name = firstname + lastname;
             newSigner.signers[0].id = '';
@@ -115,7 +115,7 @@ public with sharing class ESignLiveSDK
         }
         else
         {
-            throw new ESignLiveSDKException('There is no role for the role id: ' + roleId + 'in the package: ' + packageId);
+            throw new OneSpanSDKException('There is no role for the role id: ' + roleId + 'in the package: ' + packageId);
         }
 
         return response;
@@ -123,23 +123,23 @@ public with sharing class ESignLiveSDK
 
     /**
      * Method Name: setAttachmentRequirements
-     * Inputs: List<ESignLiveAPIObjects.AttachmentRequirement>, Package Id, Role Id
+     * Inputs: List<OneSpanAPIObjects.AttachmentRequirement>, Package Id, Role Id
      * Output: Response String
      * This method sets the attachment requirements for a particular signer. 
      */
-    public String setAttachmentRequirements(List<ESignLiveAPIObjects.AttachmentRequirement> 
+    public String setAttachmentRequirements(List<OneSpanAPIObjects.AttachmentRequirement>
                                             attachmentRequirements,String packageId,
                                             String roleId)
     {
-        ESignLiveValidation.validate('Package Id', packageId);
-        ESignLiveValidation.validate('Role Id', roleId);
-        ESignLiveValidation.validate(attachmentRequirements);
+        OneSpanValidation.validate('Package Id', packageId);
+        OneSpanValidation.validate('Role Id', roleId);
+        OneSpanValidation.validate(attachmentRequirements);
 
         // Get the Role for the RoleId 
-        ESignLiveAPIObjects.Role role = helper.getRole(packageId,roleId);
+        OneSpanAPIObjects.Role role = helper.getRole(packageId,roleId);
 
         // add the Attachment Requirements
-        for(ESignLiveAPIObjects.AttachmentRequirement ar : attachmentRequirements)
+        for(OneSpanAPIObjects.AttachmentRequirement ar : attachmentRequirements)
         {
             role.attachmentRequirements.add(ar);
         }
@@ -157,8 +157,8 @@ public with sharing class ESignLiveSDK
      */
     public String downloadAllAttachmentFilesForSignerInPackage(String packageId,String roleId)
     {
-        ESignLiveValidation.validate('Package Id', packageId);
-        ESignLiveValidation.validate('Role Id', roleId);
+        OneSpanValidation.validate('Package Id', packageId);
+        OneSpanValidation.validate('Role Id', roleId);
 
         String response = helper.getSignerAttachments(packageId,roleId);
         return response;
@@ -170,9 +170,9 @@ public with sharing class ESignLiveSDK
      * Output: Package Id
      * This method creates the package with the information provided. 
      */
-    public String createPackage(ESignLiveAPIObjects.Package_x pkg)
+    public String createPackage(OneSpanAPIObjects.Package_x pkg)
     {
-        ESignLiveValidation.validate(pkg);
+        OneSpanValidation.validate(pkg);
 
         String response = helper.createPackage(pkg);
         return response;
@@ -184,10 +184,10 @@ public with sharing class ESignLiveSDK
      * Output: Package Id
      * This method creates the package along with the documents with the information provided. 
      */
-    public String createPackage(ESignLiveAPIObjects.Package_x pkg, Map<String,Blob> documentBlobMap)
+    public String createPackage(OneSpanAPIObjects.Package_x pkg, Map<String,Blob> documentBlobMap)
     {
-        ESignLiveValidation.validate(pkg);
-        ESignLiveValidation.validate(documentBlobMap);
+        OneSpanValidation.validate(pkg);
+        OneSpanValidation.validate(documentBlobMap);
 
         String response = createPackageWithBinaries(pkg,documentBlobMap);
         return response;
@@ -199,11 +199,11 @@ public with sharing class ESignLiveSDK
      * Output: Package Object
      * This method gets the Package object for the Package Id passed.
      */
-    public ESignLiveAPIObjects.Package_x getPackage(String packageId)
+    public OneSpanAPIObjects.Package_x getPackage(String packageId)
     {
-        ESignLiveValidation.validate('Package Id', packageId);
+        OneSpanValidation.validate('Package Id', packageId);
 
-        ESignLiveAPIObjects.Package_x pkg = helper.getPackage(packageId);
+        OneSpanAPIObjects.Package_x pkg = helper.getPackage(packageId);
         return pkg;
     }
 
@@ -213,10 +213,10 @@ public with sharing class ESignLiveSDK
      * Output: Response String
      * This method updates the Package for the Package Id and the Package object passed.
      */
-    public void updatePackage(ESignLiveAPIObjects.Package_x packageToUpdate, String packageId)
+    public void updatePackage(OneSpanAPIObjects.Package_x packageToUpdate, String packageId)
     {
-        ESignLiveValidation.validate('Package Id', packageId);
-        ESignLiveValidation.validate(packageToUpdate);
+        OneSpanValidation.validate('Package Id', packageId);
+        OneSpanValidation.validate(packageToUpdate);
 
         helper.updatePackage(packageToUpdate,packageId);
     }
@@ -227,10 +227,10 @@ public with sharing class ESignLiveSDK
      * Output: Documents JSON String
      * This method adds the documents in the existing package.
      */
-    public String createDocuments(String packageId,ESignLiveAPIObjects.Document document, Map<String,Blob> documentBlobMap)
+    public String createDocuments(String packageId,OneSpanAPIObjects.Document document, Map<String,Blob> documentBlobMap)
     {
-        ESignLiveValidation.validate('Package Id', packageId);
-        ESignLiveValidation.validate(documentBlobMap);
+        OneSpanValidation.validate('Package Id', packageId);
+        OneSpanValidation.validate(documentBlobMap);
 
         String response = createDocumentWithBinariesAndFields(packageId,document,documentBlobMap);
         return response;
@@ -244,12 +244,12 @@ public with sharing class ESignLiveSDK
      */
     public String setSigningOrder(String packageId,String roleId,Integer index)
     {
-        ESignLiveValidation.validate('Package Id', packageId);
-        ESignLiveValidation.validate('Role Id', roleId);
-        ESignLiveValidation.validate('Role Index/Signing Order', index);
+        OneSpanValidation.validate('Package Id', packageId);
+        OneSpanValidation.validate('Role Id', roleId);
+        OneSpanValidation.validate('Role Index/Signing Order', index);
 
         // Get the Role for the RoleId and validate it
-        ESignLiveAPIObjects.Role signer = helper.getRole(packageId,roleId);
+        OneSpanAPIObjects.Role signer = helper.getRole(packageId,roleId);
         String response;
 
         if(signer != null)
@@ -259,7 +259,7 @@ public with sharing class ESignLiveSDK
         }
         else
         {
-            throw new ESignLiveSDKException('setSigningOrder: There is no role for the role id:'+roleId + ' in the package:'+packageId);
+            throw new OneSpanSDKException('setSigningOrder: There is no role for the role id:'+roleId + ' in the package:'+packageId);
         }
 
         return response;
@@ -273,7 +273,7 @@ public with sharing class ESignLiveSDK
      */
     public String getSigningStatus(String packageId)
     {
-        ESignLiveValidation.validate('Package Id', packageId);
+        OneSpanValidation.validate('Package Id', packageId);
 
         String response = helper.getPackageSigningStatus(packageId);
         return response;
@@ -287,10 +287,10 @@ public with sharing class ESignLiveSDK
      */
     public String getSigningUrl(String packageId, String signerId)
     {
-        ESignLiveValidation.validate('Package Id', packageId);
-        ESignLiveValidation.validate('Signer Id', signerId);
+        OneSpanValidation.validate('Package Id', packageId);
+        OneSpanValidation.validate('Signer Id', signerId);
 
-        ESignLiveAPIObjects.SigningUrl signingURL = helper.getSigningUrl(packageId,signerId);
+        OneSpanAPIObjects.SigningUrl signingURL = helper.getSigningUrl(packageId,signerId);
         return signingURL.url;
     }
 
@@ -302,8 +302,8 @@ public with sharing class ESignLiveSDK
      */
     public Blob downloadDocument(String packageId,String docId)
     {
-        ESignLiveValidation.validate('Package Id', packageId);
-        ESignLiveValidation.validate('Document Id', docId);
+        OneSpanValidation.validate('Package Id', packageId);
+        OneSpanValidation.validate('Document Id', docId);
 
         Blob documentBlob = helper.getSignedDocument(packageId,docId);
         return documentBlob;
@@ -315,10 +315,10 @@ public with sharing class ESignLiveSDK
      * Output: Response String
      * This method sets the status for the Package Id passed.
      */
-    public String setStatus(String packageId, ESignLiveAPIObjects.PackageStatus status)
+    public String setStatus(String packageId, OneSpanAPIObjects.PackageStatus status)
     {
-        ESignLiveValidation.validate('Package Id', packageId);
-        ESignLiveValidation.validate(status);
+        OneSpanValidation.validate('Package Id', packageId);
+        OneSpanValidation.validate(status);
 
         String response = helper.updatePackageStatus(packageId, status);
 
@@ -331,13 +331,13 @@ public with sharing class ESignLiveSDK
      * Output: Approval String
      * This method adds the Signature for the Package Id, Document Id and Approval passed.
      */
-    public String addSignature(String packageId, String documentId,ESignLiveAPIObjects.Approval approval)
+    public String addSignature(String packageId, String documentId,OneSpanAPIObjects.Approval approval)
     {
-        ESignLiveValidation.validate('Package Id', packageId);
-        ESignLiveValidation.validate('Document Id', documentId);
-        ESignLiveValidation.validate(approval);
+        OneSpanValidation.validate('Package Id', packageId);
+        OneSpanValidation.validate('Document Id', documentId);
+        OneSpanValidation.validate(approval);
 
-        ESignLiveAPIObjects.Approval approvalResponse = helper.createApproval(packageId,documentId,approval);
+        OneSpanAPIObjects.Approval approvalResponse = helper.createApproval(packageId,documentId,approval);
 
         return JSON.serialize(approvalResponse);
     }
@@ -351,23 +351,23 @@ public with sharing class ESignLiveSDK
      */
     public String addRole(String firstName, String lastName, String email, String packageId)
     {
-        ESignLiveValidation.validate('Email', email);
-        ESignLiveValidation.validate('First Name', firstname);
-        ESignLiveValidation.validate('Last Name', lastname);
-        ESignLiveValidation.validate('Package Id', packageId);
+        OneSpanValidation.validate('Email', email);
+        OneSpanValidation.validate('First Name', firstname);
+        OneSpanValidation.validate('Last Name', lastname);
+        OneSpanValidation.validate('Package Id', packageId);
 
         // Create request
-        List<ESignLiveAPIObjects.AuthChallenge> challenges = new List<ESignLiveAPIObjects.AuthChallenge>();
+        List<OneSpanAPIObjects.AuthChallenge> challenges = new List<OneSpanAPIObjects.AuthChallenge>();
         
-        ESignLiveAPIObjects.Delivery delivery = new ESignLiveAPIObjects.Delivery();
+        OneSpanAPIObjects.Delivery delivery = new OneSpanAPIObjects.Delivery();
         delivery.email = true;
         delivery.provider = true;
 
-        ESignLiveAPIObjects.Auth auth = new ESignLiveAPIObjects.Auth();
+        OneSpanAPIObjects.Auth auth = new OneSpanAPIObjects.Auth();
         auth.challenges = challenges;
-        auth.scheme = ESignLiveAPIObjects.AuthScheme.NONE;
+        auth.scheme = OneSpanAPIObjects.AuthScheme.NONE;
 
-        ESignLiveAPIObjects.Signer signer = new ESignLiveAPIObjects.Signer();
+        OneSpanAPIObjects.Signer signer = new OneSpanAPIObjects.Signer();
         signer.auth = auth;
         signer.delivery = delivery;
         signer.firstName = firstName;
@@ -375,10 +375,10 @@ public with sharing class ESignLiveSDK
         signer.email = email;
         signer.name = firstName + lastName;
 
-        List<ESignLiveAPIObjects.Signer> signers = new List<ESignLiveAPIObjects.Signer>();
+        List<OneSpanAPIObjects.Signer> signers = new List<OneSpanAPIObjects.Signer>();
         signers.add(signer);
 
-        ESignLiveAPIObjects.Role role = new ESignLiveAPIObjects.Role();
+        OneSpanAPIObjects.Role role = new OneSpanAPIObjects.Role();
         role.signers = signers;
         role.reassign = true;
         
@@ -394,14 +394,14 @@ public with sharing class ESignLiveSDK
      * This method is a private method which is called from the createPackage method
      * to create the package with the document blobs.
      */
-    private String createPackageWithBinaries(ESignLiveAPIObjects.Package_x pkg, Map<String,Blob> documentMap)
+    private String createPackageWithBinaries(OneSpanAPIObjects.Package_x pkg, Map<String,Blob> documentMap)
     {
         // Check if the documents in the Package (if any provided) match with the documents in the documentMap
         String compResult ='success';
 
         if(pkg.documents != null)
         {
-            compResult = ESignLiveValidation.comparePackageDocumentsAndMap(pkg,documentMap);    
+            compResult = OneSpanValidation.comparePackageDocumentsAndMap(pkg,documentMap);
         }
         
         if(compResult.equals('success'))
@@ -412,9 +412,9 @@ public with sharing class ESignLiveSDK
 
             String footer = '--' + BOUNDARY + '--';             
 
-            String secondHeaderEncoded = ESignLiveDocumentUtilities.encodeString(secondHeader);
+            String secondHeaderEncoded = OneSpanDocumentUtilities.encodeString(secondHeader);
 
-            List<String> encodedStrings = ESignLiveDocumentUtilities.encodeDocuments(documentMap,BOUNDARY,'file');
+            List<String> encodedStrings = OneSpanDocumentUtilities.encodeDocuments(documentMap,BOUNDARY,'file');
 
             String fileNamesJSON = '';
 
@@ -430,15 +430,15 @@ public with sharing class ESignLiveSDK
             if(pkg.documents == null)
             {
                 packageContent = '{ "documents":['+fileNamesJSON.substring(0,fileNamesJSON.length()-1)+'] }';
-                ESignLiveAPIObjects.Package_x tempPkg = (ESignLiveAPIObjects.Package_x)JSON.deserialize(packageContent, ESignLiveAPIObjects.Package_x.class);
+                OneSpanAPIObjects.Package_x tempPkg = (OneSpanAPIObjects.Package_x)JSON.deserialize(packageContent, OneSpanAPIObjects.Package_x.class);
                 pkg.documents = tempPkg.documents;
             }
 
             pkg.data = null;
             packageContent = JSON.serialize(pkg);
-            packageContent = ESignLiveJSONHelper.prepareOutboundJSON(packageContent);
+            packageContent = OneSpanJSONHelper.prepareOutboundJSON(packageContent);
 
-            String packageContentEncoded = ESignLiveDocumentUtilities.encodeContent(packageContent);
+            String packageContentEncoded = OneSpanDocumentUtilities.encodeContent(packageContent);
 
             multipartFormData = EncodingUtil.base64Decode(headerPlusBodyEncoded+secondHeaderEncoded+packageContentEncoded+footerEncoded);
 
@@ -451,12 +451,12 @@ public with sharing class ESignLiveSDK
 
     /*
      * Method Name: createDocumentWithBinariesAndFields
-     * Inputs: Package Id, ESignLiveAPIObjects.Document document, Document Map
+     * Inputs: Package Id, OneSpanAPIObjects.Document document, Document Map
      * Output: Document Response string
      * This method is a private method which is called from the createDocument method
      * to create the documents within an existing package.
      */
-    private String createDocumentWithBinariesAndFields(String packageId, ESignLiveAPIObjects.Document document, Map<String,Blob> documentMap)
+    private String createDocumentWithBinariesAndFields(String packageId, OneSpanAPIObjects.Document document, Map<String,Blob> documentMap)
     {
         Blob multipartFormData;
 
@@ -464,9 +464,9 @@ public with sharing class ESignLiveSDK
 
         String footer = '--' + BOUNDARY + '--';             
 
-        String secondHeaderEncoded = ESignLiveDocumentUtilities.encodeString(secondHeader);
+        String secondHeaderEncoded = OneSpanDocumentUtilities.encodeString(secondHeader);
 
-        List<String> encodedStrings = ESignLiveDocumentUtilities.encodeDocuments(documentMap,BOUNDARY,'file');
+        List<String> encodedStrings = OneSpanDocumentUtilities.encodeDocuments(documentMap,BOUNDARY,'file');
 
         String fileNamesJSON = '';
 
@@ -479,9 +479,9 @@ public with sharing class ESignLiveSDK
         String footerEncoded = encodedStrings[1];
         
         String documentJSON = JSON.serialize(document);
-        documentJSON = ESignLiveJSONHelper.prepareOutboundJSON(documentJSON);        
+        documentJSON = OneSpanJSONHelper.prepareOutboundJSON(documentJSON);
 
-        String documentJSONEncoded = ESignLiveDocumentUtilities.encodeContent(documentJSON);
+        String documentJSONEncoded = OneSpanDocumentUtilities.encodeContent(documentJSON);
 
         multipartFormData = EncodingUtil.base64Decode(headerPlusBodyEncoded+secondHeaderEncoded+documentJSONEncoded+footerEncoded);
 
@@ -495,21 +495,21 @@ public with sharing class ESignLiveSDK
      * Output: List of Signer objects
      * This method builds the signer
      */
-    public List<ESignLiveAPIObjects.Signer> createRolesSigner(String firstName, String lastName, String email, String title, String company)
+    public List<OneSpanAPIObjects.Signer> createRolesSigner(String firstName, String lastName, String email, String title, String company)
     {
         // Create request
-        List<ESignLiveAPIObjects.AuthChallenge> challenges = new List<ESignLiveAPIObjects.AuthChallenge>();
+        List<OneSpanAPIObjects.AuthChallenge> challenges = new List<OneSpanAPIObjects.AuthChallenge>();
         
-        ESignLiveAPIObjects.Delivery delivery = new ESignLiveAPIObjects.Delivery();
+        OneSpanAPIObjects.Delivery delivery = new OneSpanAPIObjects.Delivery();
         delivery.email = true;
         delivery.provider = true;
         delivery.download = true;
 
-        ESignLiveAPIObjects.Auth auth = new ESignLiveAPIObjects.Auth();
+        OneSpanAPIObjects.Auth auth = new OneSpanAPIObjects.Auth();
         auth.challenges = challenges;
-        auth.scheme = ESignLiveAPIObjects.AuthScheme.NONE;
+        auth.scheme = OneSpanAPIObjects.AuthScheme.NONE;
 
-        ESignLiveAPIObjects.Signer signer = new ESignLiveAPIObjects.Signer();
+        OneSpanAPIObjects.Signer signer = new OneSpanAPIObjects.Signer();
         signer.auth = auth;
         signer.delivery = delivery;
         signer.firstName = firstName;
@@ -519,7 +519,7 @@ public with sharing class ESignLiveSDK
         signer.company = company;
         signer.title= title;
 
-        List<ESignLiveAPIObjects.Signer> signers = new List<ESignLiveAPIObjects.Signer>();
+        List<OneSpanAPIObjects.Signer> signers = new List<OneSpanAPIObjects.Signer>();
         signers.add(signer);
         return signers;
     }
@@ -532,7 +532,7 @@ public with sharing class ESignLiveSDK
      */
     public String  deletePackage(String packageId)
     {
-        ESignLiveValidation.validate('Package Id', packageId);
+        OneSpanValidation.validate('Package Id', packageId);
         return helper.deletePackage(packageId);
     }
 
@@ -542,10 +542,10 @@ public with sharing class ESignLiveSDK
      * Output: Response String
      * This method updates the Document specified by the Package Id and the Document Id.
      */
-    public String updateDocument(String packageId, String documentId, ESignLiveAPIObjects.Document doc)
+    public String updateDocument(String packageId, String documentId, OneSpanAPIObjects.Document doc)
     {
-        ESignLiveValidation.validate('Package Id', packageId);
-        ESignLiveValidation.validate('Document Id', documentId);
+        OneSpanValidation.validate('Package Id', packageId);
+        OneSpanValidation.validate('Document Id', documentId);
         return helper.updateDocument(packageId, documentId, doc);
     }
 
@@ -557,8 +557,8 @@ public with sharing class ESignLiveSDK
      */
     public String deleteDocument(String packageId, String documentId)
     {
-        ESignLiveValidation.validate('Package Id', packageId);
-        ESignLiveValidation.validate('Document Id', documentId);
+        OneSpanValidation.validate('Package Id', packageId);
+        OneSpanValidation.validate('Document Id', documentId);
         return helper.deleteDocument(packageId, documentId);
     } 
 
@@ -570,8 +570,8 @@ public with sharing class ESignLiveSDK
      */
     public String deleteRole(String packageId, String roleId)
     {
-        ESignLiveValidation.validate('Package Id', packageId);
-        ESignLiveValidation.validate('Role Id', roleId);
+        OneSpanValidation.validate('Package Id', packageId);
+        OneSpanValidation.validate('Role Id', roleId);
         return helper.deleteDocument(packageId, roleId);
     }
 
@@ -582,11 +582,11 @@ public with sharing class ESignLiveSDK
      * This method gets the Approval specified by the Approval Id on the Document 
      * identified by the Document Id in the Package specified by the Package Id.
      */
-    public ESignLiveAPIObjects.Approval getApproval(String packageId, String documentId, String approvalId)
+    public OneSpanAPIObjects.Approval getApproval(String packageId, String documentId, String approvalId)
     {
-        ESignLiveValidation.validate('Package Id', packageId);
-        ESignLiveValidation.validate('Document Id', documentId);
-        ESignLiveValidation.validate('Approval Id', approvalId);
+        OneSpanValidation.validate('Package Id', packageId);
+        OneSpanValidation.validate('Document Id', documentId);
+        OneSpanValidation.validate('Approval Id', approvalId);
         return helper.getApproval(packageId, documentId, approvalId);
     }
 
@@ -597,12 +597,12 @@ public with sharing class ESignLiveSDK
      * This method updates the Approval specified by the Approval Id on the Document 
      * identified by the Document Id in the Package specified by the Package Id.
      */
-    public String updateApproval(String packageId, String documentId, String approvalId, ESignLiveAPIObjects.Approval approval)
+    public String updateApproval(String packageId, String documentId, String approvalId, OneSpanAPIObjects.Approval approval)
     {
-        ESignLiveValidation.validate('Package Id', packageId);
-        ESignLiveValidation.validate('Document Id', documentId);
-        ESignLiveValidation.validate('Approval Id', approvalId);
-        ESignLiveValidation.validate(approval);
+        OneSpanValidation.validate('Package Id', packageId);
+        OneSpanValidation.validate('Document Id', documentId);
+        OneSpanValidation.validate('Approval Id', approvalId);
+        OneSpanValidation.validate(approval);
         return helper.updateApproval(packageId, documentId, approvalId, approval);
     }
 
@@ -615,9 +615,9 @@ public with sharing class ESignLiveSDK
      */
     public String deleteApproval(String packageId, String documentId, String approvalId)
     {
-        ESignLiveValidation.validate('Package Id', packageId);
-        ESignLiveValidation.validate('Document Id', documentId);
-        ESignLiveValidation.validate('Approval Id', approvalId);
+        OneSpanValidation.validate('Package Id', packageId);
+        OneSpanValidation.validate('Document Id', documentId);
+        OneSpanValidation.validate('Approval Id', approvalId);
         return helper.deleteApproval(packageId, documentId, approvalId);
     }
 
@@ -627,10 +627,10 @@ public with sharing class ESignLiveSDK
      * Output: Approval Response String
      * This method gets the Role specified by the Role Id in the Package specified by the Package Id.
      */
-    public ESignLiveAPIObjects.Role getRole(String packageId, String roleId)
+    public OneSpanAPIObjects.Role getRole(String packageId, String roleId)
     {
-        ESignLiveValidation.validate('Package Id', packageId);
-        ESignLiveValidation.validate('Role Id', roleId);
+        OneSpanValidation.validate('Package Id', packageId);
+        OneSpanValidation.validate('Role Id', roleId);
         return helper.getRole(packageId, roleId);
     }
 
@@ -640,10 +640,10 @@ public with sharing class ESignLiveSDK
      * Output: Response String
      * This method updates the Role specified by the Role Id in the Package specified by the Package Id.
      */
-    public String updateRole(String packageId, String roleId, ESignLiveAPIObjects.Role role)
+    public String updateRole(String packageId, String roleId, OneSpanAPIObjects.Role role)
     {
-        ESignLiveValidation.validate('Package Id', packageId);
-        ESignLiveValidation.validate('Role Id', roleId);
+        OneSpanValidation.validate('Package Id', packageId);
+        OneSpanValidation.validate('Role Id', roleId);
         
         String roleResponse = helper.updateRole(packageId,roleId,role);
 
@@ -656,12 +656,12 @@ public with sharing class ESignLiveSDK
      * Output: Field JSON Response String
      * This method adds the Role for the Package Id passed.
      */
-    public String addField(String packageId, String documentId, String approvalId, ESignLiveAPIObjects.Field fieldToCreate)
+    public String addField(String packageId, String documentId, String approvalId, OneSpanAPIObjects.Field fieldToCreate)
     {
-        ESignLiveValidation.validate('Package Id', packageId);
-        ESignLiveValidation.validate('Document Id', documentId);
-        ESignLiveValidation.validate('Approval Id', approvalId);
-        ESignLiveValidation.validate(fieldToCreate);
+        OneSpanValidation.validate('Package Id', packageId);
+        OneSpanValidation.validate('Document Id', documentId);
+        OneSpanValidation.validate('Approval Id', approvalId);
+        OneSpanValidation.validate(fieldToCreate);
 
         // Create request
        
@@ -676,12 +676,12 @@ public with sharing class ESignLiveSDK
      * Output: Field Response String
      * This method gets the Field specified by the inputs.
      */
-    public ESignLiveAPIObjects.Field getField(String packageId, String documentId, String approvalId, String fieldId)
+    public OneSpanAPIObjects.Field getField(String packageId, String documentId, String approvalId, String fieldId)
     {
-        ESignLiveValidation.validate('Package Id', packageId);
-        ESignLiveValidation.validate('Document Id', documentId);
-        ESignLiveValidation.validate('Approval Id', approvalId);
-        ESignLiveValidation.validate('Field Id', fieldId);
+        OneSpanValidation.validate('Package Id', packageId);
+        OneSpanValidation.validate('Document Id', documentId);
+        OneSpanValidation.validate('Approval Id', approvalId);
+        OneSpanValidation.validate('Field Id', fieldId);
 
         return helper.getField(packageId, documentId, approvalId, fieldId);
     }
@@ -692,12 +692,12 @@ public with sharing class ESignLiveSDK
      * Output: Field Response String
      * This method updates the Field specified by the inputs.
      */
-    public String updateField(String packageId, String documentId, String approvalId, String fieldId, ESignLiveAPIObjects.Field fieldToUpdate)
+    public String updateField(String packageId, String documentId, String approvalId, String fieldId, OneSpanAPIObjects.Field fieldToUpdate)
     {
-        ESignLiveValidation.validate('Package Id', packageId);
-        ESignLiveValidation.validate('Document Id', documentId);
-        ESignLiveValidation.validate('Approval Id', approvalId);
-        ESignLiveValidation.validate(fieldToUpdate);
+        OneSpanValidation.validate('Package Id', packageId);
+        OneSpanValidation.validate('Document Id', documentId);
+        OneSpanValidation.validate('Approval Id', approvalId);
+        OneSpanValidation.validate(fieldToUpdate);
 
         return helper.updateField(packageId, documentId, approvalId, fieldId, fieldToUpdate);
     }
@@ -710,10 +710,10 @@ public with sharing class ESignLiveSDK
      */
     public String deleteField(String packageId, String documentId, String approvalId, String fieldId)
     {
-        ESignLiveValidation.validate('Package Id', packageId);
-        ESignLiveValidation.validate('Document Id', documentId);
-        ESignLiveValidation.validate('Approval Id', approvalId);
-        ESignLiveValidation.validate('Field Id', fieldId);
+        OneSpanValidation.validate('Package Id', packageId);
+        OneSpanValidation.validate('Document Id', documentId);
+        OneSpanValidation.validate('Approval Id', approvalId);
+        OneSpanValidation.validate('Field Id', fieldId);
 
         return helper.deleteField(packageId, documentId, approvalId, fieldId);
     }
@@ -721,5 +721,5 @@ public with sharing class ESignLiveSDK
     /*
     *   SDK Specific Exception class 
     */
-    public class ESignLiveSDKException extends Exception{}
+    public class OneSpanSDKException extends Exception{}
 }

@@ -1,12 +1,12 @@
 /**
- * Class Name: ESignLiveValidation.cls
+ * Class Name: OneSpanValidationls
  *
- * Class handling validation for eSignLive objects
+ * Class handling validation for OneSpan objects
  */
 
-public with sharing class ESignLiveValidation
+public with sharing class OneSpanValidation
 {
-    public ESignLiveValidation(){}
+    public OneSpanValidation(){}
 
     /**
      * Method to validate a string value
@@ -15,7 +15,7 @@ public with sharing class ESignLiveValidation
     {
         if(String.isBlank(stringToValidate))
         {
-            throw new ESignLiveValidationException('String can\'t be empty:'+nameOfStringToValidate);
+            throw new OneSpanValidationException('String can\'t be empty:'+nameOfStringToValidate);
         }
     }
 
@@ -26,29 +26,29 @@ public with sharing class ESignLiveValidation
     {
         if(integerToValidate == null || ( !(nameOfIntegerToValidate.startsWith('ExtractAnchor')) && integerToValidate < 0) )
         {
-            throw new ESignLiveValidationException('Not a valid value for :'+nameOfIntegerToValidate);
+            throw new OneSpanValidationException('Not a valid value for :'+nameOfIntegerToValidate);
         }
     }
 
     /**
      * Method to validate an AuthScheme
      */
-    public static void validate(ESignLiveAPIObjects.AuthScheme scheme)
+    public static void validate(OneSpanAPIObjects.AuthScheme scheme)
     {
         if( scheme == null || (
-            scheme != ESignLiveAPIObjects.AuthScheme.NONE &&
-            scheme != ESignLiveAPIObjects.AuthScheme.PROVIDER &&
-            scheme != ESignLiveAPIObjects.AuthScheme.CHALLENGE &&
-            scheme != ESignLiveAPIObjects.AuthScheme.SMS))
+            scheme != OneSpanAPIObjects.AuthScheme.NONE &&
+            scheme != OneSpanAPIObjects.AuthScheme.PROVIDER &&
+            scheme != OneSpanAPIObjects.AuthScheme.CHALLENGE &&
+            scheme != OneSpanAPIObjects.AuthScheme.SMS))
         {
-            throw new ESignLiveValidationException('Not a valid Auth Scheme:'+scheme);
+            throw new OneSpanValidationException('Not a valid Auth Scheme:'+scheme);
         }
     }
 
     /**
      * Method to validate an AuthChallenge
      */
-    public static void validate(ESignLiveAPIObjects.AuthChallenge authChallenge)
+    public static void validate(OneSpanAPIObjects.AuthChallenge authChallenge)
     {
             if(authChallenge == null || authChallenge.maskInput == null ||
                 String.isBlank(authChallenge.answer) ||
@@ -56,11 +56,11 @@ public with sharing class ESignLiveValidation
             {
                 try
                 {
-                    throw new ESignLiveValidationException('Not a valid Auth Challenge:'+authChallenge);  
+                    throw new OneSpanValidationException('Not a valid Auth Challenge:'+authChallenge);
                 }
                 catch(Exception e)
                 {
-                    throw new ESignLiveValidationException('Not a valid Auth Challenge:'+authChallenge);
+                    throw new OneSpanValidationException('Not a valid Auth Challenge:'+authChallenge);
                 }
             }
     }
@@ -68,15 +68,15 @@ public with sharing class ESignLiveValidation
     /**
      * Method to validate an AuthChallenge list
      */
-    public static void validate(List<ESignLiveAPIObjects.AuthChallenge> authChallengeList)
+    public static void validate(List<OneSpanAPIObjects.AuthChallenge> authChallengeList)
     {
         //If we have CHALLENGE or SMS as the scheme then we would need to have at least 1 AuthChallenge object in challenges list
         if(authChallengeList == null || authChallengeList.size() == 0)
         {
-            throw new ESignLiveValidationException('At least one Auth Challenge is needed for the scheme selected: '+authChallengeList);
+            throw new OneSpanValidationException('At least one Auth Challenge is needed for the scheme selected: '+authChallengeList);
         }
         
-        for(ESignLiveAPIObjects.AuthChallenge authChallenge : authChallengeList)
+        for(OneSpanAPIObjects.AuthChallenge authChallenge : authChallengeList)
         {   
             validate(authChallenge);
         }
@@ -85,26 +85,26 @@ public with sharing class ESignLiveValidation
     /**
      * Method to validate an AttachmentRequirement
      */
-    public static void validate(ESignLiveAPIObjects.AttachmentRequirement ar)
+    public static void validate(OneSpanAPIObjects.AttachmentRequirement ar)
     {
         if(ar == null || String.isBlank(ar.name))
         {
-            throw new ESignLiveValidationException('Not a valid Attachment Requirement:'+ar);
+            throw new OneSpanValidationException('Not a valid Attachment Requirement:'+ar);
         }
     }
 
     /**
      * Method to validate an AttachmentRequirement list
      */
-    public static void validate(List<ESignLiveAPIObjects.AttachmentRequirement> arList)
+    public static void validate(List<OneSpanAPIObjects.AttachmentRequirement> arList)
     {
         //If we have CHALLENGE or SMS as the scheme then we would need to have at least 1 AttachmentRequirement object in challenges list
         if(arList == null || arList.size() == 0)
         {
-            throw new ESignLiveValidationException('At least one Auth Challenge is needed for the scheme selected: '+arList);
+            throw new OneSpanValidationException('At least one Auth Challenge is needed for the scheme selected: '+arList);
         }
         
-        for(ESignLiveAPIObjects.AttachmentRequirement ar : arList)
+        for(OneSpanAPIObjects.AttachmentRequirement ar : arList)
         {   
             validate(ar);
         }
@@ -113,11 +113,11 @@ public with sharing class ESignLiveValidation
     /**
      * Method to validate a Package
      */
-    public static void validate(ESignLiveAPIObjects.Package_x pkg)
+    public static void validate(OneSpanAPIObjects.Package_x pkg)
     {
         if(pkg == null || String.isBlank(pkg.name))
         {
-            throw new ESignLiveValidationException('Not a valid Package:'+pkg);
+            throw new OneSpanValidationException('Not a valid Package:'+pkg);
         }
     }
 
@@ -128,14 +128,14 @@ public with sharing class ESignLiveValidation
     {
         if(blobMap == null || blobMap.size() == 0)
         {
-            throw new ESignLiveValidationException('Not a valid Map:'+blobMap);
+            throw new OneSpanValidationException('Not a valid Map:'+blobMap);
         }
 
         for(String key : blobMap.keySet())
         {
             if(String.isBlank(key))
             {
-                throw new ESignLiveValidationException('Not a valid key in the Map:'+blobMap);
+                throw new OneSpanValidationException('Not a valid key in the Map:'+blobMap);
             }
         }
     }
@@ -143,31 +143,31 @@ public with sharing class ESignLiveValidation
     /**
      * Method to validate a Package status
      */
-    public static void validate(ESignLiveAPIObjects.PackageStatus status)
+    public static void validate(OneSpanAPIObjects.PackageStatus status)
     {
         if( status == null || (
-            status != ESignLiveAPIObjects.PackageStatus.DRAFT &&
-            status != ESignLiveAPIObjects.PackageStatus.SENT &&
-            status != ESignLiveAPIObjects.PackageStatus.COMPLETED &&
-            status != ESignLiveAPIObjects.PackageStatus.ARCHIVED &&
-            status != ESignLiveAPIObjects.PackageStatus.DECLINED &&
-            status != ESignLiveAPIObjects.PackageStatus.OPTED_OUT &&
-            status != ESignLiveAPIObjects.PackageStatus.EXPIRED))
+            status != OneSpanAPIObjects.PackageStatus.DRAFT &&
+            status != OneSpanAPIObjects.PackageStatus.SENT &&
+            status != OneSpanAPIObjects.PackageStatus.COMPLETED &&
+            status != OneSpanAPIObjects.PackageStatus.ARCHIVED &&
+            status != OneSpanAPIObjects.PackageStatus.DECLINED &&
+            status != OneSpanAPIObjects.PackageStatus.OPTED_OUT &&
+            status != OneSpanAPIObjects.PackageStatus.EXPIRED))
         {
-            throw new ESignLiveValidationException('Not a valid Auth Scheme:'+status);
+            throw new OneSpanValidationException('Not a valid Auth Scheme:'+status);
         }
     }
 
     /**
      * Method to validate an Approval
      */
-    public static void validate(ESignLiveAPIObjects.Approval approval)
+    public static void validate(OneSpanAPIObjects.Approval approval)
     {
         if(approval == null || String.isBlank(approval.role) || approval.fields == null  )
         {
-            throw new ESignLiveValidationException('Not a valid Approval:'+approval);
+            throw new OneSpanValidationException('Not a valid Approval:'+approval);
         }
-        for(ESignLiveAPIObjects.Field field : approval.fields)
+        for(OneSpanAPIObjects.Field field : approval.fields)
         {
             validate(field);
         }
@@ -176,11 +176,11 @@ public with sharing class ESignLiveValidation
     /**
      * Method to validate a field
      */
-    public static void validate(ESignLiveAPIObjects.Field field)
+    public static void validate(OneSpanAPIObjects.Field field)
     {
         if(field == null)
         {
-            throw new ESignLiveValidationException('Not a valid Approval Field:'+field);
+            throw new OneSpanValidationException('Not a valid Approval Field:'+field);
         }
         else
         {
@@ -208,7 +208,7 @@ public with sharing class ESignLiveValidation
     /**
      * Method to validate a ExtractAnchor
      */
-    public static void validate(ESignLiveAPIObjects.ExtractAnchor ea)
+    public static void validate(OneSpanAPIObjects.ExtractAnchor ea)
     {
         validate('ExtractAnchor Text', ea.text);
         validate(ea.anchorPoint);
@@ -217,15 +217,15 @@ public with sharing class ESignLiveValidation
     /**
      * Method to validate a AnchorPoint
      */
-    public static void validate(ESignLiveAPIObjects.AnchorPoint anchorPointToValidate)
+    public static void validate(OneSpanAPIObjects.AnchorPoint anchorPointToValidate)
     {
         if( anchorPointToValidate == null || (
-            anchorPointToValidate != ESignLiveAPIObjects.AnchorPoint.TOPLEFT &&
-            anchorPointToValidate != ESignLiveAPIObjects.AnchorPoint.TOPRIGHT &&
-            anchorPointToValidate != ESignLiveAPIObjects.AnchorPoint.BOTTOMLEFT &&
-            anchorPointToValidate != ESignLiveAPIObjects.AnchorPoint.BOTTOMRIGHT))
+            anchorPointToValidate != OneSpanAPIObjects.AnchorPoint.TOPLEFT &&
+            anchorPointToValidate != OneSpanAPIObjects.AnchorPoint.TOPRIGHT &&
+            anchorPointToValidate != OneSpanAPIObjects.AnchorPoint.BOTTOMLEFT &&
+            anchorPointToValidate != OneSpanAPIObjects.AnchorPoint.BOTTOMRIGHT))
         {
-            throw new ESignLiveValidationException('Not a valid Anchor Point:'+anchorPointToValidate);
+            throw new OneSpanValidationException('Not a valid Anchor Point:'+anchorPointToValidate);
         }
 
     }
@@ -237,14 +237,14 @@ public with sharing class ESignLiveValidation
     {
         if(decimalToValidate == null ||  decimalToValidate < 0.00 )
         {
-            throw new ESignLiveValidationException('Not a valid value for :'+nameOfDecimalToValidate);
+            throw new OneSpanValidationException('Not a valid value for :'+nameOfDecimalToValidate);
         }
     }
 
     /**
      * Method to check if the documents in the package are in the same order as in the Map passed
      */
-    public static String comparePackageDocumentsAndMap(ESignLiveAPIObjects.Package_x pkg, Map<String,Blob> documentMap)
+    public static String comparePackageDocumentsAndMap(OneSpanAPIObjects.Package_x pkg, Map<String,Blob> documentMap)
     {
         Integer count = 0;
         for(String docName : documentMap.keySet())
@@ -254,7 +254,7 @@ public with sharing class ESignLiveValidation
 
         if(pkg.documents.size() != count)
         {
-            throw new ESignLiveValidationException ('Package should have equal number of documents as in the document Map');
+            throw new OneSpanValidationException ('Package should have equal number of documents as in the document Map');
         }
 
         if(pkg.documents != null && pkg.documents.size() > 0)
@@ -265,11 +265,11 @@ public with sharing class ESignLiveValidation
                 System.debug('=> docName, index: '+docName+','+index);
                 if(docName == null ||  pkg.documents[index].name == null)
                 {
-                     throw new ESignLiveValidationException  ('Document name can\'t be null');
+                     throw new OneSpanValidationException  ('Document name can\'t be null');
                 }
                 if(!docName.equalsIgnoreCase(pkg.documents[index].name))
                 {
-                     throw new ESignLiveValidationException ('Document name should be the same in Package and Document Map');
+                     throw new OneSpanValidationException ('Document name should be the same in Package and Document Map');
                 }
 
                 index ++;
@@ -279,5 +279,5 @@ public with sharing class ESignLiveValidation
         return 'success';        
     }
 
-    public class ESignLiveValidationException extends Exception {}
+    public class OneSpanValidationException extends Exception {}
 }

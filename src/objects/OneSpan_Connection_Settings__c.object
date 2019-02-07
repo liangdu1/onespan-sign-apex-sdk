@@ -20,6 +20,6 @@
         <trackTrending>false</trackTrending>
         <type>Url</type>
     </fields>
-    <label>e-SignLive Connection Settings</label>
+    <label>OneSpan Connection Settings</label>
     <visibility>Public</visibility>
 </CustomObject>

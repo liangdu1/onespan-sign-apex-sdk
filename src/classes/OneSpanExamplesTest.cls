@@ -1,11 +1,10 @@
 /**
- * Class Name: ESignLiveExamplesTest.cls
- *
- * Class to test the ESignLiveExamples class
+ * Class Name: OneSpanExamplesTest.cls*
+ * Class to test the OneSpanExamples class
  */
 
 @isTest
-public class ESignLiveExamplesTest 
+public class OneSpanExamplesTest
 {
     /**
      * Method to test the createPackageExample method
@@ -13,7 +12,7 @@ public class ESignLiveExamplesTest
     public static testMethod void testCreatePackageExample()
     {
         // Create custom setting for test
-        ESignLiveTestDataUtility.createConnectionSetting();
+        OneSpanTestDataUtility.createConnectionSetting();
         
         Test.startTest();
         
@@ -21,7 +20,7 @@ public class ESignLiveExamplesTest
             Blob myBlob = Blob.valueof('StringToBlob');
             String packageId = 'avc123456';
             String docId = 'abc987654321';
-            ESignLiveAPIObjects.Package_x packageSettings = ESignLiveTestDataUtility.createPackageX(packageId, 'packName', 'packConsent');
+            OneSpanAPIObjects.Package_x packageSettings = OneSpanTestDataUtility.createPackageX(packageId, 'packName', 'packConsent');
             
             // Get JSON response
             String mockResponse = JSON.serialize(packageSettings);
@@ -30,10 +29,10 @@ public class ESignLiveExamplesTest
             String response = null;
             
             // Set mock callout class
-            Test.setMock(HttpCalloutMock.class, new ESignLiveServiceMock(mockResponse));
+            Test.setMock(HttpCalloutMock.class, new OneSpanServiceMock(mockResponse));
             
             // Creates class that does callout
-            response = ESignLiveExamples.createPackageExample();
+            response = OneSpanExamples.createPackageExample();
         
         Test.stopTest();
         
@@ -47,7 +46,7 @@ public class ESignLiveExamplesTest
     public static testMethod void testCreatePackageWithDocumentsExample()
     {
         // Create custom setting for test
-        ESignLiveTestDataUtility.createConnectionSetting();
+        OneSpanTestDataUtility.createConnectionSetting();
         
         Test.startTest();
         
@@ -55,9 +54,9 @@ public class ESignLiveExamplesTest
             Blob myBlob = Blob.valueof('StringToBlob');
             String packageId = 'avc123456';
             String docId = 'abc987654321';
-            ESignLiveAPIObjects.Package_x packageSettings = ESignLiveTestDataUtility.createPackageX(packageId, 'packName', 'packConsent');
-            Map<String,Blob> documentMap = ESignLiveTestDataUtility.createDocumentMap();
-            ESignLiveTestDataUtility.createDocumentObject();
+            OneSpanAPIObjects.Package_x packageSettings = OneSpanTestDataUtility.createPackageX(packageId, 'packName', 'packConsent');
+            Map<String,Blob> documentMap = OneSpanTestDataUtility.createDocumentMap();
+            OneSpanTestDataUtility.createDocumentObject();
             
             // Get JSON response
             String mockResponse = JSON.serialize(packageSettings);
@@ -66,10 +65,10 @@ public class ESignLiveExamplesTest
             String response = null;
             
             // Set mock callout class
-            Test.setMock(HttpCalloutMock.class, new ESignLiveServiceMock(mockResponse));
+            Test.setMock(HttpCalloutMock.class, new OneSpanServiceMock(mockResponse));
             
             // Creates class that does callout
-            ESignLiveExamples.createPackageWithDocumentsExample('packName', false, 'description', Datetime.now(), 'emailMessage');
+            OneSpanExamples.createPackageWithDocumentsExample('packName', false, 'description', Datetime.now(), 'emailMessage');
         
         Test.stopTest();
     }
@@ -80,25 +79,25 @@ public class ESignLiveExamplesTest
     public static testMethod void testGetPackageExample()
     {
         // Create custom setting for test
-        ESignLiveTestDataUtility.createConnectionSetting();
+        OneSpanTestDataUtility.createConnectionSetting();
         
         Test.startTest();
 
             // Set parameters for call
             String packageId = '123456';
-            ESignLiveAPIObjects.Package_x packageSettings = ESignLiveTestDataUtility.createPackageX(packageId, 'packName', 'packConsent');
+            OneSpanAPIObjects.Package_x packageSettings = OneSpanTestDataUtility.createPackageX(packageId, 'packName', 'packConsent');
             
             // Set JSON response
             String mockResponse = JSON.serialize(packageSettings);
             
             // Response object 
-            ESignLiveAPIObjects.Package_x response = null;
+            OneSpanAPIObjects.Package_x response = null;
             
             // Set mock callout class
-            Test.setMock(HttpCalloutMock.class, new ESignLiveServiceMock(mockResponse));
+            Test.setMock(HttpCalloutMock.class, new OneSpanServiceMock(mockResponse));
             
             // Creates class that does callout
-            response = ESignLiveExamples.getPackageExample(packageId);
+            response = OneSpanExamples.getPackageExample(packageId);
         
         Test.stopTest();
         
@@ -112,7 +111,7 @@ public class ESignLiveExamplesTest
     public static testMethod void testUpdatePackageExample()
     {
         // Create custom setting for test
-        ESignLiveTestDataUtility.createConnectionSetting();
+        OneSpanTestDataUtility.createConnectionSetting();
         
         Test.startTest();
             
@@ -121,19 +120,19 @@ public class ESignLiveExamplesTest
             
             // Set parameters for call
             String packageId = '123456';
-            ESignLiveAPIObjects.Package_x packageSettings = ESignLiveTestDataUtility.createPackageX(packageId, 'packName', 'packConsent');
+            OneSpanAPIObjects.Package_x packageSettings = OneSpanTestDataUtility.createPackageX(packageId, 'packName', 'packConsent');
             
             // Set mock callout class
-            Test.setMock(HttpCalloutMock.class, new ESignLiveServiceMock(mockResponse, 500));
+            Test.setMock(HttpCalloutMock.class, new OneSpanServiceMock(mockResponse, 500));
             
             // Creates class that does callout
             try
             {
-                ESignLiveExamples.updatePackageExample(packageSettings, packageId);
+                OneSpanExamples.updatePackageExample(packageSettings, packageId);
             } 
             catch( Exception e)
             {
-                System.assertEquals('ESignLiveRESTAPIHelper.ESignLiveRestAPIHelperException', e.getTypeName());
+                System.assertEquals('OneSpanRESTAPIHelper.OneSpanRestAPIHelperException', e.getTypeName());
             }
 
         Test.stopTest();
@@ -145,15 +144,15 @@ public class ESignLiveExamplesTest
     public static testMethod void testCreateDocumentsExample()
     {
         // Create custom setting for test
-        ESignLiveTestDataUtility.createConnectionSetting();
+        OneSpanTestDataUtility.createConnectionSetting();
         
         Test.startTest();
             
             // Set parameters for call
             Blob myBlob = Blob.valueof('StringToBlob');
             String packageId = 'avc123456';
-            ESignLiveAPIObjects.Document document = ESignLiveTestDataUtility.createDocument('docId', 'Document Name', 123);
-            ESignLiveTestDataUtility.createDocumentObject();
+            OneSpanAPIObjects.Document document = OneSpanTestDataUtility.createDocument('docId', 'Document Name', 123);
+            OneSpanTestDataUtility.createDocumentObject();
             
             // Get JSON response
             String mockResponse = JSON.serialize(document);
@@ -162,10 +161,10 @@ public class ESignLiveExamplesTest
             String response = null;
             
             // Set mock callout class
-            Test.setMock(HttpCalloutMock.class, new ESignLiveServiceMock(mockResponse));
+            Test.setMock(HttpCalloutMock.class, new OneSpanServiceMock(mockResponse));
             
             // Creates class that does callout
-            response = ESignLiveExamples.createDocumentsExample(packageId, 'Document Name', 'Description');
+            response = OneSpanExamples.createDocumentsExample(packageId, 'Document Name', 'Description');
         
         Test.stopTest();
         
@@ -179,28 +178,28 @@ public class ESignLiveExamplesTest
     public static testMethod void testSetAttachmentRequirementsExample()
     {
         // Create custom setting for test
-        ESignLiveTestDataUtility.createConnectionSetting();
+        OneSpanTestDataUtility.createConnectionSetting();
         
         Test.startTest();
             
             // Set parameters for call
-            List<ESignLiveAPIObjects.AttachmentRequirement> attachmentRequirementsList = new List<ESignLiveAPIObjects.AttachmentRequirement>();
-            ESignLiveAPIObjects.AttachmentRequirement ar = new ESignLiveAPIObjects.AttachmentRequirement();
+            List<OneSpanAPIObjects.AttachmentRequirement> attachmentRequirementsList = new List<OneSpanAPIObjects.AttachmentRequirement>();
+            OneSpanAPIObjects.AttachmentRequirement ar = new OneSpanAPIObjects.AttachmentRequirement();
             ar.Name = 'AttchReq';
             attachmentRequirementsList.add(ar);
             String packageId = '123456';
             String roleId = 'abc987';
-            ESignLiveAPIObjects.Role signer = ESignLiveTestDataUtility.createRole('roleId', 'roleName', 'roleType');
+            OneSpanAPIObjects.Role signer = OneSpanTestDataUtility.createRole('roleId', 'roleName', 'roleType');
             signer.attachmentRequirements = attachmentRequirementsList;
             
             // Get JSON response
             String mockResponse = JSON.serialize(signer);
             
             // Set mock callout class
-            Test.setMock(HttpCalloutMock.class, new ESignLiveServiceMock(mockResponse, 200, 'OK'));
+            Test.setMock(HttpCalloutMock.class, new OneSpanServiceMock(mockResponse, 200, 'OK'));
             
             // Creates class that does callout
-            ESignLiveExamples.setAttachmentRequirementsExample(packageId, roleId, 'arName', false, 'description');
+            OneSpanExamples.setAttachmentRequirementsExample(packageId, roleId, 'arName', false, 'description');
             
         Test.stopTest();
     }
@@ -211,13 +210,13 @@ public class ESignLiveExamplesTest
     public static testMethod void testGetAuditExample()
     {
         // Create custom setting for test
-        ESignLiveTestDataUtility.createConnectionSetting();
+        OneSpanTestDataUtility.createConnectionSetting();
 
         Test.startTest();
 
-            Test.setMock(HttpCalloutMock.class, new ESignLiveServiceMock('',200,Blob.valueOf('ThisIsMyBlob')));
+            Test.setMock(HttpCalloutMock.class, new OneSpanServiceMock('',200,Blob.valueOf('ThisIsMyBlob')));
             // Creates class that does callout
-            String response = ESignLiveExamples.getAuditExample('123456');
+            String response = OneSpanExamples.getAuditExample('123456');
     
         Test.stopTest();
         
@@ -231,7 +230,7 @@ public class ESignLiveExamplesTest
     public static testMethod void testDownloadAllAttachmentFilesForSignerInPackageExample()
     {
         // Create custom setting for test
-        ESignLiveTestDataUtility.createConnectionSetting();
+        OneSpanTestDataUtility.createConnectionSetting();
         
         Test.startTest();
         
@@ -246,10 +245,10 @@ public class ESignLiveExamplesTest
             String response = null;
             
             // Set mock callout class
-            Test.setMock(HttpCalloutMock.class, new ESignLiveServiceMock(mockResponse, 200, Blob.valueOf('ThisIsMyBlob')));
+            Test.setMock(HttpCalloutMock.class, new OneSpanServiceMock(mockResponse, 200, Blob.valueOf('ThisIsMyBlob')));
             
             // Creates class that does callout
-            ESignLiveExamples.downloadAllAttachmentFilesForSignerInPackageExample(packageId, roleId);
+            OneSpanExamples.downloadAllAttachmentFilesForSignerInPackageExample(packageId, roleId);
         
         Test.stopTest();
     }
@@ -260,7 +259,7 @@ public class ESignLiveExamplesTest
     public static testMethod void testUpdateSignerExample()
     {
         // Create custom setting for test
-        ESignLiveTestDataUtility.createConnectionSetting();
+        OneSpanTestDataUtility.createConnectionSetting();
         
         Test.startTest();
             
@@ -271,17 +270,17 @@ public class ESignLiveExamplesTest
             String lastname = 'Test';
             String email = 't.tester@test.com';
             String optionalMessage = 'Your role was reassigned';
-            ESignLiveAPIObjects.Role signer = ESignLiveTestDataUtility.createRole('roleId', 'roleName', 'roleType');
+            OneSpanAPIObjects.Role signer = OneSpanTestDataUtility.createRole('roleId', 'roleName', 'roleType');
             signer.reassign = true;
             
             // Get JSON response
             String mockResponse = JSON.serialize(signer);
             
             // Set mock callout class
-            Test.setMock(HttpCalloutMock.class, new ESignLiveServiceMock(mockResponse));
+            Test.setMock(HttpCalloutMock.class, new OneSpanServiceMock(mockResponse));
             
             // Creates class that does callout
-            ESignLiveExamples.updateSignerExample(packageId, roleId, firstname, lastname, email, optionalMessage);
+            OneSpanExamples.updateSignerExample(packageId, roleId, firstname, lastname, email, optionalMessage);
         
         Test.stopTest();
     }
@@ -292,29 +291,29 @@ public class ESignLiveExamplesTest
     public static testMethod void testSafeSetAuthExample()
     {
         // Create custom setting for test
-        ESignLiveTestDataUtility.createConnectionSetting();
+        OneSpanTestDataUtility.createConnectionSetting();
         
         // Set parameters for call
-        List<ESignLiveAPIObjects.AuthChallenge> challenges = new List<ESignLiveAPIObjects.AuthChallenge>();
-        ESignLiveAPIObjects.AuthChallenge authChallenge = ESignLiveTestDataUtility.createAuthChallenge();
+        List<OneSpanAPIObjects.AuthChallenge> challenges = new List<OneSpanAPIObjects.AuthChallenge>();
+        OneSpanAPIObjects.AuthChallenge authChallenge = OneSpanTestDataUtility.createAuthChallenge();
         challenges.add(authChallenge);
         
-        ESignLiveAPIObjects.Signer s = new ESignLiveAPIObjects.Signer();
+        OneSpanAPIObjects.Signer s = new OneSpanAPIObjects.Signer();
         s.firstName = 'Tester';
         s.lastName = 'Test';
         
-        List<ESignLiveAPIObjects.Signer> signersList = new List<ESignLiveAPIObjects.Signer>();
+        List<OneSpanAPIObjects.Signer> signersList = new List<OneSpanAPIObjects.Signer>();
         signersList.add(s);
         
-        ESignLiveAPIObjects.Role signer = ESignLiveTestDataUtility.createRole('roleId', 'roleName', 'roleType', signersList);
+        OneSpanAPIObjects.Role signer = OneSpanTestDataUtility.createRole('roleId', 'roleName', 'roleType', signersList);
         
         // Get JSON response
         String mockResponse = JSON.serialize(signer);
         
         Test.startTest();
 
-            Test.setMock(HttpCalloutMock.class, new ESignLiveServiceMock(mockResponse));
-            ESignLiveExamples.safeSetAuthExample('123456789', '123456789', 'question', 'answer', true);
+            Test.setMock(HttpCalloutMock.class, new OneSpanServiceMock(mockResponse));
+            OneSpanExamples.safeSetAuthExample('123456789', '123456789', 'question', 'answer', true);
         
         Test.stopTest();
     }
@@ -325,23 +324,23 @@ public class ESignLiveExamplesTest
     public static testMethod void testSetSigningOrderExample()
     {
         // Create custom setting for test
-        ESignLiveTestDataUtility.createConnectionSetting();
+        OneSpanTestDataUtility.createConnectionSetting();
         
         Test.startTest();
 
             // Set parameters for call
             String packageId = '123456';
             String roleId = 'abc987';
-            ESignLiveAPIObjects.Role signer = ESignLiveTestDataUtility.createRole('roleId', 'roleName', 'roleType');
+            OneSpanAPIObjects.Role signer = OneSpanTestDataUtility.createRole('roleId', 'roleName', 'roleType');
             
             // Get JSON response
             String mockResponse = JSON.serialize(signer);
             
             // Set mock callout class
-            Test.setMock(HttpCalloutMock.class, new ESignLiveServiceMock(mockResponse, 200, 'OK'));
+            Test.setMock(HttpCalloutMock.class, new OneSpanServiceMock(mockResponse, 200, 'OK'));
             
             // Creates class that does callout
-            ESignLiveExamples.setSigningOrderExample(packageId, roleId, 2);
+            OneSpanExamples.setSigningOrderExample(packageId, roleId, 2);
         
         Test.stopTest();
     }
@@ -352,13 +351,13 @@ public class ESignLiveExamplesTest
     public static testMethod void testGetSigningStatusExample()
     {
         // Create custom setting for test
-        ESignLiveTestDataUtility.createConnectionSetting();
+        OneSpanTestDataUtility.createConnectionSetting();
         
         Test.startTest();
             
             // Set parameters for call
             String packageId = '123456';
-            ESignLiveAPIObjects.Package_x packageSettings = ESignLiveTestDataUtility.createPackageX(packageId, 'packName', 'packConsent');
+            OneSpanAPIObjects.Package_x packageSettings = OneSpanTestDataUtility.createPackageX(packageId, 'packName', 'packConsent');
             
             // Get JSON response
             String mockResponse = JSON.serialize(packageSettings);
@@ -367,10 +366,10 @@ public class ESignLiveExamplesTest
             String response = null;
             
             // Set mock callout class
-            Test.setMock(HttpCalloutMock.class, new ESignLiveServiceMock(mockResponse));
+            Test.setMock(HttpCalloutMock.class, new OneSpanServiceMock(mockResponse));
             
             // Creates class that does callout
-            response = ESignLiveExamples.getSigningStatusExample(packageId);
+            response = OneSpanExamples.getSigningStatusExample(packageId);
         
         Test.stopTest();
         
@@ -384,7 +383,7 @@ public class ESignLiveExamplesTest
     public static testMethod void testGetSigningUrlExample()
     {
         // Create custom setting for test
-        ESignLiveTestDataUtility.createConnectionSetting();
+        OneSpanTestDataUtility.createConnectionSetting();
         
         Test.startTest();
         
@@ -393,7 +392,7 @@ public class ESignLiveExamplesTest
             String signerId = '654321';
             String roleId = '2jsTTXD2dZMZ';
             String url =  'https://sandbox.e-signlive.com/auth?target=https%3A%2F%2Fsandbox.e-signlive.com%2Fpackages%2Fa3b023bf-db56-4c53-b36e-bd9acd0579f4%2Fsign&loginToken=Mi4xMDAwGpGY3JJPS55ZnNSeHBmekNxc1RzdnNJRVlBSDkZBR1RhcmxKS09aZ3M4aFZXVlpvdExrdz09';
-            ESignLiveAPIObjects.SigningUrl su = new ESignLiveAPIObjects.SigningUrl(roleId, url, packageId);
+            OneSpanAPIObjects.SigningUrl su = new OneSpanAPIObjects.SigningUrl(roleId, url, packageId);
             
             // Set response object
             String mockResponse = JSON.serialize(su);
@@ -402,10 +401,10 @@ public class ESignLiveExamplesTest
             String response = null;
             
             // Set mock callout class
-            Test.setMock(HttpCalloutMock.class, new ESignLiveServiceMock(mockResponse));
+            Test.setMock(HttpCalloutMock.class, new OneSpanServiceMock(mockResponse));
             
             // Creates class that does callout
-            response = ESignLiveExamples.getSigningUrlExample(packageId, signerId);
+            response = OneSpanExamples.getSigningUrlExample(packageId, signerId);
         
         Test.stopTest();
 
@@ -419,14 +418,14 @@ public class ESignLiveExamplesTest
     public static testMethod void testDownloadDocumentExample()
     {
         // Create custom setting for test
-        ESignLiveTestDataUtility.createConnectionSetting();
+        OneSpanTestDataUtility.createConnectionSetting();
         
         Test.startTest();
         
             // Set parameters for call
             String packageId = '123456';
             String docId = 'abc987654321';
-            ESignLiveAPIObjects.Package_x packageSettings = ESignLiveTestDataUtility.createPackageX(packageId, 'packName', 'packConsent');
+            OneSpanAPIObjects.Package_x packageSettings = OneSpanTestDataUtility.createPackageX(packageId, 'packName', 'packConsent');
             
             // Get JSON response
             String mockResponse = '';
@@ -435,10 +434,10 @@ public class ESignLiveExamplesTest
             Blob response = null;
             
             // Set mock callout class
-            Test.setMock(HttpCalloutMock.class, new ESignLiveServiceMock(mockResponse,200,Blob.valueOf('ThisIsMyBlob')));
+            Test.setMock(HttpCalloutMock.class, new OneSpanServiceMock(mockResponse,200,Blob.valueOf('ThisIsMyBlob')));
             
             // Creates class that does callout
-            response = ESignLiveExamples.downloadDocumentExample(packageId, docId);
+            response = OneSpanExamples.downloadDocumentExample(packageId, docId);
             
         Test.stopTest();
         
@@ -452,22 +451,22 @@ public class ESignLiveExamplesTest
     public static testMethod void testSetStatusExample()
     {
         // Create custom setting for test
-        ESignLiveTestDataUtility.createConnectionSetting();
+        OneSpanTestDataUtility.createConnectionSetting();
         
         Test.startTest();
         
             // Set parameters for call
             String packageId = '123456';
-            ESignLiveAPIObjects.PackageStatus status = ESignLiveAPIObjects.PackageStatus.DRAFT;
+            OneSpanAPIObjects.PackageStatus status = OneSpanAPIObjects.PackageStatus.DRAFT;
             
             // Get JSON response
             String mockResponse = '';
             
             // Set mock callout class
-            Test.setMock(HttpCalloutMock.class, new ESignLiveServiceMock(mockResponse, 200, 'OK'));
+            Test.setMock(HttpCalloutMock.class, new OneSpanServiceMock(mockResponse, 200, 'OK'));
             
             // Creates class that does callout
-            ESignLiveExamples.setStatusExample(packageId, status);
+            OneSpanExamples.setStatusExample(packageId, status);
             
         Test.stopTest();
     }
@@ -478,7 +477,7 @@ public class ESignLiveExamplesTest
     public static testMethod void testAddSignatureExample()
     {
         // Create custom setting for test
-        ESignLiveTestDataUtility.createConnectionSetting();
+        OneSpanTestDataUtility.createConnectionSetting();
         
         Test.startTest();
         
@@ -488,16 +487,16 @@ public class ESignLiveExamplesTest
             String approvalId = 'abc123456';
             String approvalName = 'NAME';
             String role = 'RKbhyswr2FYO';
-            ESignLiveAPIObjects.Approval approval = ESignLiveTestDataUtility.createApproval(approvalId, approvalName, role);
+            OneSpanAPIObjects.Approval approval = OneSpanTestDataUtility.createApproval(approvalId, approvalName, role);
             
             // Get JSON response
             String mockResponse = JSON.serialize(approval);
             
             // Set mock callout class
-            Test.setMock(HttpCalloutMock.class, new ESignLiveServiceMock(mockResponse));
+            Test.setMock(HttpCalloutMock.class, new OneSpanServiceMock(mockResponse));
             
             // Creates class that does callout
-            ESignLiveExamples.addSignatureExample( packageId, role, docId, 100, 100, 100, 100, 'fieldType', 'text', 10);
+            OneSpanExamples.addSignatureExample( packageId, role, docId, 100, 100, 100, 100, 'fieldType', 'text', 10);
         
         Test.stopTest();
     }
@@ -508,13 +507,13 @@ public class ESignLiveExamplesTest
     public static testMethod void testAddRoleExample()
     {
         // Create custom setting for test
-        ESignLiveTestDataUtility.createConnectionSetting();
+        OneSpanTestDataUtility.createConnectionSetting();
         
         Test.startTest();
         
             // Set parameters for call
             String packageId = '123456';
-            ESignLiveAPIObjects.Role signer = ESignLiveTestDataUtility.createRole('roleId', 'roleName', 'roleType');
+            OneSpanAPIObjects.Role signer = OneSpanTestDataUtility.createRole('roleId', 'roleName', 'roleType');
             
             // Get JSON response
             String mockResponse = JSON.serialize(signer);
@@ -523,15 +522,15 @@ public class ESignLiveExamplesTest
             String response = null;
             
             // Set mock callout class
-            Test.setMock(HttpCalloutMock.class, new ESignLiveServiceMock(mockResponse));
+            Test.setMock(HttpCalloutMock.class, new OneSpanServiceMock(mockResponse));
             
             // Creates class that does callout
-            response = ESignLiveExamples.addRoleExample(packageId, 'Test', 'Role', 'test.role@test.com');
+            response = OneSpanExamples.addRoleExample(packageId, 'Test', 'Role', 'test.role@test.com');
         
         Test.stopTest();
         
         // Verify result
-        ESignLiveAPIObjects.Role result = (ESignLiveAPIObjects.Role) JSON.deserialize(response, ESignLiveAPIObjects.Role.class);
+        OneSpanAPIObjects.Role result = (OneSpanAPIObjects.Role) JSON.deserialize(response, OneSpanAPIObjects.Role.class);
         System.assertEquals('roleId', result.Id);
         System.assertEquals('roleName', result.Name);
         System.assertEquals('roleType', result.Type);
@@ -543,13 +542,13 @@ public class ESignLiveExamplesTest
     public static testMethod void testDeletePackageExample()
     {
         // Create custom setting for test
-        ESignLiveTestDataUtility.createConnectionSetting();
+        OneSpanTestDataUtility.createConnectionSetting();
         
         Test.startTest();
         
             // Set parameters for call
             String packageId = '123456';
-            ESignLiveAPIObjects.Role signer = ESignLiveTestDataUtility.createRole('roleId', 'roleName', 'roleType');
+            OneSpanAPIObjects.Role signer = OneSpanTestDataUtility.createRole('roleId', 'roleName', 'roleType');
             
             // Get JSON response
             String mockResponse = '';
@@ -558,10 +557,10 @@ public class ESignLiveExamplesTest
             String response = null;
             
             // Set mock callout class
-            Test.setMock(HttpCalloutMock.class, new ESignLiveServiceMock(mockResponse, 200, 'OK'));
+            Test.setMock(HttpCalloutMock.class, new OneSpanServiceMock(mockResponse, 200, 'OK'));
             
             // Creates class that does callout
-            response = ESignLiveExamples.deletePackageExample(packageId);
+            response = OneSpanExamples.deletePackageExample(packageId);
         
         Test.stopTest();
         
@@ -575,7 +574,7 @@ public class ESignLiveExamplesTest
     public static testMethod void testUpdateDocumentExample()
     {
          // Create custom setting for test
-        ESignLiveTestDataUtility.createConnectionSetting();
+        OneSpanTestDataUtility.createConnectionSetting();
         
         Test.startTest();
         
@@ -592,10 +591,10 @@ public class ESignLiveExamplesTest
             String response = null;
             
             // Set mock callout class
-            Test.setMock(HttpCalloutMock.class, new ESignLiveServiceMock(mockResponse, 200, 'OK'));
+            Test.setMock(HttpCalloutMock.class, new OneSpanServiceMock(mockResponse, 200, 'OK'));
             
             // Creates class that does callout
-            response = ESignLiveExamples.updateDocumentExample(packageId, docId, docName, description);
+            response = OneSpanExamples.updateDocumentExample(packageId, docId, docName, description);
         
         Test.stopTest();
         
@@ -609,7 +608,7 @@ public class ESignLiveExamplesTest
     public static testMethod void testDeleteDocumentExample()
     {
          // Create custom setting for test
-        ESignLiveTestDataUtility.createConnectionSetting();
+        OneSpanTestDataUtility.createConnectionSetting();
         
         Test.startTest();
         
@@ -623,10 +622,10 @@ public class ESignLiveExamplesTest
             String response = null;
             
             // Set mock callout class
-            Test.setMock(HttpCalloutMock.class, new ESignLiveServiceMock(mockResponse, 200, 'OK'));
+            Test.setMock(HttpCalloutMock.class, new OneSpanServiceMock(mockResponse, 200, 'OK'));
             
             // Creates class that does callout
-            response = ESignLiveExamples.deleteDocumentExample(packageId, docId);
+            response = OneSpanExamples.deleteDocumentExample(packageId, docId);
         
         Test.stopTest();
         
@@ -637,7 +636,7 @@ public class ESignLiveExamplesTest
     public static testMethod void testDeleteRoleExample()
     {
            // Create custom setting for test
-        ESignLiveTestDataUtility.createConnectionSetting();
+        OneSpanTestDataUtility.createConnectionSetting();
         
         Test.startTest();
         
@@ -651,10 +650,10 @@ public class ESignLiveExamplesTest
             String response = null;
             
             // Set mock callout class
-            Test.setMock(HttpCalloutMock.class, new ESignLiveServiceMock(mockResponse, 200, 'OK'));
+            Test.setMock(HttpCalloutMock.class, new OneSpanServiceMock(mockResponse, 200, 'OK'));
             
             // Creates class that does callout
-            response = ESignLiveExamples.deleteRoleExample(packageId, roleId);
+            response = OneSpanExamples.deleteRoleExample(packageId, roleId);
         
         Test.stopTest();
         
@@ -667,7 +666,7 @@ public class ESignLiveExamplesTest
      */
     public static testMethod void getApprovalExample()
     {
-        ESignLiveTestDataUtility.createConnectionSetting();
+        OneSpanTestDataUtility.createConnectionSetting();
         
         Test.startTest();
         
@@ -677,18 +676,18 @@ public class ESignLiveExamplesTest
             String approvalId = 'abc123456';
             String approvalName = 'NAME';
             String role = 'RKbhyswr2FYO';
-            ESignLiveAPIObjects.Approval approval = ESignLiveTestDataUtility.createApproval(approvalId, approvalName, role);
+            OneSpanAPIObjects.Approval approval = OneSpanTestDataUtility.createApproval(approvalId, approvalName, role);
             // Get JSON response
             String mockResponse = JSON.serialize(approval);
             
             // Response object
-            ESignLiveAPIObjects.Approval response = null;
+            OneSpanAPIObjects.Approval response = null;
             
             // Set mock callout class
-            Test.setMock(HttpCalloutMock.class, new ESignLiveServiceMock(mockResponse, 200, 'OK'));
+            Test.setMock(HttpCalloutMock.class, new OneSpanServiceMock(mockResponse, 200, 'OK'));
             
             // Creates class that does callout
-            response = ESignLiveExamples.getApprovalExample(packageId, docId, approvalId);
+            response = OneSpanExamples.getApprovalExample(packageId, docId, approvalId);
         
         Test.stopTest();
     }
@@ -698,7 +697,7 @@ public class ESignLiveExamplesTest
      */
     public static testMethod void testUpdateApprovalExample()
     {
-        ESignLiveTestDataUtility.createConnectionSetting();
+        OneSpanTestDataUtility.createConnectionSetting();
         
         Test.startTest();
             // Set parameters for call
@@ -707,7 +706,7 @@ public class ESignLiveExamplesTest
             String approvalId = 'abc123456';
             String approvalName = 'NAME';
             String role = 'RKbhyswr2FYO';
-            ESignLiveAPIObjects.Approval approval = ESignLiveTestDataUtility.createApproval(approvalId, approvalName, role);
+            OneSpanAPIObjects.Approval approval = OneSpanTestDataUtility.createApproval(approvalId, approvalName, role);
             // Get JSON response
             String mockResponse = JSON.serialize(approval);
             
@@ -715,10 +714,10 @@ public class ESignLiveExamplesTest
             String response = null;
             
             // Set mock callout class
-            Test.setMock(HttpCalloutMock.class, new ESignLiveServiceMock(mockResponse, 200, 'OK'));
+            Test.setMock(HttpCalloutMock.class, new OneSpanServiceMock(mockResponse, 200, 'OK'));
             
             // Creates class that does callout
-            response = ESignLiveExamples.updateApprovalExample(packageId, docId, approvalId);
+            response = OneSpanExamples.updateApprovalExample(packageId, docId, approvalId);
         
         Test.stopTest();
         
@@ -732,7 +731,7 @@ public class ESignLiveExamplesTest
     public static testMethod void deleteApprovalExample()
     {
         // Create custom setting for test
-        ESignLiveTestDataUtility.createConnectionSetting();
+        OneSpanTestDataUtility.createConnectionSetting();
         
         Test.startTest();
         
@@ -747,10 +746,10 @@ public class ESignLiveExamplesTest
             String response = null;
             
             // Set mock callout class
-            Test.setMock(HttpCalloutMock.class, new ESignLiveServiceMock(mockResponse, 200, 'OK'));
+            Test.setMock(HttpCalloutMock.class, new OneSpanServiceMock(mockResponse, 200, 'OK'));
             
             // Creates class that does callout
-            response = ESignLiveExamples.deleteApprovalExample(packageId, documentId, approvalId);
+            response = OneSpanExamples.deleteApprovalExample(packageId, documentId, approvalId);
         
         Test.stopTest();
         
@@ -764,26 +763,26 @@ public class ESignLiveExamplesTest
     private static testMethod void testGetRole() 
     {
         // Create custom setting for test
-        ESignLiveTestDataUtility.createConnectionSetting();
+        OneSpanTestDataUtility.createConnectionSetting();
         
         Test.startTest();
         
             // Set parameters for call
             String packageId = '123456';
             String roleId = 'abc987';
-            ESignLiveAPIObjects.Role signer = ESignLiveTestDataUtility.createRole('roleId', 'roleName', 'roleType');
+            OneSpanAPIObjects.Role signer = OneSpanTestDataUtility.createRole('roleId', 'roleName', 'roleType');
             
             // Get JSON response
             String mockResponse = JSON.serialize(signer);
             
             // Response object
-            ESignLiveAPIObjects.Role response = null; 
+            OneSpanAPIObjects.Role response = null;
             
             // Set mock callout class
-            Test.setMock(HttpCalloutMock.class, new ESignLiveServiceMock(mockResponse));
+            Test.setMock(HttpCalloutMock.class, new OneSpanServiceMock(mockResponse));
             
             // Creates class that does callout
-            response = ESignLiveExamples.getRoleExample(packageId, roleId);
+            response = OneSpanExamples.getRoleExample(packageId, roleId);
         
         Test.stopTest();
         
@@ -798,12 +797,12 @@ public class ESignLiveExamplesTest
     private static testMethod void testUpdateRole() 
     {
         // Create custom setting for test
-        ESignLiveTestDataUtility.createConnectionSetting();
+        OneSpanTestDataUtility.createConnectionSetting();
         
         Test.startTest();
         
             // Set parameters for call
-            ESignLiveAPIObjects.Role signer = ESignLiveTestDataUtility.createRole('roleId', 'roleName', 'roleType');
+            OneSpanAPIObjects.Role signer = OneSpanTestDataUtility.createRole('roleId', 'roleName', 'roleType');
             String packageId = '123456';
             String roleId = 'abc987';
             
@@ -814,10 +813,10 @@ public class ESignLiveExamplesTest
             String response = null;
             
             // Set mock callout class
-            Test.setMock(HttpCalloutMock.class, new ESignLiveServiceMock(mockResponse, 200, 'OK'));
+            Test.setMock(HttpCalloutMock.class, new OneSpanServiceMock(mockResponse, 200, 'OK'));
             
             // Creates class that does callout
-            response = ESignLiveExamples.updateRoleExample(packageId, roleId, 'FirstName', 'LastName', 'email@test.com', true);            
+            response = OneSpanExamples.updateRoleExample(packageId, roleId, 'FirstName', 'LastName', 'email@test.com', true);
         
         Test.stopTest();
         

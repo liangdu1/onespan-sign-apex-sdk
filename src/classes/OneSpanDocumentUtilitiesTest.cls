@@ -1,12 +1,11 @@
 /**
- * Class Name: ESignLiveDocumentUtilitiesTest.cls
- *
- * This test class tests the ESignLiveDocumentUtitlities class and
+ * Class Name: OneSpanDocumentUtilitiesTest.cls*
+ * This test class tests the OneSpanDocumentUtitlities class and
  * contains methods to test the various encoding methods in that class
  */
 
 @isTest
-public class ESignLiveDocumentUtilitiesTest 
+public class OneSpanDocumentUtilitiesTest
 {
     /**
      * Test method for encodeDocuments()
@@ -14,11 +13,11 @@ public class ESignLiveDocumentUtilitiesTest
     public static testmethod void testEncodeDocuments()
     {
         // Set parameters
-        Map<String,Blob> documentMap = ESignLiveTestDataUtility.createDocumentMap();
+        Map<String,Blob> documentMap = OneSpanTestDataUtility.createDocumentMap();
         
         // Call code to test
         Test.startTest();
-        List<String> stringList = ESignLiveDocumentUtilities.encodeDocuments(documentMap, 'boundary', 'name');
+        List<String> stringList = OneSpanDocumentUtilities.encodeDocuments(documentMap, 'boundary', 'name');
         Test.stopTest();
         
         // Verify Resulst
@@ -36,7 +35,7 @@ public class ESignLiveDocumentUtilitiesTest
         
         // Call code to test
         Test.startTest();
-        String result = ESignLiveDocumentUtilities.encodeContent(encodeString);
+        String result = OneSpanDocumentUtilities.encodeContent(encodeString);
         Test.stopTest();
         
         // Verify result
@@ -53,7 +52,7 @@ public class ESignLiveDocumentUtilitiesTest
         
         // Call code to test
         Test.startTest();
-        String result = ESignLiveDocumentUtilities.encodeString(encodeString);
+        String result = OneSpanDocumentUtilities.encodeString(encodeString);
         Test.stopTest();
         
         // Verify result
@@ -66,12 +65,12 @@ public class ESignLiveDocumentUtilitiesTest
     public static testmethod void testComparePackageDocumentsAndMap()
     {
         // Set parameters
-        Map<String,Blob> documentMap = ESignLiveTestDataUtility.createDocumentMap();
-        ESignLiveAPIObjects.Package_x pkg = ESignLiveTestDataUtility.createPackageX('packId', 'packName', 'consent');
+        Map<String,Blob> documentMap = OneSpanTestDataUtility.createDocumentMap();
+        OneSpanAPIObjects.Package_x pkg = OneSpanTestDataUtility.createPackageX('packId', 'packName', 'consent');
         
         // Call code to test
         Test.startTest();
-        String result = ESignLiveValidation.comparePackageDocumentsAndMap(pkg, documentMap);
+        String result = OneSpanValidation.comparePackageDocumentsAndMap(pkg, documentMap);
         Test.stopTest();
         
         // Verify result
@@ -84,16 +83,16 @@ public class ESignLiveDocumentUtilitiesTest
     public static testmethod void testComparePackageDocumentsAndMap2()
     {
         // Set parameters
-        Map<String,Blob> documentMap = ESignLiveTestDataUtility.createDocumentMap();
+        Map<String,Blob> documentMap = OneSpanTestDataUtility.createDocumentMap();
         documentMap.put('Third document', Blob.valueOf('myBlob3'));
-        ESignLiveAPIObjects.Package_x pkg = ESignLiveTestDataUtility.createPackageX('packId', 'packName', 'consent');
+        OneSpanAPIObjects.Package_x pkg = OneSpanTestDataUtility.createPackageX('packId', 'packName', 'consent');
         String result = '';
         // Call code to test
         Test.startTest();
 
         try
         {
-            result = ESignLiveValidation.comparePackageDocumentsAndMap(pkg, documentMap);    
+            result = OneSpanValidation.comparePackageDocumentsAndMap(pkg, documentMap);
         }
         catch(Exception e)
         {

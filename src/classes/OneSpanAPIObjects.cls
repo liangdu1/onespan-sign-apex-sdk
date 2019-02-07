@@ -1,15 +1,15 @@
 /**
- * Class Name: ESignLiveAPIObjects.cls
+ * Class Name: OneSpanAPIObjectsls
  * 
  * This class contains classes used for serializing requests and deserializing responses
- * to and from the eSignLive REST API.  Each class contains both an empty constructor
+ * to and from the OneSpan REST API.  Each class contains both an empty constructor
  * and a constructor with arguments for easy variable setting.
  *
- * These classes were derived from the eSign-Live API Schema Docs which can be
+ * These classes were derived from the OneSpan API Schema Docs which can be
  * found here: http://docs.e-signlive.com/10.0/schema/index.html
  */
 
-public with sharing class ESignLiveAPIObjects
+public with sharing class OneSpanAPIObjects
 {
     /**
      * Enumerated Values
@@ -23,7 +23,7 @@ public with sharing class ESignLiveAPIObjects
     public enum PackageStatus  {DRAFT, SENT, COMPLETED, ARCHIVED, DECLINED, OPTED_OUT, EXPIRED, SIGNING_PENDING}
     public enum PackageType    {PACKAGE_X, TEMPLATE, LAYOUT}
 
-    public ESignLiveAPIObjects(){}
+    public OneSpanAPIObjects(){}
 
     public class Address
     {

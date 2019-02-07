@@ -1,11 +1,11 @@
 /**
- * Class Name: ESignLiveJSONHelperTest.cls
+ * Class Name: OneSpanJSONHelperTestls
  *
- * Test class for the ESignLiveJSONHelper class
+ * Test class for the OneSpanJSONHelper class
  */
 
 @isTest
-public class ESignLiveJSONHelperTest
+public class OneSpanJSONHelperTest
 {    
     /**
      * Test method for prepareOutboundJSON method
@@ -13,15 +13,15 @@ public class ESignLiveJSONHelperTest
     private static testMethod void prepareOutboundJSONTest() 
     {
         // Create custom setting for test
-        ESignLiveTestDataUtility.createConnectionSetting();
+        OneSpanTestDataUtility.createConnectionSetting();
         
         Test.startTest();
         
             // Set parameters for call
             String packageId = 'PACKAGE_X';
-            Map<String,Blob> documentMap = ESignLiveTestDataUtility.createDocumentMap();
-            ESignLiveAPIObjects.Package_x pkg = ESignLiveTestDataUtility.createPackageX(packageId,'packName','packConsent');
-            String result = ESignLiveValidation.comparePackageDocumentsAndMap(pkg, documentMap);
+            Map<String,Blob> documentMap = OneSpanTestDataUtility.createDocumentMap();
+            OneSpanAPIObjects.Package_x pkg = OneSpanTestDataUtility.createPackageX(packageId,'packName','packConsent');
+            String result = OneSpanValidation.comparePackageDocumentsAndMap(pkg, documentMap);
             
             // Get JSON response
             String mockResponse = JSON.serialize(pkg);
@@ -29,7 +29,7 @@ public class ESignLiveJSONHelperTest
             // Object response    
             System.assertEquals(true, mockResponse.contains('PACKAGE_X'));  
             System.assertEquals(true, mockResponse.contains('null'));      
-            mockResponse = ESignLiveJSONHelper.prepareOutboundJSON(mockResponse);  
+            mockResponse = OneSpanJSONHelper.prepareOutboundJSON(mockResponse);
             
             // Ensure after invoking the prepareOutboundJSON method all _X removed
             System.assertEquals(false, mockResponse.contains('PACKAGE_X')); 
@@ -50,20 +50,20 @@ public class ESignLiveJSONHelperTest
     private static testMethod void prepareInboundJSONTest() 
     {
         // Create custom setting for test
-        ESignLiveTestDataUtility.createConnectionSetting();
+        OneSpanTestDataUtility.createConnectionSetting();
         
         Test.startTest();
         
             // Set parameters for call
             String packageId = 'NEW';
-            ESignLiveAPIObjects.Package_x pkg = ESignLiveTestDataUtility.createPackageX(packageId,'packName','packConsent');
+            OneSpanAPIObjects.Package_x pkg = OneSpanTestDataUtility.createPackageX(packageId,'packName','packConsent');
             
             // Get JSON response
             String mockResponse = JSON.serialize(pkg);
                   
             System.assertEquals(true, mockResponse.contains(packageId));  
             System.assertEquals(true, mockResponse.contains('null'));     
-            mockResponse = ESignLiveJSONHelper.prepareInboundJSON(mockResponse);
+            mockResponse = OneSpanJSONHelper.prepareInboundJSON(mockResponse);
             
             // Values of packageId variable replaced with NEW_X because NEW is a reserved word
             System.assertEquals(true, mockResponse.contains('NEW_X'));  

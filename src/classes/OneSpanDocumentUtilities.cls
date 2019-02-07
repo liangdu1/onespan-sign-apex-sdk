@@ -1,13 +1,12 @@
 /**
- * Class Name: ESignLiveDocumentUtilities.cls
- *
+ * Class Name: OneSpanDocumentUtilities.cls*
  * This class contains method used for encoding documents for sending
- * to eSignLive.
+ * to OneSpan.
  */
 
-public with sharing class ESignLiveDocumentUtilities 
+public with sharing class OneSpanDocumentUtilities
 {
-    public ESignLiveDocumentUtilities(){}
+    public OneSpanDocumentUtilities(){}
 
     /**
      * Method to encode documents passed in the documentMap
