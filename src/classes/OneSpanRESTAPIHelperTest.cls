@@ -91,7 +91,7 @@ public class OneSpanRESTAPIHelperTest
             String packageId = 'a3b023bf-db56-4c53-b36e-bd9acd0579f4';
             String signerId = '654321';
             String roleId = '2jsTTXD2dZMZ';
-            String url =  'https://sandbox.e-signlive.com/auth?target=https%3A%2F%2Fsandbox.e-signlive.com%2Fpackages%2Fa3b023bf-db56-4c53-b36e-bd9acd0579f4%2Fsign&loginToken=Mi4xMDAwGpGY3JJPS55ZnNSeHBmekNxc1RzdnNJRVlBSDkZBR1RhcmxKS09aZ3M4aFZXVlpvdExrdz09';
+            String url =  'https://sandbox.e-signlive.com/auth?target=https%3A%2F%2Fsandbox.e-signlive.com%2Fpackages%2Fa3b023bf-db56-4c53-b36e-bd9acd0579f4%2Fsign&loginToken=NEWenumfromgroupPACKAGEPACKAGE_X_XMi4xMDAwGpGY3JJPS55ZnNSeHBmekNxc1RzdnNJRVlBSDkZBR1RhcmxKS09aZ3M4aFZXVlpvdExrdz09';
             OneSpanAPIObjects.SigningUrl su = new OneSpanAPIObjects.SigningUrl(roleId, url, packageId);
             
             // Set response object
@@ -111,7 +111,7 @@ public class OneSpanRESTAPIHelperTest
         
         // Verify response received contains fake values
         System.assertEquals('2jsTTXD2dZMZ', response.roleId);
-        System.assertEquals('https://sandbox.e-signlive.com/auth?target=https%3A%2F%2Fsandbox.e-signlive.com%2Fpackages%2Fa3b023bf-db56-4c53-b36e-bd9acd0579f4%2Fsign&loginToken=Mi4xMDAwGpGY3JJPS55ZnNSeHBmekNxc1RzdnNJRVlBSDkZBR1RhcmxKS09aZ3M4aFZXVlpvdExrdz09', response.url);
+        System.assertEquals('https://sandbox.e-signlive.com/auth?target=https%3A%2F%2Fsandbox.e-signlive.com%2Fpackages%2Fa3b023bf-db56-4c53-b36e-bd9acd0579f4%2Fsign&loginToken=NEWenumfromgroupPACKAGEPACKAGE_X_XMi4xMDAwGpGY3JJPS55ZnNSeHBmekNxc1RzdnNJRVlBSDkZBR1RhcmxKS09aZ3M4aFZXVlpvdExrdz09', response.url);
         System.assertEquals('a3b023bf-db56-4c53-b36e-bd9acd0579f4', response.packageId);
     }
 
