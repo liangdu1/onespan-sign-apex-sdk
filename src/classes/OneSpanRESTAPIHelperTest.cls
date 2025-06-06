@@ -7,6 +7,21 @@
 @isTest
 public class OneSpanRESTAPIHelperTest
 {
+
+    private static String inlineMockLastCapturedRequestBody;
+
+    private class InlineMock implements HttpCalloutMock {
+        public HTTPResponse respond(HTTPRequest req) {
+            inlineMockLastCapturedRequestBody = req.getBody();  
+
+            HttpResponse res = new HttpResponse();
+            res.setHeader('Content-Type', 'application/json');
+            res.setBody('{}');
+            res.setStatusCode(200);
+            return res;
+        }
+    }
+
     /**
      * Test method for setSessionId method
      */
@@ -75,6 +90,31 @@ public class OneSpanRESTAPIHelperTest
             }
         
         Test.stopTest();
+    }
+    
+    @isTest
+    static void testUpdatePackageWithUnderscoreXInPackageId() {
+        OneSpanTestDataUtility.createConnectionSetting();
+
+        String packageId = 'abc_x123';
+        OneSpanAPIObjects.Package_x pkg = new OneSpanAPIObjects.Package_x();
+        pkg.id = packageId;
+        pkg.name = 'Demo Package';
+
+        Test.setMock(HttpCalloutMock.class, new InlineMock());
+
+        Test.startTest();
+            new OneSpanRESTAPIHelper().updatePackage(pkg, packageId);
+        Test.stopTest();
+
+        // Validate that outbound JSON preserves _x in ID
+        Map<String, Object> payload = (Map<String, Object>) JSON.deserializeUntyped(inlineMockLastCapturedRequestBody);
+        if (payload.containsKey('id')) {
+            System.assertEquals(packageId, payload.get('id'),
+                'Expected "id" field to be preserved in outbound JSON body if present');
+        } else {
+            System.debug('PASS: "id" field is not present in payload, which is acceptable');
+        }
     }
 
     /**

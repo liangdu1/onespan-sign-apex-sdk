@@ -74,6 +74,7 @@ public with sharing class OneSpanRESTAPIHelper
      */
     public void updatePackage(OneSpanAPIObjects.Package_x packageSettings, String packageId)
     {
+        packageSettings.id = null;
         String requestBody = JSON.serialize(packageSettings);
         HttpResponse response = doPut('/packages/' + packageId, requestBody);
 
