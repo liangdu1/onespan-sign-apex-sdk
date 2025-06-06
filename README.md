@@ -11,10 +11,18 @@ Documentation for the SDK can be accessed [here](http://bit.ly/2uN6Rlz).
 For help, use OneSpan's [Developer Community](http://bit.ly/2uJz52e).
 
 ## Installation and Configuration
+
+### Option1 Install via GitHub Salesforce Deploy Tool
+
 The SDK can be installed using the <a href="https://githubsfdeploy.herokuapp.com?owner=OneSpan&repo=onespan-sign-apex-sdk">
   <img alt="Deploy to Salesforce"
        src="https://raw.githubusercontent.com/afawcett/githubsfdeploy/master/src/main/webapp/resources/img/deploy.png">
 </a> button.
+
+### Option2 Install via Salesforce Workbench 
+To deploy manually via Salesforce Workbench, first download or clone the master branch of this repository to your local machine, then compress the src/ folder into a file named src.zip. Next, go to https://workbench.developerforce.com, log in to your Salesforce org, navigate to Migration > Deploy, upload the src.zip, then proceed with the deployment.
+
+---
 
 After installing in your sandbox or developer org you'll need to configure the connection settings by creating an entry in the OneSpan Connection Settings custom setting.
 
@@ -57,6 +65,18 @@ The following methods are included in the current version of the SDK:
 * Get Signature
 * Update Signature
 * Delete Signature
+
+
+
+## Reserved Keywords
+Due to Salesforce's internal keyword handling and the custom serialization logic in this SDK, the following keywords are considered reserved and will be rewritten to avoid conflicts during payload construction:
+
+`enum` `from` `group` `NEW` `PACKAGE` `_x` `_X`
+
+Avoid including reserved words in your transaction name, template name, transaction description, role ID, or other outbound fields, as this may lead to unexpected API behavior or failure.
+
+
+---
 
 ##License##
 This OneSpan Apex SDK is released under the following [license](/LICENSE).
