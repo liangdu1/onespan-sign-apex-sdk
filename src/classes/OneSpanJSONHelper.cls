@@ -7,14 +7,27 @@
 public with sharing class OneSpanJSONHelper
 {
     /**
-     * Method to prepare outbound JSON to include removing _x
-     * values and removing null properties and values
+     * Method to prepare outbound JSON including:
+     *  - mapping Apex-safe field names back to API field names
+     *    (e.g. enum_x -> enum, from_x -> from, group_x -> group)
+     *  - mapping Apex-safe enum values back to API values
+     *    (e.g. NEW_X -> NEW, PACKAGE_X -> PACKAGE)
+     *  - removing null properties and values
      */
     public static String prepareOutboundJSON(String jsonString)
     {
         if(String.isNotEmpty(jsonString))
         {
-            jsonString = remove_x(jsonString);
+            // Map internal property names back to API-safe keys
+            jsonString = replacePropertyName(jsonString, 'enum_x', 'enum');
+            jsonString = replacePropertyName(jsonString, 'from_x', 'from');
+            jsonString = replacePropertyName(jsonString, 'group_x', 'group');
+
+            // Map internal enum values back to API values
+            jsonString = replaceEnumValue(jsonString, 'status', 'NEW_X', 'NEW');          // MessageStatus
+            jsonString = replaceEnumValue(jsonString, 'type',   'PACKAGE_X', 'PACKAGE');  // PackageType
+
+            // Remove null properties
             jsonString = removeNullProperties(jsonString);
         }
 
@@ -22,43 +35,70 @@ public with sharing class OneSpanJSONHelper
     }
 
     /**
-     * Method to replace inbound values using the getInboundReplacementMap method
-     * This is needed to handle reserved words in Apex
+     * Method to prepare inbound JSON including:
+     *  - mapping API field names to Apex-safe field names
+     *    (e.g. enum -> enum_x, from -> from_x, group -> group_x)
+     *  - mapping API enum values to Apex-safe enum values
+     *    (e.g. NEW -> NEW_X, PACKAGE -> PACKAGE_X)
+     *  - removing null properties and values
      */
     public static String prepareInboundJSON(String jsonString)
     {
         if(String.isNotEmpty(jsonString))
         {
-            Map<String, String> inboundReplacementMap = getInboundReplacementMap();
-            for(String key : inboundReplacementMap.keySet())
-            {
-                if(jsonString.contains(key))
-                {
-                    jsonString = jsonString.replace(key, inboundReplacementMap.get(key));
-                }
-            }
+            // Property-name mappings (keys)
+            jsonString = replacePropertyName(jsonString, 'enum',  'enum_x');
+            jsonString = replacePropertyName(jsonString, 'from',  'from_x');
+            jsonString = replacePropertyName(jsonString, 'group', 'group_x');
+
+            // Enum value mappings (values)
+            jsonString = replaceEnumValue(jsonString, 'status', 'NEW',     'NEW_X');      // MessageStatus
+            jsonString = replaceEnumValue(jsonString, 'type',   'PACKAGE', 'PACKAGE_X');  // PackageType
+
+            // Remove null properties
+            jsonString = removeNullProperties(jsonString);
         }
-        jsonString = removeNullProperties(jsonString);
+
         return jsonString;
     }
 
     /**
-     * Method to remove all _x values used for handling reserved words
-     * in Apex
+     * Helper to replace a JSON property name
      */
-    private static String remove_x(String jsonString)
+    private static String replacePropertyName(String jsonString, String original, String replacement)
     {
-        if(String.isNotEmpty(jsonString))
+        if(String.isEmpty(jsonString))
         {
-            jsonString = jsonString.replace('_x', '');
-            jsonString = jsonString.replace('_X', '');
+            return jsonString;
         }
 
-        return jsonString;
+        // with optional whitespace before the colon
+        String regex = '"' + original + '"\\s*:';
+        String repl  = '"' + replacement + '":';
+
+        return jsonString.replaceAll(regex, repl);
     }
 
     /**
-     * Method to remove null properties and values using regex
+     * Helper to replace a JSON enum value for a specific property.
+     * Example: "status":"NEW" -> "status":"NEW_X"
+     */
+    private static String replaceEnumValue(String jsonString, String propName, String fromValue, String toValue)
+    {
+        if(String.isEmpty(jsonString))
+        {
+            return jsonString;
+        }
+
+        // with optional whitespace before the colon
+        String regex = '"' + propName + '"\\s*:\\s*"' + fromValue + '"';
+        String replacement = '"' + propName + '":"' + toValue + '"';
+
+        return jsonString.replaceAll(regex, replacement);
+    }
+
+    /**
+     * Method to remove null properties and values using regex.
      */
     private static String removeNullProperties(String jsonString)
     {
@@ -74,22 +114,5 @@ public with sharing class OneSpanJSONHelper
         }
     
         return jsonString;
-    }
-
-    /**
-     * Method to build map for replacing inbound values to Salesforce safe values
-     * This is needed to get around reserved words in Apex
-     */
-    private static Map<String, String> getInboundReplacementMap()
-    {
-        Map<String, String> inboundReplacementMap = new Map<String, String>();
-        inboundReplacementMap.put('"enum"', '"enum_x"');
-        inboundReplacementMap.put('"from"', '"from_x"');
-        inboundReplacementMap.put('"group"', '"group_x"');
-        inboundReplacementMap.put('NEW', 'NEW_X');
-        inboundReplacementMap.put('PACKAGE', 'PACKAGE_X');
-        inboundReplacementMap.put('PACKAGE_X_X', 'PACKAGE_X');
-
-        return inboundReplacementMap;
     }
 }
