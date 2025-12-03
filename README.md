@@ -68,13 +68,10 @@ The following methods are included in the current version of the SDK:
 
 
 
-## Reserved Keywords
-Due to Salesforce's internal keyword handling and the custom serialization logic in this SDK, the following keywords are considered reserved and will be rewritten to avoid conflicts during payload construction:
+## Reserved Identifiers and JSON Mapping
+To avoid conflicts with Salesforce reserved words, this SDK rewrites only a few specific JSON fields. The JSON keys `enum`, `from`, and `group` are mapped to `enum_x`, `from_x`, and `group_x` in Apex, and mapped back to their original names when sending data to the API.
 
-`enum` `from` `group` `NEW` `PACKAGE` `_x` `_X`
-
-Avoid including reserved words in your transaction name, template name, transaction description, role ID, or other outbound fields, as this may lead to unexpected API behavior or failure.
-
+For JSON values, only `status: "NEW"` and `type: "PACKAGE"` are mapped to the internal enum values `NEW_X` and `PACKAGE_X` (and back again on outbound). Other uses of these Apex reserved words (for example, `"NEW"`, `"PACKAGE"`, `"from"` in IDs, names, descriptions, or signing links) are not changed by the helper and are safe to use.
 
 ---
 
